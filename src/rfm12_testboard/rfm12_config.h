@@ -110,7 +110,7 @@
 /**** UART DEBUGGING
  * en- or disable debugging via uart.
  */
-#define RFM12_UART_DEBUG 0
+#define RFM12_UART_DEBUG 5
 
 /*
 This is a bitmask that defines how "rude" this library behaves

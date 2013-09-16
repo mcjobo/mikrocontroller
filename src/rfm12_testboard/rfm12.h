@@ -11,7 +11,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "../library/spi/spi.h"
+#include "spi.h"
 #include "rfm12_hw.h"
 #include "rfm12_core.h"
 #include "uart.h"
@@ -100,17 +100,17 @@ typedef struct
 	//! Counter for the bytes we are transmitting or receiving at the moment.
 	uint8_t bytecount;
 
-		//! Points to the receive buffer that will be filled next.
-		rf_rx_buffer_t * rf_buffer_in;
+	//! Points to the receive buffer that will be filled next.
+	rf_rx_buffer_t * rf_buffer_in;
 		
-		//! Points to the receive buffer that will be returned for the next read.
-		rf_rx_buffer_t * rf_buffer_out;
+	//! Points to the receive buffer that will be returned for the next read.
+	rf_rx_buffer_t * rf_buffer_out;
 		
-		//! the number of the currently used in receive buffer.
-		uint8_t buffer_in_num;
+	//! the number of the currently used in receive buffer.
+	uint8_t buffer_in_num;
 		
-		//! the number of the currently used out receive buffer.
-		uint8_t buffer_out_num;
+	//! the number of the currently used out receive buffer.
+	uint8_t buffer_out_num;
 	
 	//wakeup timer feature
 	#if RFM12_USE_WAKEUP_TIMER
@@ -180,6 +180,10 @@ extern rfm12_control_t ctrl;
 		return ctrl.rf_buffer_out->status;
 	}
 
+	static inline uint8_t rfm12_tx_status(void)
+	{
+		return ctrl.txstate;
+	}
 
 	//! Inline function to return the rx buffer length field.
 	/** \returns The length of the data inside the buffer
