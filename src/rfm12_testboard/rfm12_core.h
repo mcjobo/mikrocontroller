@@ -21,8 +21,7 @@
 #ifndef _RFM12_CORE_H
 #define _RFM12_CORE_H
 
-#include "rfm12_config.h"
-
+//#include "../../rfm12_config.h"
 /************************
 * VARIOUS RFM RELATED DEFINES FOR INTERNAL USE	
 *(defines which shall be visible to the user are located in rfm12.h)
