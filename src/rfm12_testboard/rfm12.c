@@ -83,7 +83,7 @@ void rfm12_init(void)
 	// 8. command 0xC4F7
 	
 	//set TX Power to -0dB, frequency shift = +-125kHz
-	rfm12_data(RFM12_CMD_TXCONF | RFM12_TXCONF_POWER_0 | RFM12_TXCONF_FS_CALC(125000) );
+	rfm12_data(RFM12_CMD_TXCONF | RFM12_TXCONF_POWER_17_5 | RFM12_TXCONF_FS_CALC(125000) );
 	// 9. command 0x9870
 	
 	//disable low dutycycle mode
@@ -243,8 +243,8 @@ void rfm12_tick(void)
 		rfm12_data(RFM12_CMD_PWRMGT | PWRMGT_DEFAULT);
 		
 		//calculate number of bytes to be sent by ISR
-		//2 sync bytes + len byte + type byte + checksum + message length + 1 dummy byte
-		ctrl.num_bytes = rf_tx_buffer.len + 6;
+		//2 sync bytes + len byte + message length + 1 dummy byte
+		ctrl.num_bytes = rf_tx_buffer.len + 4;
 		
 		//reset byte sent counter
 		ctrl.bytecount = 0;
@@ -513,7 +513,6 @@ ISR(RFM12_INT_VECT, ISR_NOBLOCK)
 			//debug
 			#if RFM12_UART_DEBUG >= 2
 			uart_putc('R');
-			uart_putc(data);
 			#endif
 			
 			//xor the remaining bytes onto the checksum
@@ -523,16 +522,21 @@ ISR(RFM12_INT_VECT, ISR_NOBLOCK)
 			//put next byte into buffer, if there is enough space
 			if(ctrl.bytecount < (RFM12_RX_BUFFER_SIZE + 3))
 			{
+				
 				//hackhack: begin writing to struct at offsetof len
 				(& ctrl.rf_buffer_in->len)[ctrl.bytecount] = data;
+				
 			}
 			
 			//check header against checksum
-			if (ctrl.bytecount == 2 && checksum != 0xff)
+			/*if (ctrl.bytecount == 2 && checksum != 0xff)
 			{
 				//if the checksum does not match, reset the fifo
+				#if RFM12_UART_DEBUG >= 2
+				uart_putc('c');
+				#endif
 				break;
-			}
+			}*/
 
 			//increment bytecount
 			ctrl.bytecount++;
@@ -603,6 +607,9 @@ ISR(RFM12_INT_VECT, ISR_NOBLOCK)
 	//set the state machine to idle
 	ctrl.rfm12_state = STATE_RX_IDLE;
 	
+	#if RFM12_UART_DEBUG >= 2
+	uart_putc('r');
+	#endif
 	//reset the receiver fifo, if receive mode is not disabled (default)
 	#if !(RFM12_TRANSMIT_ONLY)
 	rfm12_data(RFM12_CMD_FIFORESET + CLEAR_FIFO_INLINE);

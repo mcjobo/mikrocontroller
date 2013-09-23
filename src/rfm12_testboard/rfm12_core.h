@@ -40,7 +40,7 @@
 #define STATE_TX 2
 
 //packet header length in bytes
-#define PACKET_OVERHEAD 3
+#define PACKET_OVERHEAD 2
 
 
 /************************

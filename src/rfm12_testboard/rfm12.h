@@ -69,7 +69,7 @@ void  rfm12_rx_clear(void);
 		//uint8_t type;
 		
 		//! Checksum over the type and length header fields
-		uint8_t checksum;
+		//uint8_t checksum;
 		
 		//! The actual receive buffer data
 		uint8_t buffer[RFM12_RX_BUFFER_SIZE]; 
@@ -146,7 +146,7 @@ typedef struct
 	//uint8_t type;
 
 	//! Checksum over the former two members.
-	uint8_t checksum;
+	//uint8_t checksum;
 
 	//! Buffer for the raw bytes to be transmitted.
 	uint8_t buffer[RFM12_TX_BUFFER_SIZE];
