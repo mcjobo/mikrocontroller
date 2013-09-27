@@ -8,51 +8,11 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include "rfm12.h"
 #include "protocol.h"
+#include "protStatemachine.h"
 
-uint8_t bufferLength;
-uint8_t *bufcontents;
+bufferStruct buffer;
 
-
-uint8_t received = 0;
-
-void rx_data(){
-	if (rfm12_rx_status() == STATUS_COMPLETE)
-	{
-		uint8_t i;
-		uart_putstr ("new packet:\r\n");
-
-		bufcontents = rfm12_rx_buffer();
-		bufferLength = rfm12_rx_len();
-
-		// dump buffer contents to uart		
-		uint8_t* payload = getPayload(bufferLength, bufcontents);
-		for (i=0;i<getPayloadLength(bufferLength, bufcontents);i++)
-		{
-			uart_putc ( payload[i] );
-		}
-		uart_putstr ("\r\n");
-		
-		uint16_t crc = (bufcontents[bufferLength-1])|(bufcontents[bufferLength-2]<<8);
-		uint8_t ack = checkCrc(bufferLength-2, bufcontents, crc);
-		if(ack){
-			uart_putstr ("ack\r\n");
-		} else {
-			uart_putstr ("nack\r\n");
-		}
-		
-		// tell the implementation that the buffer
-		// can be reused for the next data.
-		received = 1;
-		rfm12_rx_clear();
-	} 
-}
-
-void sendData(uint8_t length, uint8_t* data){
-	
-	rfm12_tx (length+4, encode(0x03, 0x05, length, data));
-}
 
 // main for reply received data
 /*int main(void)
@@ -90,8 +50,7 @@ int main(void)
 	//_delay_ms(500);
 	uint8_t teststring[] = "asd12";
 	uint8_t packetLength = sizeof(teststring);
-	rfm12_init();  // initialize the library
-	sei();
+	initCommunication();
 	
 	uart_putstr ("init\r\n");
 
@@ -102,12 +61,15 @@ int main(void)
 	
 	while (1)
 	{		
-		rx_data();
+		checkReceiveData(buffer);
 		rfm12_tick();  //periodic tick function - call that one once in a while
 
 		if(counter <=0){
 			counter = 20000;
-			sendData(packetLength, teststring);
+			bufferStruct send;
+			send.bufferLength = packetLength;
+			memcpy(send.buffer, teststring, send.bufferLength);
+			sendData(send, NEED_ACK);
 			uart_putstr ("send:\r\n");
 			for(uint8_t i = 0; i < packetLength; ++i){
 				uart_putc(teststring[i]);
@@ -116,8 +78,5 @@ int main(void)
 			
 		}
 		--counter;
-		if(rfm12_tx_status() == STATUS_OCCUPIED){
-			counter = 20000;
-		}
 	}
 }

@@ -118,6 +118,12 @@
     <Compile Include="protocol.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="protStatemachine.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="protStatemachine.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12.c">
       <SubType>compile</SubType>
     </Compile>
