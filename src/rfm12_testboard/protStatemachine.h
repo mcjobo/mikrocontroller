@@ -11,12 +11,17 @@
 
 #include <avr/io.h>
 
+// states of the statemachine in witch the data transmission is in
+#define STATE_FREE			0
+#define STATE_EXPECKT_ACK	1
 
 // struct to hold the datastream and the length of it
 typedef struct{
-uint8_t bufferLength;
-uint8_t buffer[30];	
+	uint8_t bufferLength;
+	uint8_t buffer[30];	
 } bufferStruct; 
+
+extern uint8_t state;
 
 // public functions
 void initCommunication();

@@ -8,7 +8,7 @@
 #include "rfm12.h"
 #include "protocol.h"
 
-uint8_t expectAck = 0;
+uint8_t state = 0;
 bufferStruct backupData;
 uint8_t backupType;
 
@@ -18,11 +18,11 @@ void initCommunication(){
 }
 
 void processAck(){
-	expectAck = 0;
+	state = STATE_FREE;
 }	
 
 void processNack(){
-	expectAck = 1;
+	state = STATE_EXPECKT_ACK;
 	sendData(backupData, backupType);
 }	
 	
@@ -54,7 +54,7 @@ void checkReceiveData(bufferStruct buffer){
 			return;
 		}
 
-		if(expectAck){
+		if(state > STATE_FREE){
 			switch(getType(buffer.bufferLength, buffer.buffer)){
 				case ACK:
 					processAck();
@@ -64,7 +64,7 @@ void checkReceiveData(bufferStruct buffer){
 					break;
 			}
 		}		
-		if(!expectAck){
+		if(state == STATE_FREE){
 			switch(getType(buffer.bufferLength, buffer.buffer)){
 				case SEND_DATA:
 					return receiveSendData(buffer);
