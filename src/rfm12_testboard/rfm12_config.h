@@ -92,13 +92,13 @@
 #define RFM12_INT_VECT (INT0_vect)
 
 //the interrupt mask register
-#define RFM12_INT_MSK GICR
+#define RFM12_INT_MSK EIMSK
 
 //the interrupt bit in the mask register
 #define RFM12_INT_BIT (INT0)
 
 //the interrupt flag register
-#define RFM12_INT_FLAG GIFR
+#define RFM12_INT_FLAG EIFR
 
 //the interrupt bit in the flag register
 #define RFM12_FLAG_BIT (INTF0)
