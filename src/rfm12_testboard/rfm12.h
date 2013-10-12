@@ -64,12 +64,6 @@ void  rfm12_rx_clear(void);
 		
 		//! Length byte - number of bytes in buffer.
 		uint8_t len;
-
-		//! Type field for the simple airlab protocol.		
-		//uint8_t type;
-		
-		//! Checksum over the type and length header fields
-		//uint8_t checksum;
 		
 		//! The actual receive buffer data
 		uint8_t buffer[RFM12_RX_BUFFER_SIZE]; 
@@ -142,12 +136,6 @@ typedef struct
 	//! Length byte - number of bytes in buffer.
 	uint8_t len;
 
-	//! Type field for the simple airlab protocol.
-	//uint8_t type;
-
-	//! Checksum over the former two members.
-	//uint8_t checksum;
-
 	//! Buffer for the raw bytes to be transmitted.
 	uint8_t buffer[RFM12_TX_BUFFER_SIZE];
 } rf_tx_buffer_t;
@@ -175,8 +163,7 @@ extern rfm12_control_t ctrl;
 	/** \returns STATUS_FREE or STATUS_COMPLETE
 	* \see \ref rxtx_states "rx buffer states", rfm12_rx_len(), rfm12_rx_type(), rfm12_rx_buffer(), rfm12_rx_clear() and rf_rx_buffer_t
 	*/
-	static inline uint8_t rfm12_rx_status(void)
-	{
+	static inline uint8_t rfm12_rx_status(void)	{
 		return ctrl.rf_buffer_out->status;
 	}
 

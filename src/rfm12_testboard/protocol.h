@@ -14,7 +14,7 @@
 #include <string.h>
 #include "uart.h"
 
-#define VERSION 0
+#define VERSION 0x00
 
 // ack bits that my be combined with other protocol types
 #define NO_ACK			0x00
@@ -26,6 +26,9 @@
 #define REPEATING_DATA	0x01
 #define NACK			0x02
 #define GET_BACK_AGAIN	0x03
+#define NO_DATA			0x04
+
+#define CRC_UART_DEBUG	0
 
 // number of bytes of header overhead
 #define OVERHEAD 5

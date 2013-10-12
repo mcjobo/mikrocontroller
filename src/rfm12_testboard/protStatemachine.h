@@ -12,8 +12,14 @@
 #include <avr/io.h>
 
 // states of the statemachine in witch the data transmission is in
-#define STATE_FREE			0
-#define STATE_EXPECKT_ACK	1
+#define STATE_FREE			0x00
+#define STATE_EXPECKT_ACK	0x01
+#define STATE_TIMEOUT		0x02
+#define STATE_SENDING_ACK	0x03
+#define STATE_SENDING_DATA	0x04
+
+#define STATE_UART_DEBUG	5
+
 
 // struct to hold the datastream and the length of it
 typedef struct{
@@ -21,11 +27,11 @@ typedef struct{
 	uint8_t buffer[30];	
 } bufferStruct; 
 
-extern uint8_t state;
+extern volatile uint8_t state;
 
 // public functions
 void initCommunication();
-void checkReceiveData(bufferStruct buffer);
+bufferStruct checkReceiveData(bufferStruct buffer);
 void sendData(bufferStruct buffer, uint8_t ack);
 
 // internal functions don't use externaly
@@ -35,5 +41,7 @@ void sendAck(bufferStruct buffer);
 void processAck();
 void processNack();
 bufferStruct receiveSendData(bufferStruct buffer);
+void startTimer();
+void stopTimer();
 
 #endif /* PROTSTATEMACHINE_H_ */

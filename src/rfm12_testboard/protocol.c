@@ -12,13 +12,14 @@
 uint8_t* encode(uint8_t ack, uint8_t type, uint8_t address, uint8_t length, uint8_t* data){
 	uint8_t newData[length + OVERHEAD];
 	
+
 	newData[0] = ((getProtocolVersion()<<3) | (ack & 0x07));
 	newData[1] = type;
 	newData[2] = address;
 	for(int i = 0; i < length; ++i){
 		newData[i + 3] = data[i];
 	}
-	uint16_t crc = createCrc(length + 2, newData);
+	uint16_t crc = createCrc(length + 3, newData);
 	newData[length +3] = crc>>8;
 	newData[length +4] = crc & 0x00ff;
 	return newData;
@@ -26,18 +27,35 @@ uint8_t* encode(uint8_t ack, uint8_t type, uint8_t address, uint8_t length, uint
 
 uint16_t createCrc(uint8_t length, uint8_t* data){
 	uint16_t crc = 0;
+	#if CRC_UART_DEBUG >= 3
+		uart_putc('@');
+	#endif
 	for (uint8_t i = 0; i < length; i++){
 		crc = _crc_ccitt_update(crc, data[i]);
+		#if CRC_UART_DEBUG >= 3
+			uart_putc(data[i]);
+		#endif
 	}
+	#if CRC_UART_DEBUG >= 3
+		uart_putc('@');
+		uart_putc(crc>>8);
+		uart_putc(crc&0x00ff);
+		uart_putc('@');
+	#endif
 	return crc;
 }
 
 uint8_t checkCrc(uint8_t length, uint8_t* data, uint16_t crc){
 	uint16_t newCrc = createCrc(length, data);
-	//#if RFM12_UART_DEBUG >= 2
+	#if CRC_UART_DEBUG >= 1
+		uart_putc('@');
 		uart_putc(newCrc>>8);
 		uart_putc(newCrc&0x00ff);
-	//#endif
+		uart_putc('@');
+		uart_putc(crc>>8);
+		uart_putc(crc&0x00ff);
+		uart_putc('@');
+	#endif
 	if(newCrc == crc){
 		return 1;
 	}

@@ -171,7 +171,7 @@ void rfm12_tick(void)
 	uint8_t state = ctrl.rfm12_state;
 	if (oldstate != state)
 	{
-		uart_putstr ("mode change: ");
+		//uart_putstr ("mode change: ");
 		switch (state)
 		{
 			case STATE_RX_IDLE:
@@ -186,7 +186,7 @@ void rfm12_tick(void)
 			default:
 			uart_putc ('?');
 		}
-		uart_putstr ("\r\n");
+		//uart_putstr ("\r\n");
 		oldstate = state;
 	}
 	#endif
@@ -396,7 +396,7 @@ void rfm12_tick(void)
 */
 //if polling is used, do not define an interrupt handler, but a polling function
 
-ISR(RFM12_INT_VECT, ISR_NOBLOCK)
+ISR(RFM12_INT_VECT)
 {
 	RFM12_INT_OFF();
 	uint8_t status;
@@ -503,8 +503,8 @@ ISR(RFM12_INT_VECT, ISR_NOBLOCK)
 		//if receive mode is not disabled (default)
 		#if !(RFM12_TRANSMIT_ONLY)
 		//check if transmission is complete
-		if(ctrl.bytecount < ctrl.num_bytes)
-		{
+		
+		if(ctrl.bytecount < ctrl.num_bytes){
 			uint8_t data;
 			
 			//read a byte
@@ -608,7 +608,7 @@ ISR(RFM12_INT_VECT, ISR_NOBLOCK)
 	ctrl.rfm12_state = STATE_RX_IDLE;
 	
 	#if RFM12_UART_DEBUG >= 2
-	uart_putc('r');
+	uart_putc('E');
 	#endif
 	//reset the receiver fifo, if receive mode is not disabled (default)
 	#if !(RFM12_TRANSMIT_ONLY)
