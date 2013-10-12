@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8</ToolchainName>
-    <ProjectGuid>{9ce89c28-4c7e-4d01-bdf1-e14021b20256}</ProjectGuid>
+    <ProjectGuid>{b0178112-6172-44d1-8c84-f63460284665}</ProjectGuid>
     <avrdevice>ATmega88A</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>StaticLibrary</OutputType>
@@ -14,9 +14,9 @@
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AvrGccProjectExtensions>
     </AvrGccProjectExtensions>
-    <AssemblyName>avrlib</AssemblyName>
-    <Name>avrlib</Name>
-    <RootNamespace>avrlib</RootNamespace>
+    <AssemblyName>rfm12Protocol</AssemblyName>
+    <Name>rfm12Protocol</Name>
+    <RootNamespace>rfm12Protocol</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -54,6 +54,11 @@
         <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
         <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
         <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../../lib</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
         <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
@@ -64,44 +69,22 @@
             <Value>m</Value>
           </ListValues>
         </avrgcc.linker.libraries.Libraries>
+        <avrgcc.linker.libraries.LibrarySearchPaths>
+          <ListValues>
+            <Value>../../lib</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.LibrarySearchPaths>
         <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
       </AvrGcc>
     </ToolchainSettings>
-    <PostBuildEvent>copy $(MSBuildProjectDirectory)\$(SolutionName).h $(MSBuildProjectDirectory)\..\..\lib\
-copy $(MSBuildProjectDirectory)\rfm12_extra.h $(MSBuildProjectDirectory)\..\..\lib\
-copy $(MSBuildProjectDirectory)\rfm12_ctrl.h $(MSBuildProjectDirectory)\..\..\lib\
-copy $(MSBuildProjectDirectory)\rfm12_config.h $(MSBuildProjectDirectory)\..\..\lib\
-copy $(OutputDirectory)\$(OutputFileName)$(OutputFileExtension) $(MSBuildProjectDirectory)\..\..\lib\</PostBuildEvent>
+    <PostBuildEvent>copy $(MSBuildProjectDirectory)\rfm12Protocol.h  $(MSBuildProjectDirectory)\..\lib\
+copy $(OutputDirectory)\$(OutputFileName)$(OutputFileExtension)  $(MSBuildProjectDirectory)\..\lib\</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="rfm12.c">
+    <Compile Include="rfm12Protocol.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_config.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_core.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_ctrl.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_ctrl.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_extra.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_extra.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_hw.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12_spi.c">
+    <Compile Include="rfm12Protocol.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

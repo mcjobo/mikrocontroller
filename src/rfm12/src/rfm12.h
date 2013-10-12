@@ -88,11 +88,11 @@ void rfm12_tick(void);
 
 #if (RFM12_NORETURNS)
 //see rfm12.c for more documentation
-void rfm12_start_tx(uint8_t type, uint8_t length);
-void rfm12_tx(uint8_t len, uint8_t type, uint8_t *data);
+void rfm12_start_tx(uint8_t length);
+void rfm12_tx(uint8_t len, uint8_t *data);
 #else
-uint8_t rfm12_start_tx(uint8_t type, uint8_t length);
-uint8_t rfm12_tx(uint8_t len, uint8_t type, uint8_t *data);
+uint8_t rfm12_start_tx(uint8_t length);
+uint8_t rfm12_tx(uint8_t len, uint8_t *data);
 #endif
 
 //if polling is used, define a polling function
@@ -245,6 +245,10 @@ extern rfm12_control_t ctrl;
 	static inline uint8_t rfm12_rx_status(void)
 	{
 		return ctrl.rf_buffer_out->status;
+	}
+	static inline uint8_t rfm12_tx_status(void)
+	{
+		return ctrl.txstate;
 	}
 
 	//! Inline function to return the rx buffer length field.

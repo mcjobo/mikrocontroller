@@ -76,7 +76,7 @@ rfm12_control_t ctrl;
 */
 
 /* include spi functions into here */
-#include "include/rfm12_spi.c"
+#include "rfm12_spi.c"
 
 /*
  * include control / init functions into here
@@ -475,7 +475,7 @@ void
 #else
 uint8_t
 #endif
-rfm12_start_tx(uint8_t type, uint8_t length)
+rfm12_start_tx(uint8_t length)
 {
 	//exit if the buffer isn't free
 	if(ctrl.txstate != STATUS_FREE)
@@ -483,8 +483,8 @@ rfm12_start_tx(uint8_t type, uint8_t length)
 	
 	//write airlab header to buffer
 	rf_tx_buffer.len = length;
-	rf_tx_buffer.type = type;
-	rf_tx_buffer.checksum = length ^ type ^ 0xff;
+	//rf_tx_buffer.type = type;
+	//rf_tx_buffer.checksum = length ^ type ^ 0xff;
 	
 	//schedule packet for transmission
 	ctrl.txstate = STATUS_OCCUPIED;
@@ -514,7 +514,7 @@ void
 #else
 uint8_t 
 #endif
-rfm12_tx(uint8_t len, uint8_t type, uint8_t *data)
+rfm12_tx(uint8_t len, uint8_t *data)
 {
 	#if RFM12_UART_DEBUG
 		uart_putstr ("sending packet\r\n");
@@ -529,9 +529,9 @@ rfm12_tx(uint8_t len, uint8_t type, uint8_t *data)
 	memcpy ( rf_tx_buffer.buffer, data, len );
 
 	#if (!(RFM12_NORETURNS))
-	return rfm12_start_tx (type, len);
+	return rfm12_start_tx (len);
 	#else
-	rfm12_start_tx (type, len);
+	rfm12_start_tx (len);
 	#endif
 }
 
