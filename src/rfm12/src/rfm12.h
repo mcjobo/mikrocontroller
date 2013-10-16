@@ -120,10 +120,10 @@ typedef struct
 	uint8_t len;
 
 	//! Type field for the simple airlab protocol.
-	uint8_t type;		
+	//uint8_t type;		
 
 	//! Checksum over the former two members.
-	uint8_t checksum;
+	//uint8_t checksum;
 
 	//! Buffer for the raw bytes to be transmitted.
 	uint8_t buffer[RFM12_TX_BUFFER_SIZE];
@@ -148,10 +148,10 @@ typedef struct
 		uint8_t len;
 
 		//! Type field for the simple airlab protocol.		
-		uint8_t type;
+		//uint8_t type;
 		
 		//! Checksum over the type and length header fields
-		uint8_t checksum;
+		//uint8_t checksum;
 		
 		//! The actual receive buffer data
 		uint8_t buffer[RFM12_RX_BUFFER_SIZE]; 
@@ -264,10 +264,10 @@ extern rfm12_control_t ctrl;
 	/** \returns The packet type from the packet header type field
 	* \see rfm12_rx_status(), rfm12_rx_len(), rfm12_rx_buffer(), rfm12_rx_clear() and rf_rx_buffer_t
 	*/
-	static inline uint8_t rfm12_rx_type(void)
-	{
-		return ctrl.rf_buffer_out->type;
-	}
+	//static inline uint8_t rfm12_rx_type(void)
+	//{
+	//	return ctrl.rf_buffer_out->type;
+	//}
 
 	//! Inline function to retreive current rf buffer contents.
 	/** \returns A pointer to the current receive buffer contents

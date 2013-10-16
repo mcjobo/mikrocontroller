@@ -15,8 +15,8 @@ uint8_t timoutCounter = 0;
 
 
 void initCommunication(){
-	rfm12_init();  // initialize the library
 	sei();
+	rfm12_init();  // initialize the library
 	rfm12_rx_clear();
 }
 

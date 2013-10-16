@@ -34,101 +34,7 @@ uint16_t  rfm12_read(uint16_t c)
 	return retval;
 }
 
-void rfm12_init(void)
-{
-	//initialize spi
-	SS_RELEASE();
-	DDR_SS |= (1<<BIT_SS);
-	spi_init();
 
-	//enable internal data register and fifo
-	//setup selected band
-	rfm12_data(RFM12_CMD_CFG | RFM12_CFG_EL | RFM12_CFG_EF | RFM12_BASEBAND | RFM12_XTAL_12PF);
-	// 1. command 0x80D7
-	
-	//set power default state (usually disable clock output)
-	//do not write the power register two times in a short time
-	//as it seems to need some recovery
-	rfm12_data(RFM12_CMD_PWRMGT | PWRMGT_DEFAULT);
-	// 2. command 0x8201
-
-	//set frequency
-	rfm12_data(RFM12_CMD_FREQUENCY | RFM12_FREQUENCY_CALC(FREQ) );
-	// 3. command 0xA0B0
-
-	//set data rate
-	rfm12_data(RFM12_CMD_DATARATE | DATARATE_VALUE );
-	// 4. command 0xC623
-	
-	//set rx parameters: int-in/vdi-out pin is vdi-out,
-	//Bandwith, LNA, RSSI
-	rfm12_data(RFM12_CMD_RXCTRL | RFM12_RXCTRL_P16_VDI
-	| RFM12_RXCTRL_VDI_FAST | RFM12_RXCTRL_BW_400 | RFM12_RXCTRL_LNA_20
-	| RFM12_RXCTRL_RSSI_79 );
-	// 5. command 0x942C
-	
-	//automatic clock lock control(AL), digital Filter(!S),
-	//Data quality detector value 3, slow clock recovery lock
-	rfm12_data(RFM12_CMD_DATAFILTER | RFM12_DATAFILTER_AL | 3);
-	// 6. command 0xC2AB
-	
-	//2 Byte Sync Pattern, Start fifo fill when sychron pattern received,
-	//disable sensitive reset, Fifo filled interrupt at 8 bits
-	rfm12_data(RFM12_CMD_FIFORESET | RFM12_FIFORESET_DR | (8<<4));
-	// 7. command 0xCA81
-
-	//set AFC to automatic, (+4 or -3)*2.5kHz Limit, fine mode, active and enabled
-	rfm12_data(RFM12_CMD_AFC | RFM12_AFC_AUTO_KEEP | RFM12_AFC_LIMIT_4
-	| RFM12_AFC_FI | RFM12_AFC_OE | RFM12_AFC_EN);
-	// 8. command 0xC4F7
-	
-	//set TX Power to -0dB, frequency shift = +-125kHz
-	rfm12_data(RFM12_CMD_TXCONF | RFM12_TXCONF_POWER_17_5 | RFM12_TXCONF_FS_CALC(125000) );
-	// 9. command 0x9870
-	
-	//disable low dutycycle mode
-	rfm12_data(RFM12_CMD_DUTYCYCLE);
-	// 10. command 0xC800
-	
-	//disable wakeup timer
-	rfm12_data(RFM12_CMD_WAKEUP);
-	// 11. command 0xE000
-
-	//store the syncronization pattern to the transmission buffer
-	//the sync pattern is used by the receiver to distinguish noise from real transmissions
-	//the sync pattern is hardcoded into the receiver
-	
-	rf_tx_buffer.sync[0] = SYNC_MSB;
-	rf_tx_buffer.sync[1] = SYNC_LSB;
-
-	
-	//enable rf receiver chain, if receiving is not disabled (default)
-	//the magic is done via defines
-	rfm12_data(RFM12_CMD_PWRMGT | PWRMGT_RECEIVE);
-	// 12. command 0x8281
-	
-	//ASK receive mode feature initialization
-	#if RFM12_RECEIVE_ASK
-	adc_init();
-	#endif
-
-	//setup interrupt for falling edge trigger
-	RFM12_INT_SETUP();
-	
-	//clear int flag
-	rfm12_read(RFM12_CMD_STATUS);
-	RFM12_INT_FLAG |= (1<<RFM12_FLAG_BIT);
-	// 13. command 0x0000
-	
-	//init receiver fifo, we now begin receiving.
-	rfm12_data(CLEAR_FIFO);
-	// 14. command 0xCA81
-	rfm12_data(ACCEPT_DATA);
-	// 15. command 0xCA83
-	
-	//activate the interrupt
-	RFM12_INT_ON();
-}
 
 void rfm12_data(uint16_t d)
 {
@@ -396,7 +302,11 @@ void rfm12_tick(void)
 */
 //if polling is used, do not define an interrupt handler, but a polling function
 
+#if (RFM12_USE_POLLING)
+void rfm12_poll(void)
+#else
 ISR(RFM12_INT_VECT)
+#endif
 {
 	RFM12_INT_OFF();
 	uint8_t status;
@@ -618,5 +528,101 @@ ISR(RFM12_INT_VECT)
 	
 	END:
 	//turn the int back on
+	RFM12_INT_ON();
+}
+
+void rfm12_init(void)
+{
+	//initialize spi
+	SS_RELEASE();
+	DDR_SS |= (1<<BIT_SS);
+	spi_init();
+
+	//enable internal data register and fifo
+	//setup selected band
+	rfm12_data(RFM12_CMD_CFG | RFM12_CFG_EL | RFM12_CFG_EF | RFM12_BASEBAND | RFM12_XTAL_12PF);
+	// 1. command 0x80D7
+	
+	//set power default state (usually disable clock output)
+	//do not write the power register two times in a short time
+	//as it seems to need some recovery
+	rfm12_data(RFM12_CMD_PWRMGT | PWRMGT_DEFAULT);
+	// 2. command 0x8201
+
+	//set frequency
+	rfm12_data(RFM12_CMD_FREQUENCY | RFM12_FREQUENCY_CALC(FREQ) );
+	// 3. command 0xA0B0
+
+	//set data rate
+	rfm12_data(RFM12_CMD_DATARATE | DATARATE_VALUE );
+	// 4. command 0xC623
+	
+	//set rx parameters: int-in/vdi-out pin is vdi-out,
+	//Bandwith, LNA, RSSI
+	rfm12_data(RFM12_CMD_RXCTRL | RFM12_RXCTRL_P16_VDI
+	| RFM12_RXCTRL_VDI_FAST | RFM12_RXCTRL_BW_400 | RFM12_RXCTRL_LNA_20
+	| RFM12_RXCTRL_RSSI_79 );
+	// 5. command 0x942C
+	
+	//automatic clock lock control(AL), digital Filter(!S),
+	//Data quality detector value 3, slow clock recovery lock
+	rfm12_data(RFM12_CMD_DATAFILTER | RFM12_DATAFILTER_AL | 3);
+	// 6. command 0xC2AB
+	
+	//2 Byte Sync Pattern, Start fifo fill when sychron pattern received,
+	//disable sensitive reset, Fifo filled interrupt at 8 bits
+	rfm12_data(RFM12_CMD_FIFORESET | RFM12_FIFORESET_DR | (8<<4));
+	// 7. command 0xCA81
+
+	//set AFC to automatic, (+4 or -3)*2.5kHz Limit, fine mode, active and enabled
+	rfm12_data(RFM12_CMD_AFC | RFM12_AFC_AUTO_KEEP | RFM12_AFC_LIMIT_4
+	| RFM12_AFC_FI | RFM12_AFC_OE | RFM12_AFC_EN);
+	// 8. command 0xC4F7
+	
+	//set TX Power to -0dB, frequency shift = +-125kHz
+	rfm12_data(RFM12_CMD_TXCONF | RFM12_TXCONF_POWER_17_5 | RFM12_TXCONF_FS_CALC(125000) );
+	// 9. command 0x9870
+	
+	//disable low dutycycle mode
+	rfm12_data(RFM12_CMD_DUTYCYCLE);
+	// 10. command 0xC800
+	
+	//disable wakeup timer
+	rfm12_data(RFM12_CMD_WAKEUP);
+	// 11. command 0xE000
+
+	//store the syncronization pattern to the transmission buffer
+	//the sync pattern is used by the receiver to distinguish noise from real transmissions
+	//the sync pattern is hardcoded into the receiver
+	
+	rf_tx_buffer.sync[0] = SYNC_MSB;
+	rf_tx_buffer.sync[1] = SYNC_LSB;
+
+	
+	//enable rf receiver chain, if receiving is not disabled (default)
+	//the magic is done via defines
+	rfm12_data(RFM12_CMD_PWRMGT | PWRMGT_RECEIVE);
+	// 12. command 0x8281
+	
+	//ASK receive mode feature initialization
+	#if RFM12_RECEIVE_ASK
+	adc_init();
+	#endif
+
+	//setup interrupt for falling edge trigger
+	RFM12_INT_SETUP();
+	
+	//clear int flag
+	rfm12_read(RFM12_CMD_STATUS);
+	RFM12_INT_FLAG |= (1<<RFM12_FLAG_BIT);
+	// 13. command 0x0000
+	
+	//init receiver fifo, we now begin receiving.
+	rfm12_data(CLEAR_FIFO);
+	// 14. command 0xCA81
+	rfm12_data(ACCEPT_DATA);
+	// 15. command 0xCA83
+	
+	//activate the interrupt
 	RFM12_INT_ON();
 }
