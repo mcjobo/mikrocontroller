@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "rfm12", "rfm12.cproj", "{9CE89C28-4C7E-4D01-BDF1-E14021B20256}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CE89C28-4C7E-4D01-BDF1-E14021B20256}.Debug|AVR.ActiveCfg = Debug|AVR
+		{9CE89C28-4C7E-4D01-BDF1-E14021B20256}.Debug|AVR.Build.0 = Debug|AVR
+		{9CE89C28-4C7E-4D01-BDF1-E14021B20256}.Release|AVR.ActiveCfg = Release|AVR
+		{9CE89C28-4C7E-4D01-BDF1-E14021B20256}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

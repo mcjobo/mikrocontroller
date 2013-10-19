@@ -62,13 +62,14 @@ SIGNAL(UART_RX_vect) {
 void uart_init() {
 	PORTD |= 0x01;				//Pullup an RXD an
 
-	UCSRB |= (1<<TXEN);			//UART TX einschalten
-	UCSRC |= (1<<URSEL)|(3<<UCSZ0);		//Asynchron 8N1
+	UCSR0B |= (1<<TXEN0);			//UART TX einschalten
+	//UCSR0C |= (1<<URSEL)|(3<<UCSZ00);
+	UCSR0C |= (3<<UCSZ00);		//Asynchron 8N1
 
-	UCSRB |= ( 1 << RXEN );			//Uart RX einschalten
+	UCSR0B |= ( 1 << RXEN0 );			//Uart RX einschalten
 
-	UBRRH=(uint8_t)(UART_BAUD_CALC(UART_BAUD_RATE,F_CPU)>>8);
-	UBRRL=(uint8_t)(UART_BAUD_CALC(UART_BAUD_RATE,F_CPU));
+	UBRR0H=(uint8_t)(UART_BAUD_CALC(UART_BAUD_RATE,F_CPU)>>8);
+	UBRR0L=(uint8_t)(UART_BAUD_CALC(UART_BAUD_RATE,F_CPU));
 
 #ifdef UART_INTERRUPT
 	// init buffers
@@ -99,8 +100,8 @@ void uart_putc(char c) {
 }
 #else  // WITHOUT INTERRUPT
 void uart_putc(char c) {
-	while (!(UCSRA & (1<<UDRE))); /* warten bis Senden moeglich                   */
-	UDR = c;                      /* schreibt das Zeichen x auf die Schnittstelle */
+	while (!(UCSR0A & (1<<UDRE0))); /* warten bis Senden moeglich                   */
+	UDR0 = c;                      /* schreibt das Zeichen x auf die Schnittstelle */
 }
 #endif // UART_INTERRUPT
 
@@ -152,8 +153,8 @@ char uart_getc()
 #else  // WITHOUT INTERRUPT
 char uart_getc()
 {
-	while (!(UCSRA & (1<<RXC)));	// warten bis Zeichen verfuegbar
-	return UDR;			// Zeichen aus UDR zurueckgeben
+	while (!(UCSR0A & (1<<RXC0)));	// warten bis Zeichen verfuegbar
+	return UDR0;			// Zeichen aus UDR zurueckgeben
 }
 #endif // UART_INTERRUPT
 
@@ -171,8 +172,8 @@ char uart_getc_nb(char *c)
 #else  // WITHOUT INTERRUPT
 char uart_getc_nb(char *c)
 {
-	if (UCSRA & (1<<RXC)) {		// Zeichen verfuegbar
-		*c = UDR;
+	if (UCSR0A & (1<<RXC0)) {		// Zeichen verfuegbar
+		*c = UDR0;
 		return 1;
 	}
 

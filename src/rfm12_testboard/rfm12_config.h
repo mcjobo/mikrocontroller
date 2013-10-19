@@ -92,13 +92,13 @@
 #define RFM12_INT_VECT (INT0_vect)
 
 //the interrupt mask register
-#define RFM12_INT_MSK GICR
+#define RFM12_INT_MSK EIMSK
 
 //the interrupt bit in the mask register
 #define RFM12_INT_BIT (INT0)
 
 //the interrupt flag register
-#define RFM12_INT_FLAG GIFR
+#define RFM12_INT_FLAG EIFR
 
 //the interrupt bit in the flag register
 #define RFM12_FLAG_BIT (INTF0)
@@ -123,8 +123,14 @@ This is a bitmask that defines how "rude" this library behaves
  **/
 #define RFM12_LIVECTRL 0
 #define RFM12_NORETURNS 0
-#define RFM12_USE_WAKEUP_TIMER 0
+#define RFM12_NOCOLLISIONDETECTION 0
 #define RFM12_TRANSMIT_ONLY 0
+#define RFM12_SPI_SOFTWARE 0
+#define RFM12_USE_POLLING 0
+#define RFM12_RECEIVE_ASK 0
+#define RFM12_TRANSMIT_ASK 0
+#define RFM12_USE_WAKEUP_TIMER 0
+#define RFM12_LOW_POWER 0
 
 /* Disable interrupt vector and run purely inline. This may be useful for
  * configurations where a hardware interrupt is not available.

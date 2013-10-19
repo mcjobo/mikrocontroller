@@ -17,3 +17,31 @@ void spi_init()
 
 	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);//SPI Master, clk/16
 }
+
+/* @description reads the upper 8 bits of the status
+ * register (the interrupt flags)
+ */
+ uint8_t rfm12_read_int_flags_inline()
+{
+	SS_ASSERT();
+	#if !(RFM12_SPI_SOFTWARE)
+	SPDR = 0;
+	while(!(SPSR & (1<<SPIF)));
+	SS_RELEASE();
+	return SPDR;
+
+	#else
+	unsigned char x, d=d;
+	PORT_MOSI &= ~(1<<BIT_MOSI);	
+	for(x=0;x<8;x++){
+		PORT_SCK |= (1<<BIT_SCK);
+		d<<=1;
+		if(PIN_MISO & (1<<BIT_MISO)){
+			d|=1;
+		}
+		PORT_SCK &= ~(1<<BIT_SCK);
+	}
+	SS_RELEASE();
+	return d;
+	#endif
+}

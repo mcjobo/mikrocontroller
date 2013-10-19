@@ -8,91 +8,89 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include "rfm12.h"
+#include <avr/interrupt.h>
 #include "protocol.h"
+#include "protStatemachine.h"
 
-uint8_t bufferLength;
-uint8_t *bufcontents;
+bufferStruct buffer;
 
-
-uint8_t received = 0;
-
-void rx_data(){
-	if (rfm12_rx_status() == STATUS_COMPLETE)
-	{
-		uint8_t i;
-		uart_putstr ("new packet:\r\n");
-
-		bufcontents = rfm12_rx_buffer();
-		bufferLength = rfm12_rx_len();
-
-		// dump buffer contents to uart		
-		uint8_t* payload = getPayload(bufferLength, bufcontents);
-		for (i=0;i<getPayloadLength(bufferLength, bufcontents);i++)
-		{
-			uart_putc ( payload[i] );
-		}
-		uart_putstr ("\r\n");
-		
-		uint16_t crc = (bufcontents[bufferLength-1])|(bufcontents[bufferLength-2]<<8);
-		uint8_t ack = checkCrc(bufferLength-2, bufcontents, crc);
-		if(ack){
-			uart_putstr ("ack\r\n");
-		} else {
-			uart_putstr ("nack\r\n");
-		}
-		
-		// tell the implementation that the buffer
-		// can be reused for the next data.
-		received = 1;
-		rfm12_rx_clear();
-	} 
-}
-
-void sendData(uint8_t length, uint8_t* data){
-	
-	rfm12_tx (length+4, encode(0x03, 0x05, length, data));
-}
+uint8_t volatile tick2 = 0;
+uint8_t volatile resend2 = 0;
+bufferStruct resendBuffer;
 
 // main for reply received data
-/*int main(void)
+ISR (TIMER2_COMPA_vect){
+	uart_putc('I');
+	++tick2;
+	uart_putc('I');
+	if(tick2 >= 10){
+		uart_putc('S');
+		resend2 = 1;
+		tick2 = 0;
+	}
+}
+void stopTimer2(){
+	uart_putc('T');
+	//TIMSK2 &= ~(1<<OCIE2A);
+}
+
+void startTimer2(){
+	uart_putc('S');
+	TCCR2A = (1<<WGM01); // CTC Modus
+	TCCR2B |= (1<<CS02)|(1<<CS00); // Prescaler 1024
+	OCR2A = 48-1;
+	
+	// Compare Interrupt erlauben
+	TIMSK2 |= (1<<OCIE2A);
+	
+	// Global Interrupts aktivieren
+	sei();
+}
+
+int main(void)
 {
 	uart_init();
 	//_delay_ms(500);
 	uint8_t teststring[] = "ich liebe dich";
 	uint8_t packettype = 0xEE;
-	rfm12_init();  // initialize the library
-	sei();
+	initCommunication();
 	
 	uart_putstr ("init\r\n");
-
-	rfm12_rx_clear();
+	
+	startTimer2();
+	
 	
 	while (1)
 	{
-		if(received){
-			uart_putstr ("s\r\n");
-			_delay_ms(100);
-			rfm12_tx (bufferLength, bufcontents);
-			received = 0;
+		buffer = checkReceiveData(buffer);
+		//uart_putc(buffer.bufferLength);
+		if(buffer.bufferLength > 0){
+			resendBuffer.bufferLength = buffer.bufferLength;
+			memcpy(resendBuffer.buffer, buffer.buffer, buffer.bufferLength);
+			buffer.bufferLength = 0;
+			startTimer2();		
+			uart_putc('S');	
 		}
-		
-		rx_data();
-		rfm12_tick();  // periodic tick function - call that one once in a while
-		//_delay_ms(1000);
+		if(resend2){
+			uart_putc('S');	
+			stopTimer2();
+			sendData(resendBuffer, NEED_ACK);
+			resend2 = 0;
+			
+		}
 	}
-}*/
+}
+
 
 // main for sending data and sending new data
+/*
 int main(void)
 {
 	uart_init();
 	//_delay_ms(500);
 	uint8_t teststring[] = "asd12";
 	uint8_t packetLength = sizeof(teststring);
-	rfm12_init();  // initialize the library
-	sei();
-	
+	initCommunication();
 	uart_putstr ("init\r\n");
 
 	rfm12_rx_clear();
@@ -100,24 +98,26 @@ int main(void)
 		
 	uint16_t counter = 20000;
 	
+	bufferStruct send;
+	send.bufferLength = packetLength;
+	memcpy(send.buffer, teststring, send.bufferLength);
+	sendData(send, NEED_ACK);
 	while (1)
 	{		
-		rx_data();
-		rfm12_tick();  //periodic tick function - call that one once in a while
-
-		if(counter <=0){
-			counter = 20000;
-			sendData(packetLength, teststring);
-			uart_putstr ("send:\r\n");
-			for(uint8_t i = 0; i < packetLength; ++i){
-				uart_putc(teststring[i]);
+		checkReceiveData(buffer);
+		if(buffer.bufferLength > 0){
+			uint8_t i;
+			uart_putstr ("new packet:\r\n");
+			// dump buffer contents to uart
+			uint8_t* payload = getPayload(buffer.bufferLength, buffer.buffer);
+			for (i=0;i<getPayloadLength(buffer.bufferLength, buffer.buffer);i++)
+			{
+				uart_putc ( payload[i] );
 			}
 			uart_putstr ("\r\n");
-			
-		}
+			buffer.bufferLength = 0;
+		}			
+
 		--counter;
-		if(rfm12_tx_status() == STATUS_OCCUPIED){
-			counter = 20000;
-		}
 	}
-}
+}*/

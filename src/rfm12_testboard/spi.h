@@ -17,6 +17,6 @@
 
 void spi_init();
 
-
+//uint8_t rfm12_read_int_flags_inline()
 
 #endif /* SPI_H_ */
