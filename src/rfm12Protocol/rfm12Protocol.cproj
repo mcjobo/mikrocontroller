@@ -111,7 +111,7 @@
 copy $(OutputDirectory)\$(OutputFileName)$(OutputFileExtension)  $(MSBuildProjectDirectory)\..\lib\</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="rfm12Protocol.c">
+    <Compile Include="protocol.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12Protocol.h">
