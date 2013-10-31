@@ -189,6 +189,12 @@
     <Compile Include="apps\modul_init.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="apps\openhab\openhab.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\openhab\openhab.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="apps\telnet\telnet.c">
       <SubType>compile</SubType>
     </Compile>
@@ -529,6 +535,7 @@
     <Folder Include="apps" />
     <Folder Include="apps\cron" />
     <Folder Include="apps\modules" />
+    <Folder Include="apps\openhab" />
     <Folder Include="apps\telnet" />
     <Folder Include="hardware" />
     <Folder Include="hardware\cpu_freq" />

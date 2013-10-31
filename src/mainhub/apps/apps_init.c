@@ -27,6 +27,9 @@
 #ifdef TELNETSERVER
 	#include "telnet/telnet.h"
 #endif
+#ifdef OPENHABSERVER
+	#include "telnet/telnet.h"
+#endif
 #ifdef HTTPSERVER
 	#include "httpd/httpd2.h"
 #endif
@@ -59,6 +62,9 @@ void apps_init( void )
 	#endif
 	#if defined(TELNETSERVER)
 		telnet_init();
+	#endif
+	#if defined(OPENHABSERVER)
+		openhab_init();
 	#endif
 	#if defined(HTTPSERVER_STREAM) && defined(OpenMCP) && defined(__AVR_ATmega2561__)
 		mp3client_init();

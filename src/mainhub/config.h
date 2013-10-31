@@ -103,6 +103,9 @@
 		#ifdef SHELL
 			// aktiviert den Telnet-Server, dazu muss TCP aktiv sein
 			#define TELNETSERVER
+			
+			//activates the openhab server
+			#define OPENHABSERVER
 		#endif
 
 		// aktiviert den HTTP-Server, dazu muss TCP aktiv sein
