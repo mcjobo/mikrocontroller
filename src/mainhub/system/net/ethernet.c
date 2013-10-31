@@ -44,7 +44,7 @@
 #include "endian.h"
 
 
-	//#include "../../hardware/ext_int/ext_int.h"
+	#include "../../hardware/ext_int/ext_int.h"
 
 
 #if defined(myAVR)
@@ -184,15 +184,15 @@ void LockEthernet( void )
 		LockTCP();
 
 #if defined(OpenMCP) || defined(UPP)
-		//EXTINT_block( ENC28J60_INT );
+		EXTINT_block( ENC28J60_INT );
 #endif
 
 #if defined(XPLAIN) || defined(ATXM2)
-		//EXTINT_block ( &ENC28J60_INT, ENC28J60_INT_PIN );
+		EXTINT_block ( &ENC28J60_INT, ENC28J60_INT_PIN );
 #endif
 
 #if defined(AVRNETIO) || defined( EtherSense )
-		//EXTINT_block( ENC28J60_INT );
+		EXTINT_block( ENC28J60_INT );
 #endif
 
 #if defined(myAVR)
@@ -218,15 +218,15 @@ void FreeEthernet( void )
 		eth_state = ETH_FREE;
 
 #if defined(OpenMCP) || defined(UPP)
-		//EXTINT_free ( ENC28J60_INT );
+		EXTINT_free ( ENC28J60_INT );
 #endif
 
 #if defined(XPLAIN) || defined(ATXM2)
-		//EXTINT_free ( &ENC28J60_INT, ENC28J60_INT_PIN );
+		EXTINT_free ( &ENC28J60_INT, ENC28J60_INT_PIN );
 #endif
 
 #if defined(AVRNETIO) || defined( EtherSense )
-		//EXTINT_free ( ENC28J60_INT );
+		EXTINT_free ( ENC28J60_INT );
 #endif
 
 #if defined(myAVR)
@@ -258,11 +258,11 @@ void EthernetInit( void )
 		while ( getEthernetframe( MAX_FRAMELEN, ethernetbuffer) != 0 ) { };
 		
 #if defined(OpenMCP) || defined(AVRNETIO) || defined(UPP) || defined( EtherSense )
-		//EXTINT_set ( ENC28J60_INT , ethernet );
+		EXTINT_set ( ENC28J60_INT , SENSE_LOW , ethernet );
 #endif
 
 #if defined(XPLAIN) || defined(ATXM2)
-		//EXTINT_set ( &ENC28J60_INT, ENC28J60_INT_PIN, SENSE_LOW , ethernet );
+		EXTINT_set ( &ENC28J60_INT, ENC28J60_INT_PIN, SENSE_LOW , ethernet );
 #endif
 
 #if defined(myAVR)

@@ -77,7 +77,7 @@
 	#endif
 
 	// aktiviert UDP
-	//#define UDP
+	#define UDP
 	
 	#ifdef UDP
 		// aktiviert DHCP, dazu muss UDP aktiv sein

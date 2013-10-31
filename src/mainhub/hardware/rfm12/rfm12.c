@@ -34,8 +34,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "../../hardware/spi/spi_core.h"
-//#include "../../hardware/ext_int/ext_int.h"
-//#include "../../hardware/led/led_core.h"
+#include "../../hardware/ext_int/ext_int.h"
 #include "../../system/clock/clock.h"
 #include "../../config.h"
 #include "../../system/thread/thread.h"

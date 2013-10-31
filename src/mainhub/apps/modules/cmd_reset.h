@@ -14,11 +14,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
  
-#ifndef _CMD_TWI_H
-	#define _CMD_TWI_H
+#ifndef _CMD_RESET_H
+	#define _CMD_RESET_H
 
-	void init_cmd_twi( void );
-	void cgi_twi( void * pStruct );
+	void init_cmd_reset( void );
+	int cmd_reset( int argc, char ** argv );
+	void cgi_reset( void * pStruct );
 
-#endif /* _CMD_TWITTER_H */
+#endif /* _CMD_RESET_H */
 

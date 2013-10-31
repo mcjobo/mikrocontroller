@@ -33,9 +33,6 @@
 #include "../../system/config/eeconfig.h"
 
 #include "../../system/shell/shell.h"
-#include "../../apps/httpd/cgibin/cgi-bin.h"
-#include "../../apps/httpd/httpd2.h"
-#include "../../apps/httpd/httpd2_pharse.h"
 
 #include "cmd_ntp.h"
 
@@ -101,6 +98,7 @@ int cmd_ntp( int argc, char ** argv )
  * \return	NONE
  */
 /*------------------------------------------------------------------------------------------------------------*/
+#if defined(HTTPSERVER_NTP)
 void cgi_ntp( void * pStruct )
 {
 	struct HTTP_REQUEST * http_request;
@@ -167,4 +165,5 @@ void cgi_ntp( void * pStruct )
 
 	cgi_PrintHttpheaderEnd();
 }
+#endif
 #endif

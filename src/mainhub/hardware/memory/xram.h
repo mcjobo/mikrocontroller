@@ -1,16 +1,11 @@
-/*! \file base64.h \brief Stellt Funktionen für Base64 de/encoding bereit. */
+/*! \file xram.h \brief Aktiviert das externe RAM-Interface */
 //***************************************************************************
-//*            base64.h
-//*
-//*  Son Aug  3 18:41:42 2009
-//*  Copyright  2009  Dirk Broßwick
-//*  Email: sharandac@snafu.de
-//****************************************************************************/
-///	\ingroup system
-///	\defgroup BASE64 Stellt Funktionen für Base64 de/encoding bereit. (base64.h)
-///	\par Uebersicht
-///		Stellt Funktionen für Base64 de/encoding bereit.
-//****************************************************************************/
+// *            tcp.h
+// *
+// *  Sat Jun  3 23:01:49 2006
+// *  Copyright  2006  User
+// *  Email
+//****************************************************************************
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,15 +20,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
- */ 
-//@{
+ */
+#ifndef _XRAM_H
+	#define _XRAM_H
 
-#ifndef _BASE64_H
-	#define _BASE64_H
+	#include "config.h"
 
-	int base64_decode( char *out, const char *in, int out_size);
-	char * base64_encode(char *out, int out_size, const char *in, int in_size);
+	#if defined(EXTMEM)
+		void __attribute__ ((naked, section(".init3"))) init_xram (void);
+	#endif
 
-#endif
+#endif /* _XRAM_H */
 
-//@}
+ 

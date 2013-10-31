@@ -102,6 +102,7 @@ int THREAD_RegisterThread( THREAD_CALLBACK thread_function, const char * thread_
 /*------------------------------------------------------------------------------------------------------------*/
 void THREAD_mainloop( void )
 {
+	
 	static int i=0;
 
 	// Schon das ende der Threadliste erreicht ? dann i auf i setzen.

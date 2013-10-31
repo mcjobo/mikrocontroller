@@ -43,7 +43,6 @@
 
 #include "../../system/clock/clock.h"
 #include "../../system/string/string.h"
-//#include "../../hardware/led/led_core.h"
 
 struct ARP_TABLE ARPtable[ MAX_ARPTABLE_ENTRYS ];
 

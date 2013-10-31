@@ -44,9 +44,6 @@
 
 #include "../../config.h"
 #include "../cron/cron.h"
-//#include "../httpd/cgibin/cgi-bin.h"
-//#include "../httpd/httpd2.h"
-//#include "../httpd/httpd2_pharse.h"
 
 #include "cmd_cron.h"
 
@@ -63,7 +60,7 @@ void init_cmd_cron( void )
  * \return	NONE
  */
 /*------------------------------------------------------------------------------------------------------------*/
-/*
+#if defined(HTTPSERVER_CRON)
 void cgi_cron( void * pStruct )
 {
 	int i;
@@ -142,8 +139,7 @@ void cgi_cron( void * pStruct )
 
 	cgi_PrintHttpheaderEnd();
 }
-/*
-
+#endif
 /**
  * @}
  */

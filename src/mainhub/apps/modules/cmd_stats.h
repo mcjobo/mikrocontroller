@@ -1,11 +1,3 @@
-/***************************************************************************
- *            hh10d.h
- *
- *  Sun Aug  7 18:27:25 2011
- *  Copyright  2011  Dirk Broßwick
- *  <sharandac@snafu.de>
- ****************************************************************************/
-
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +14,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
  
-#ifndef HH10D_H_
+#ifndef _CMD_STATS_H
+	#define _CMD_STATS_H
 
-	#define HH10D_H_
+	void init_cmd_stats( void );
+	int cmd_stats( int argc, char ** argv );
+	void cgi_stats( void * pStruct );
 
-	#define		MEAS_INTERVAL		10
-	#define		MEAS_PRESCALE		10
+#endif /* _CMD_STATS_H */
 
-	#define		HH10D_TWI_ADDR		0x51
-
-	void HH10D_init( void );
-	int	HH10D_meas();
-
-#endif // HH10D_H_ 

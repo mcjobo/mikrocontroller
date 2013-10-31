@@ -1,11 +1,3 @@
-/***************************************************************************
- *            lm75.h
- *
- *  Wed Dec 23 18:00:02 2009
- *  Copyright  2009  Dirk Broßwick
- *  <sharandac@snafu.de>
- ****************************************************************************/
-
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +14,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
  
- #ifndef LM75_H
-	#define LM75_H
+#ifndef _CMD_EEMEM_H
+	#define _CMD_EEME_H
 
-	int LM75_readtemp( char * id );
+	void init_cmd_eemem( void );
+	int cmd_eemem( int argc, char ** argv );
+	void cgi_eemem( void * pStruct );
 
-#endif
+#endif /* _CMD_ARP_H */
+

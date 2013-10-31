@@ -46,40 +46,28 @@
 
 // hier kommen die includes der Befehle rein die Eingebunden werden
 #include "../apps/modules/cmd_dns.h"
-//#include "../apps/modules/cmd_reset.h"
+#include "../apps/modules/cmd_reset.h"
 #include "../apps/modules/cmd_arp.h"
-//#include "../apps/modules/cmd_reset.h"
-//#include "../apps/modules/cmd_stats.h"
-//#include "../apps/modules/cmd_ifconfig.h"
-//#include "../apps/modules/cmd_eemem.h"
+#include "../apps/modules/cmd_reset.h"
+#include "../apps/modules/cmd_stats.h"
+#include "../apps/modules/cmd_ifconfig.h"
+#include "../apps/modules/cmd_eemem.h"
 #include "../apps/modules/cmd_cron.h"
 
-//#include "../apps/modules/cmd_adc.h"
-//#include "../apps/modules/cmd_gpio.h"
 #include "../apps/modules/cmd_dns.h"
-//#include "../apps/modules/cmd_dyndns.h"
 #include "../apps/modules/cmd_ntp.h"
-//#include "../apps/modules/cmd_twitter.h"
-#include "../apps/modules/cmd_twi.h"
-//#include "../apps/modules/cmd_onewire.h"
-//#include "../apps/modules/cmd_tafel.h"
-//#include "../apps/modules/cmd_stream.h"
-//#include "../apps/modules/impulse.h"
-//#include "../apps/modules/temp_json.h"
-//#include "../apps/modules/cmd_temp.h"
-//#include "../apps/modules/cmd_foo.h"
-//#include "../apps/modules/cmd_mon.h"
+#include "../apps/modules/cmd_openhab.h"
 
 void modul_init( void )
 {
 	// Befehle registrieren
 	init_cmd_arp();
-	//init_cmd_stats();
-	//init_cmd_ifconfig(),
-	//init_cmd_eemem();
-	//init_cmd_reset();
+	init_cmd_stats();
+	init_cmd_ifconfig(),
+	init_cmd_eemem();
+	init_cmd_reset();
 	init_cmd_cron();
-	//init_cmd_foo();
+	init_cmd_openhab();
 	
 #if defined(NTP)
 	init_cmd_ntp();

@@ -141,28 +141,52 @@
     <Compile Include="apps\modules\cmd_dns.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="apps\modules\cmd_eemem.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_eemem.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_ifconfig.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_ifconfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_mon.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_mon.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="apps\modules\cmd_ntp.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="apps\modules\cmd_ntp.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="apps\modules\cmd_twi.c">
+    <Compile Include="apps\modules\cmd_openhab.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="apps\modules\cmd_twi.h">
+    <Compile Include="apps\modules\cmd_openhab.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_reset.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_reset.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_stats.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_stats.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="apps\modul_init.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="apps\modul_init.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="apps\telnet\cmd_twi.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="apps\telnet\cmd_twi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="apps\telnet\telnet.c">
@@ -183,10 +207,22 @@
     <Compile Include="hardware\cpu_freq\cpu_freq.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="hardware\hal.c">
+    <Compile Include="hardware\ext_int\ext_int.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="hardware\hal.h">
+    <Compile Include="hardware\ext_int\ext_int.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\mem-check.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\mem-check.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\xram.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\xram.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hardware\network\enc28j60.c">
@@ -241,30 +277,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hardware\timer1\timer1.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\ds1307.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\ds1307.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\hh10d.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\hh10d.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\lm75.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\lm75.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\twi.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware\twi\twi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hardware\uart\mega\uart_0.c">
@@ -345,12 +357,6 @@
     <Compile Include="OpenMCP.config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="system\base64\base64.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\base64\base64.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="system\buffer\fifo.c">
       <SubType>compile</SubType>
     </Compile>
@@ -370,36 +376,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="system\config\eeconfig.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\byteordering.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\byteordering.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\fat.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\fat.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\fat_config.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\filesystem.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\filesystem.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\partition.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\partition.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\filesystem\partition_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="system\init.c">
@@ -424,24 +400,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="system\math\math.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\nano_DB\highchart.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\nano_DB\highchart.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\nano_DB\logger.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\nano_DB\logger.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\nano_DB\nano_db.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="system\nano_DB\nano_db.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="system\net\arp.c">
@@ -566,114 +524,6 @@
     <None Include="makefile.txt">
       <SubType>compile</SubType>
     </None>
-    <None Include="SC-Card Image\ATXM2\headline.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\index.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\info.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\io.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\js\excanvas-compressed.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\js\highcharts.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\js\jquery.min.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\mainmenu.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\network.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\style.css">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\system.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\ATXM2\templogger.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\headline.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\index.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\info.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\io.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\js\excanvas-compressed.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\js\highcharts.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\js\jquery.min.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\mainmenu.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\network.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\style.css">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\system.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\AVRNETIO\templogger.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\headline.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\index.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\info.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\io.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\js\excanvas-compressed.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\js\highcharts.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\js\jquery.min.js">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\mainmenu.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\network.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\style.css">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\system.html">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="SC-Card Image\myAVR\templogger.html">
-      <SubType>compile</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="apps" />
@@ -682,30 +532,21 @@
     <Folder Include="apps\telnet" />
     <Folder Include="hardware" />
     <Folder Include="hardware\cpu_freq" />
+    <Folder Include="hardware\ext_int" />
+    <Folder Include="hardware\memory" />
     <Folder Include="hardware\network" />
-    <Folder Include="hardware\spi" />
     <Folder Include="hardware\uart\mega" />
     <Folder Include="hardware\uart\xmega" />
     <Folder Include="hardware\uart" />
-    <Folder Include="hardware\twi" />
     <Folder Include="hardware\timer1" />
     <Folder Include="hardware\timer0" />
+    <Folder Include="hardware\spi" />
     <Folder Include="hardware\rfm12" />
     <Folder Include="system" />
-    <Folder Include="SC-Card Image" />
-    <Folder Include="SC-Card Image\ATXM2" />
-    <Folder Include="SC-Card Image\ATXM2\js" />
-    <Folder Include="SC-Card Image\AVRNETIO" />
-    <Folder Include="SC-Card Image\AVRNETIO\js" />
-    <Folder Include="SC-Card Image\myAVR" />
-    <Folder Include="SC-Card Image\myAVR\js" />
-    <Folder Include="system\base64" />
     <Folder Include="system\buffer" />
     <Folder Include="system\clock" />
     <Folder Include="system\config" />
-    <Folder Include="system\filesystem" />
     <Folder Include="system\math" />
-    <Folder Include="system\nano_DB" />
     <Folder Include="system\net" />
     <Folder Include="system\thread" />
     <Folder Include="system\string" />

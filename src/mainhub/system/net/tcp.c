@@ -385,6 +385,7 @@ void tcp( int packet_lenght, char * ethernetbuffer)
  * \retval	NONE
  */
 /*------------------------------------------------------------------------------------------------------------*/
+volatile int counter = 0;
 void TCPTimeOutHandler( void )
 {
 	int socket;
@@ -402,7 +403,8 @@ void TCPTimeOutHandler( void )
 				// Puffer für reservieren
 				char ethernetbuffer[ ETHERNET_HEADER_LENGTH + IP_HEADER_LENGHT + TCP_HEADER_LENGTH ];
 
-				if ( TCP_sockettable[ socket ].Timeoutcounter == ( TimeOutCounter / 3 ) )
+				//if ( TCP_sockettable[ socket ].Timeoutcounter == ( TimeOutCounter / 3 ) )
+				if ( TCP_sockettable[ socket ].Timeoutcounter == 0 )
 				{
 					MakeTCPheader( socket, TCP_FIN_FLAG | TCP_ACK_FLAG , 0 , ( MAX_RECIVEBUFFER_LENGHT - Get_Bytes_in_FIFO ( TCP_sockettable[ socket ].fifo ) ) , ethernetbuffer );
 					TCP_sockettable[ socket ].ConnectionState = SOCKET_WAIT2FINACK;
@@ -765,6 +767,7 @@ char CheckSocketState( int Socket )
 /*------------------------------------------------------------------------------------------------------------*/		
 void CloseTCPSocket( int Socket)
 {
+	printf_P( PSTR("tcp socked close %d\r\n"), Socket );
 	if ( Socket < 0 || Socket >= MAX_TCP_CONNECTIONS  || TCP_sockettable[Socket].ConnectionState != SOCKET_READY ) return;
 
 	int timer;

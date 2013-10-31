@@ -126,7 +126,7 @@
 	#define CLOSETIMEOUT				200		// angabe in 1/100 sec
 	#define RETRANSMISSIONTIMEOUT		200		// der timeout für retransmission
 	#define CONNECTTIMEOUT				500		// angabe in 1/100 sec
-	#define TimeOutCounter 				30		// angabe in 1 sec
+	#define TimeOutCounter 				60		// angabe in 1 sec
 	#define CloseTimeout				2
 
 	struct TCP_SOCKET {

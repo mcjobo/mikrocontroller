@@ -64,8 +64,6 @@ void telnet_init( void )
 	RegisterTCPPort( TELNET_PORT );
 	printf_P( PSTR("Telnet-Server Port %d.\r\n") , TELNET_PORT );
 	THREAD_RegisterThread( telnet_thread, PSTR("telnet"));
-	
-	printf_P( PSTR("telnet init\r\n") );
 }
 
 /**
@@ -78,7 +76,6 @@ void telnet_init( void )
  */
 void telnet_thread( void )
 {
-	//printf_P( PSTR("telnet thread\r\n") );
 	struct STDOUT oldstream;
 	char Data; 
 	
@@ -158,6 +155,13 @@ void telnet_thread( void )
 				CloseTCPSocket( telnet_session.SOCKET );
 				telnet_session.SOCKET = NO_SOCKET_USED;
 				return;
+			} else 
+			/************************************************************************/
+			/* help value for openhab just intended to simulate a connection        */
+			/************************************************************************/
+			if(!strcmp_P( telnet_session.argv[ 0 ] , PSTR("value") )){
+				printf_P( PSTR("openhab") );
+				STDOUT_Flush();
 			}
 			else
 			{

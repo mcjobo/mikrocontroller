@@ -61,7 +61,13 @@
 #include "system/thread/thread.h"
 
 
+
+#include "system/clock/clock.h"
+#include "system/stdout/stdout.h"
+
+
 void main(void) __attribute__((noreturn));
+
 
 void main( void )
 {
@@ -74,8 +80,10 @@ void main( void )
 	// Module initialisieren ( cmd, cgi .... )
 	modul_init();
 
+	
 	while(1)
 	{
 		THREAD_mainloop();
+
 	}
 }

@@ -93,7 +93,7 @@ void CLOCK_init(void)
 		CLOCK_decode_time( &time );
 		
 		// Clocksource init
-		timer1_init( 100 , 0);
+		timer1_init( 100 , 2);
 		// clock_tick registrieren als Callbackfunktion
 		timer1_RegisterCallbackFunction( CLOCK_tick );
 		
