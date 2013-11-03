@@ -43,10 +43,12 @@
 		int			argc;
 		char *		argv[ MAX_ARGC ];
 	};
+	
+	char sendBuffer[48];
+	uint8_t sendBufferLength;
 
 	void openhab_init( void );
 	void openhab_thread( void );
-	uint8_t openhab_send( char* sending );
 
 #endif /* _OPENHAB_H */
 //@}

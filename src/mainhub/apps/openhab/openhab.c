@@ -60,13 +60,20 @@ uint8_t timer = 0;
 char bufferString[100];
 
 void timerCallback(){
-	if(timer++ > 10){
+	if(timer++ > 5){
 		printf_P(PSTR("timeout called\r\n"));
 		CLOCK_RemoveCallbackFunction(timerCallback);
-		timer = 0;		
-		if(!openhab_send(bufferString)){
-			printf_P(PSTR("problem sending data\r\n"));
+		timer = 0;	
+		if(!strcmp(bufferString, "Light2_ON")){
+			memcpy(bufferString, "Light2_OFF", 16);
+		} else if(!strcmp(bufferString, "Light2_OFF")){
+			memcpy(bufferString, "Light2_ON", 16);
 		}
+		printf(bufferString);
+		STDOUT_Flush();
+		openhab_session.STATE = 2;	
+		sendBufferLength = sizeof(bufferString);
+		memcpy(sendBuffer, bufferString, sendBufferLength);
 	}
 
 }
@@ -92,10 +99,11 @@ void openhab_init( void )
  * \param 	NONE
  * \return	NONE
  */
+int oldState = -1;
 void openhab_thread( void )
 {
 	struct STDOUT oldstream;
-	char Data; 
+	char Data; 	
 	
 	// keine alte Verbindung offen?
 	if ( openhab_session.SOCKET == NO_SOCKET_USED )
@@ -104,12 +112,12 @@ void openhab_thread( void )
 		openhab_session.SOCKET = CheckPortRequest( OPENHAB_PORT );
 		if ( openhab_session.SOCKET != NO_SOCKET_USED )
 		{	
-			STDOUT_save( &oldstream );
+			/*STDOUT_save( &oldstream );
 			STDOUT_set( _TCP, openhab_session.SOCKET );
 			// Wenn ja, Startmeldung ausgeben und startzustand herstellen für telnet
 			printf_P( PSTR( "Und, los geht's...!!! (\"help\" hilft :-))\r\n> " ));
 			STDOUT_restore( &oldstream );
-
+*/
 			// OPENHAB_BUFFER leeren und auf Ausgangszustand setzen
 			openhab_session.STATE = 0;
 			openhab_session.POS = 0;
@@ -128,6 +136,8 @@ void openhab_thread( void )
 			openhab_session.SOCKET = NO_SOCKET_USED;
 			return;
 		}
+		
+		
 
 		// Auf neue Daten zum zusammenbauen testen
 		// hier wird der TELNET_BUFFER aufgefüllt bis 0x0a oder 0x0d eintreffen. der Puffer ist statisch
@@ -160,7 +170,7 @@ void openhab_thread( void )
 
 			STDOUT_save( &oldstream );
 			STDOUT_set( _TCP, openhab_session.SOCKET );
-
+			
 			// auf QUIT checken
 			if ( !strcmp_P( openhab_session.argv[ 0 ] , PSTR("quit") ) ) 
 			{
@@ -189,22 +199,28 @@ void openhab_thread( void )
 			openhab_session.BUFFER[0] = '\0';
 			openhab_session.STATE = 0;
 		}
+		 else if(openhab_session.STATE == 2){
+			 
+			 //sending buffer if set
+			 if(sendBufferLength > 0){
+				 STDOUT_save( &oldstream );
+				 STDOUT_set( _TCP, openhab_session.SOCKET );
+				 printf(sendBuffer);
+				 sendBufferLength = 0;
+				 STDOUT_Flush();
+				 FlushSocketData( openhab_session.SOCKET );
+				 
+				 STDOUT_restore( &oldstream );
+				 
+				 openhab_session.STATE = 0;
+				 openhab_session.POS = 0;
+				 openhab_session.BUFFER[0] = '\0';
+				 openhab_session.STATE = 0;
+			 }
+		}
 	}
 }
 
-uint8_t openhab_send( char* sending ){
-	struct STDOUT oldstream;
-	if ( openhab_session.SOCKET == NO_SOCKET_USED ){
-		STDOUT_save( &oldstream );
-		STDOUT_set( _TCP, openhab_session.SOCKET );
-		printf(sending);
-		STDOUT_restore( &oldstream );
-
-	} else {
-		return -1;
-	}
-	return 0;	
-}
 
 
 #endif
