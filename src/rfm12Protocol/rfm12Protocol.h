@@ -12,7 +12,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <rfm12.h>
-#include <avr/crc16.h>
+#include <util/crc16.h>
 
 #define VERSION 0x00
 
@@ -31,10 +31,10 @@
 #define CRC_UART_DEBUG	0
 
 // number of bytes of header overhead
-#define OVERHEAD 3
+#define OVERHEAD 5
 
 
-#define STATE_UART_DEBUG	5
+#define STATE_UART_DEBUG	0
 
 
 // struct to hold the datastream and the length of it
@@ -52,9 +52,14 @@ bufferStruct receiveBuffer;
 
 extern uint8_t nodeAddress;
 
+// function to get the prot version we are dealing here with
+static uint8_t getProtocolVersion(){return VERSION;}
+	
 // public functions
 void initCommunication();
 uint8_t checkData();
 uint8_t transmitData(bufferStruct sendData);
 
+void copyBuffer(bufferStruct* ziel, bufferStruct* start);
+void resetRx();
 #endif /* PROTSTATEMACHINE_H_ */

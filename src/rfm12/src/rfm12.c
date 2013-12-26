@@ -276,9 +276,20 @@ ISR(RFM12_INT_VECT)
 		//indicate that the buffer is ready to be used
 		ctrl.rf_buffer_in->status = STATUS_COMPLETE;
 		
+		//uart_putc('$');
+		//uart_putc(ctrl.rf_buffer_out->status);
+		//uart_putc(ctrl.rf_buffer_in->status);
+		
 		//switch to other buffer
+		//if(ctrl.rf_buffer_out->status == STATUS_FREE){
+		//	uart_putc('&');
+			//ctrl.rf_buffer_out = ctrl.rf_buffer_in;
+		//}
 		ctrl.buffer_in_num = (ctrl.buffer_in_num + 1) % 2;
 		ctrl.rf_buffer_in = &rf_rx_buffers[ctrl.buffer_in_num];
+		
+		//uart_putc(ctrl.rf_buffer_out->status);
+		
 		#endif /* !(RFM12_TRANSMIT_ONLY) */
 		break;
 		
@@ -354,6 +365,7 @@ ISR(RFM12_INT_VECT)
 */
 void rfm12_tick(void)
 {
+	
 	//collision detection is enabled by default
 	#if !(RFM12_NOCOLLISIONDETECTION)
 	uint16_t status;
@@ -433,6 +445,7 @@ void rfm12_tick(void)
 		//if it just started some cpu cycles ago
 		//(as the check for this case is some lines (cpu cycles) above)
 		//anyhow, we MUST transmit at some point...
+
 		RFM12_INT_OFF();
 		
 		//disable receiver - if you don't do this, tx packets will get lost
@@ -490,6 +503,8 @@ uint8_t
 #endif
 rfm12_start_tx(uint8_t length)
 {
+	//uart_putc ('/');
+	//uart_putc (ctrl.txstate);
 	//exit if the buffer isn't free
 	if(ctrl.txstate != STATUS_FREE)
 	return TXRETURN(RFM12_TX_OCCUPIED);
@@ -530,9 +545,8 @@ uint8_t
 rfm12_tx(uint8_t len, uint8_t *data)
 {
 	#if RFM12_UART_DEBUG
-	uart_putstr ("sending packet\r\n");
+		uart_putstr ("sending packet\r\n");
 	#endif
-	
 	if (len > RFM12_TX_BUFFER_SIZE) return TXRETURN(RFM12_TX_ERROR);
 
 	//exit if the buffer isn't free
@@ -598,75 +612,68 @@ void rfm12_init(void)
 	//enable internal data register and fifo
 	//setup selected band
 	rfm12_data(RFM12_CMD_CFG | RFM12_CFG_EL | RFM12_CFG_EF | RFM12_BASEBAND | RFM12_XTAL_12PF);
+	// 1. command 0x80D7
 	
 	//set power default state (usually disable clock output)
 	//do not write the power register two times in a short time
 	//as it seems to need some recovery
 	rfm12_data(RFM12_CMD_PWRMGT | PWRMGT_DEFAULT);
+	// 2. command 0x8201
 
 	//set frequency
 	rfm12_data(RFM12_CMD_FREQUENCY | RFM12_FREQUENCY_CALC(FREQ) );
+	// 3. command 0xA0B0
 
 	//set data rate
 	rfm12_data(RFM12_CMD_DATARATE | DATARATE_VALUE );
+	// 4. command 0xC623
 	
 	//set rx parameters: int-in/vdi-out pin is vdi-out,
 	//Bandwith, LNA, RSSI
 	rfm12_data(RFM12_CMD_RXCTRL | RFM12_RXCTRL_P16_VDI
 	| RFM12_RXCTRL_VDI_FAST | RFM12_RXCTRL_BW_400 | RFM12_RXCTRL_LNA_20
 	| RFM12_RXCTRL_RSSI_79 );
+	// 5. command 0x942C
 	
 	//automatic clock lock control(AL), digital Filter(!S),
 	//Data quality detector value 3, slow clock recovery lock
 	rfm12_data(RFM12_CMD_DATAFILTER | RFM12_DATAFILTER_AL | 3);
+	// 6. command 0xC2AB
 	
 	//2 Byte Sync Pattern, Start fifo fill when sychron pattern received,
 	//disable sensitive reset, Fifo filled interrupt at 8 bits
 	rfm12_data(RFM12_CMD_FIFORESET | RFM12_FIFORESET_DR | (8<<4));
+	// 7. command 0xCA81
 
 	//set AFC to automatic, (+4 or -3)*2.5kHz Limit, fine mode, active and enabled
 	rfm12_data(RFM12_CMD_AFC | RFM12_AFC_AUTO_KEEP | RFM12_AFC_LIMIT_4
 	| RFM12_AFC_FI | RFM12_AFC_OE | RFM12_AFC_EN);
+	// 8. command 0xC4F7
 	
 	//set TX Power to -0dB, frequency shift = +-125kHz
 	rfm12_data(RFM12_CMD_TXCONF | RFM12_TXCONF_POWER_17_5 | RFM12_TXCONF_FS_CALC(125000) );
+	// 9. command 0x9870
 	
 	//disable low dutycycle mode
 	rfm12_data(RFM12_CMD_DUTYCYCLE);
+	// 10. command 0xC800
 	
 	//disable wakeup timer
 	rfm12_data(RFM12_CMD_WAKEUP);
+	// 11. command 0xE000
 
 	//store the syncronization pattern to the transmission buffer
 	//the sync pattern is used by the receiver to distinguish noise from real transmissions
 	//the sync pattern is hardcoded into the receiver
+	
 	rf_tx_buffer.sync[0] = SYNC_MSB;
 	rf_tx_buffer.sync[1] = SYNC_LSB;
-	
-	//if receive mode is not disabled (default)
-	#if !(RFM12_TRANSMIT_ONLY)
-	//init buffer pointers
-	ctrl.rf_buffer_out = &rf_rx_buffers[0];
-	ctrl.rf_buffer_in  = &rf_rx_buffers[0];
-	//ctrl.buffer_in_num = 0;
-	//ctrl.buffer_out_num = 0;
-	#endif /* !(RFM12_TRANSMIT_ONLY) */
-	
-	//low battery detector feature initialization
-	#if RFM12_LOW_BATT_DETECTOR
-	ctrl.low_batt = RFM12_BATT_OKAY;
-	#endif /* RFM12_LOW_BATT_DETECTOR */
+
 	
 	//enable rf receiver chain, if receiving is not disabled (default)
 	//the magic is done via defines
 	rfm12_data(RFM12_CMD_PWRMGT | PWRMGT_RECEIVE);
-	
-	//wakeup timer feature setup
-	#if RFM12_USE_WAKEUP_TIMER
-	//set power management shadow register to receiver chain enabled or disabled
-	//the define correctly handles the transmit only mode
-	ctrl.pwrmgt_shadow = (RFM12_CMD_PWRMGT | PWRMGT_RECEIVE);
-	#endif /* RFM12_USE_WAKEUP_TIMER */
+	// 12. command 0x8281
 	
 	//ASK receive mode feature initialization
 	#if RFM12_RECEIVE_ASK
@@ -679,12 +686,14 @@ void rfm12_init(void)
 	//clear int flag
 	rfm12_read(RFM12_CMD_STATUS);
 	RFM12_INT_FLAG |= (1<<RFM12_FLAG_BIT);
+	// 13. command 0x0000
 	
 	//init receiver fifo, we now begin receiving.
 	rfm12_data(CLEAR_FIFO);
+	// 14. command 0xCA81
 	rfm12_data(ACCEPT_DATA);
-	//uart_putstr("RFM12_INT_MSK |= (1<<RFM12_INT_BIT)");
-	//RFM12_INT_MSK |= (1<<RFM12_INT_BIT)
+	// 15. command 0xCA83
+	
 	//activate the interrupt
 	RFM12_INT_ON();
 }

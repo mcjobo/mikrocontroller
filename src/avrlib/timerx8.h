@@ -69,7 +69,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "global.h"
+#include "conf/global.h"
 
 // constants/macros/typdefs
 

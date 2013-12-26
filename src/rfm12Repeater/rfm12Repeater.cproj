@@ -20,24 +20,24 @@
     <avrtoolinterface>ISP</avrtoolinterface>
     <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
     <com_atmel_avrdbg_tool_ispmk2>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.ispmk2</ToolType>
-      <ToolName xmlns="">AVRISP mkII</ToolName>
-      <ToolNumber xmlns="">000200109668</ToolNumber>
-      <KeepTimersRunning xmlns="">true</KeepTimersRunning>
-      <OverrideVtor xmlns="">false</OverrideVtor>
-      <OverrideVtorValue xmlns="">
+      <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
+      <ToolName>AVRISP mkII</ToolName>
+      <ToolNumber>FFFFFFFFFFFF</ToolNumber>
+      <KeepTimersRunning>true</KeepTimersRunning>
+      <OverrideVtor>false</OverrideVtor>
+      <OverrideVtorValue>
       </OverrideVtorValue>
-      <Channel xmlns="">
+      <Channel>
         <host>127.0.0.1</host>
-        <port>57789</port>
+        <port>49203</port>
         <ssl>False</ssl>
       </Channel>
-      <ToolOptions xmlns="">
+      <ToolOptions>
         <InterfaceName>ISP</InterfaceName>
         <InterfaceProperties>
           <JtagDbgClock>249000</JtagDbgClock>
           <JtagProgClock>1000000</JtagProgClock>
-          <IspClock>250000</IspClock>
+          <IspClock>999690</IspClock>
           <JtagInChain>false</JtagInChain>
           <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
           <JtagDevicesBefore>0</JtagDevicesBefore>
@@ -48,6 +48,9 @@
       </ToolOptions>
     </com_atmel_avrdbg_tool_ispmk2>
     <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue />
+    <eraseonlaunchrule>0</eraseonlaunchrule>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -73,37 +76,38 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
       <AvrGcc>
-  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
-  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
-  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
-  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
-  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
-  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-  <avrgcc.compiler.directories.IncludePaths>
-    <ListValues>
-      <Value>../../lib</Value>
-    </ListValues>
-  </avrgcc.compiler.directories.IncludePaths>
-  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
-  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
-  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
-  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-  <avrgcc.linker.libraries.Libraries>
-    <ListValues>
-      <Value>m</Value>
-      <Value>uart2</Value>
-      <Value>rfm12</Value>
-      <Value>rfm12Protocol</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.Libraries>
-  <avrgcc.linker.libraries.LibrarySearchPaths>
-    <ListValues>
-      <Value>../../lib</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.LibrarySearchPaths>
-  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
-</AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../../lib</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>m</Value>
+            <Value>uart2</Value>
+            <Value>rfm12</Value>
+            <Value>rfm12Protocol</Value>
+            <Value>timerx8</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.linker.libraries.LibrarySearchPaths>
+          <ListValues>
+            <Value>../../lib</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.LibrarySearchPaths>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>

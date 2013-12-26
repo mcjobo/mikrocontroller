@@ -18,11 +18,9 @@ void stateReceiveData();
 void stateSendNack();
 void stateSendAck();
 
-//support functions
-
-
 
 volatile void (*statefunc)() = stateIdle;
+volatile void (*oldStatefunc)() = stateTimeout;
 uint8_t resultCheckData = 0;
 uint8_t timeoutCounter = 0;
 volatile uint8_t tick = 0;
@@ -36,6 +34,7 @@ ISR (TIMER0_COMPA_vect)
 {
 	++tick;
 	if(tick >= 150){
+		// uart_putstr("stop timer\r\n");
 		tick = 0;
 		stopTimer();
 		statefunc = stateTimeout;
@@ -47,6 +46,7 @@ void stopTimer(){
 }
 
 void startTimer(){
+	// uart_putstr("start timer\r\n");
 	TCCR0A = (1<<WGM01); // CTC Modus
 	TCCR0B |= (1<<CS02)|(1<<CS00); // Prescaler 1024
 	OCR0A = 48-1;
@@ -59,28 +59,7 @@ void startTimer(){
 }
 
 /************************************************************************/
-/* used to encode the packet header into the data						*/
-/* creates and appends the crc 
-/* returns a pointer to the created data                                */
-/************************************************************************/
-uint8_t* encode(uint8_t length, uint8_t ack, uint8_t type, uint8_t address, uint8_t* data){
-	uint8_t newData[length + OVERHEAD];
-	
-
-	newData[0] = ((getProtocolVersion()<<3) | (ack & 0x07));
-	newData[1] = type;
-	newData[2] = address;
-	for(int i = 0; i < length; ++i){
-		newData[i + 3] = data[i];
-	}
-	uint16_t crc = createCrc(length + 3, newData);
-	newData[length +3] = crc>>8;
-	newData[length +4] = crc & 0x00ff;
-	return newData;
-}
-
-/************************************************************************/
-/* used to create a 16bit crc from the data stream 
+/* used to create a 16bit crc from the data stream
 /* returns the 16bit crc                                                */
 /************************************************************************/
 uint16_t createCrc(uint8_t length, uint8_t* data){
@@ -98,11 +77,33 @@ uint16_t createCrc(uint8_t length, uint8_t* data){
 	#if CRC_UART_DEBUG >= 3
 	char buf[3];
 	uart_putc('§');
-	uart_putc(itoa(crc>>8, buf, 16);
-	uart_putc(itoa(crc&0x00ff, buf, 16);
+	uart_putc(itoa(crc>>8, buf, 16));
+	uart_putc(itoa(crc&0x00ff, buf, 16));
 	uart_putc('§');
 	#endif
 	return crc;
+}
+
+/************************************************************************/
+/* used to encode the packet header into the data						*/
+/* creates and appends the crc 
+/* returns a pointer to the created data                                */
+/************************************************************************/
+void encode(uint8_t length, uint8_t ack, uint8_t type, uint8_t address, uint8_t* data, uint8_t* encodedData){
+	//uint8_t newData[length + OVERHEAD];
+	
+	
+
+	encodedData[0] = ((getProtocolVersion()<<3) | (ack & 0x07));
+	encodedData[1] = type;
+	encodedData[2] = address;
+	for(int i = 0; i < length; ++i){
+		encodedData[i + 3] = data[i];
+	}
+	uint8_t * newData2 = encodedData;
+	uint16_t crc = createCrc(length + 3, newData2);
+	encodedData[length +3] = crc>>8;
+	encodedData[length +4] = crc & 0x00ff;
 }
 
 /************************************************************************/
@@ -219,14 +220,18 @@ uint8_t receiveCopyData(){
 /* function sends a nack packet to the sender given in the data         */
 /************************************************************************/
 void sendNack(bufferStruct buffer){
-	rfm12_tx (OVERHEAD, encode(NO_ACK, NACK, getAddress(buffer.bufferLength, buffer.buffer), 0, 0x00));
+	uint8_t encodedData[OVERHEAD];
+	encode(0, NO_ACK, NACK, getAddress(buffer.bufferLength, buffer.buffer), 0x00, encodedData);
+	rfm12_tx (OVERHEAD, encodedData);
 }
 
 /************************************************************************/
 /* function sends a ack packet to the sender given in the data          */
 /************************************************************************/
 void sendAck(bufferStruct buffer){
-	rfm12_tx (OVERHEAD, encode(ACK, NO_DATA, getAddress(buffer.bufferLength, buffer.buffer), 0, 0x00));
+	uint8_t encodedData[OVERHEAD];
+	encode(0, ACK, NO_DATA, getAddress(buffer.bufferLength, buffer.buffer), 0x00, encodedData);
+	rfm12_tx (OVERHEAD, encodedData);
 }
 
 /************************************************************************/
@@ -247,12 +252,27 @@ uint8_t checkVersionAddress(){
 }
 
 /************************************************************************/
+/* copy bufferstruct from start to ziel                                 */
+/************************************************************************/
+void copyBuffer(bufferStruct* ziel, bufferStruct* start){
+	memcpy(ziel->buffer, start->buffer, start->bufferLength);
+	ziel->ackState = start->ackState;
+	ziel->address = start->address;
+	ziel->bufferLength = start->bufferLength;
+	ziel->type = start->type;
+
+}
+
+/************************************************************************/
 /* state functions                                                      */
 /************************************************************************/
 void stateIdle(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("idle\r\n");
+		if(oldStatefunc != stateIdle){
+			uart_putstr ("idle\r\n");
+		}		
 	#endif
+	oldStatefunc = stateIdle;
 	if(receiveCopyData()){
 		statefunc = stateReceiveData;
 		return;
@@ -265,10 +285,16 @@ void stateIdle(){
 
 void stateSendData(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("sendData\r\n");
+		if(oldStatefunc != stateSendData){
+			uart_putstr ("sendData\r\n");
+		}			
 	#endif
+	oldStatefunc = stateSendData;
 	
-	uint8_t ret = rfm12_tx (sendBuffer.bufferLength+OVERHEAD, encode(sendBuffer.ackState, sendBuffer.type, sendBuffer.address, sendBuffer.bufferLength, sendBuffer.buffer));
+	uint8_t encodedData[sendBuffer.bufferLength+OVERHEAD];
+	uint8_t length = sendBuffer.bufferLength+OVERHEAD;
+	encode(sendBuffer.bufferLength, sendBuffer.ackState, sendBuffer.type, sendBuffer.address, sendBuffer.buffer, encodedData);
+	uint8_t ret = rfm12_tx (length, encodedData);
 	if(sendBuffer.ackState & NEED_ACK){
 		statefunc = stateWaitForAck;
 	} else {
@@ -279,14 +305,20 @@ void stateSendData(){
 
 void stateWaitForAck(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("waitForAck\r\n");
+		if(oldStatefunc != stateWaitForAck){
+			uart_putstr ("waitForAck\r\n");
+		}			
 	#endif
 	
-	// starts the timeout timer that triggers resend or after 5 retries abort
-	startTimer();
+	if(oldStatefunc != stateWaitForAck){
+		// starts the timeout timer that triggers resend or after 5 retries abort
+		startTimer();
+	}
+	oldStatefunc = stateWaitForAck;
 	
 	// check if we can decode the received data 
 	if (receiveCopyData()){
+		
 		if(!checkVersionAddress){
 			statefunc = stateWaitForAck;
 			return;
@@ -294,15 +326,25 @@ void stateWaitForAck(){
 		if(!validateCrc(receiveBuffer.bufferLength, receiveBuffer.buffer)){
 			stopTimer();
 			statefunc = stateResend;
+			
+			#if STATE_UART_DEBUG >= 3
+				uart_putstr ("received invalid data\r\n");
+			#endif
+			
 			return;
 		} else {
 			if(getAck(receiveBuffer.bufferLength, receiveBuffer.buffer) & ACK){
 				memcpy(receiveBuffer.buffer, getPayload(receiveBuffer.bufferLength, receiveBuffer.buffer),getPayloadLength(receiveBuffer.bufferLength, receiveBuffer.buffer));
 				receiveBuffer.bufferLength = getPayloadLength(receiveBuffer.bufferLength, receiveBuffer.buffer);
 				statefunc = stateIdle;
-				resultCheckData = 1;
+				//resultCheckData = 1;
 				stopTimer();
 				sendBuffer.bufferLength = 0;
+				
+				#if STATE_UART_DEBUG >= 3
+					uart_putstr ("received ack\r\n");
+				#endif
+				
 				return;
 			}
 		}
@@ -313,16 +355,22 @@ void stateWaitForAck(){
 
 void stateResend(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("resend\r\n");
+		if(oldStatefunc != stateResend){
+			uart_putstr ("resend\r\n");
+		}			
 	#endif
+	oldStatefunc = stateResend;
 	
 	statefunc = stateSendData;
 }
 
 void stateTimeout(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("timeout\r\n");
+		if(oldStatefunc != stateTimeout){
+			uart_putstr ("timeout\r\n");
+		}			
 	#endif
+	oldStatefunc = stateTimeout;
 	
 	if(timeoutCounter >= 5){
 		#if STATE_UART_DEBUG >= 1
@@ -340,8 +388,11 @@ void stateTimeout(){
 
 void stateReceiveData(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("receiveData\r\n");
+		if(oldStatefunc != stateReceiveData){
+			uart_putstr ("receiveData\r\n");
+		}			
 	#endif
+	oldStatefunc = stateReceiveData;
 	
 	if(!checkVersionAddress){
 		statefunc = stateIdle;
@@ -355,6 +406,7 @@ void stateReceiveData(){
 		receiveBuffer.bufferLength = getPayloadLength(receiveBuffer.bufferLength, receiveBuffer.buffer);
 		if(receiveBuffer.ackState & NEED_ACK){
 			statefunc = stateSendAck;
+			resultCheckData = 1;
 			return;
 		}
 		statefunc = stateIdle;
@@ -365,8 +417,11 @@ void stateReceiveData(){
 
 void stateSendNack(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("sendNack\r\n");
+		if(oldStatefunc != stateSendNack){
+			uart_putstr ("sendNack\r\n");
+		}
 	#endif
+	oldStatefunc = stateSendNack;
 	
 	sendNack(receiveBuffer);
 	statefunc = stateIdle;
@@ -374,8 +429,11 @@ void stateSendNack(){
 
 void stateSendAck(){
 	#if STATE_UART_DEBUG >= 1
-		uart_putstr ("sendAck\r\n");
+		if(oldStatefunc != stateSendAck){
+			uart_putstr ("sendAck\r\n");
+		}
 	#endif
+	oldStatefunc = stateSendAck;
 	
 	sendAck(receiveBuffer);
 	statefunc = stateIdle;
@@ -388,8 +446,8 @@ void stateSendAck(){
 /************************************************************************/
 uint8_t checkData(){
 	rfm12_tick();  //periodic tick function - call that one once in a while
-	resultCheckData = 0;
 	
+
 	(*statefunc)();
 	
 	return resultCheckData;
@@ -410,13 +468,20 @@ void initCommunication(){
 /************************************************************************/
 uint8_t transmitData(bufferStruct sendData){
 	if(sendBuffer.bufferLength > 0){
-		return -1;
+		return 0;
 	}
 	sendBuffer.ackState = sendData.ackState;
 	sendBuffer.address = sendData.address;
 	sendBuffer.bufferLength = sendData.bufferLength;
 	sendBuffer.type = sendData.type;
 	memcpy(sendBuffer.buffer, sendData.buffer, sendData.bufferLength);
-	return 0;
+	return 1;
+}
+
+/************************************************************************/
+/* call that one to reset received flag                                 */
+/************************************************************************/
+void resetRx(){
+	resultCheckData = 0;
 }
 
