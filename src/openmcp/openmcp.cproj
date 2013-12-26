@@ -1,0 +1,1066 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.1</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
+    <ProjectGuid>{bc341e04-c52c-4f36-914e-cb92d51211b5}</ProjectGuid>
+    <avrdevice>ATmega644</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>openmcp</AssemblyName>
+    <Name>openmcp</Name>
+    <RootNamespace>openmcp</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <UncachedRange />
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.11.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.jtagicemkii</avrtool>
+    <com_atmel_avrdbg_tool_jtagicemkii>
+      <ToolOptions>
+        <InterfaceProperties>
+          <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
+          <IspClock>125000</IspClock>
+        </InterfaceProperties>
+        <InterfaceName>ISP</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.jtagicemkii</ToolType>
+      <ToolNumber>070000004695</ToolNumber>
+      <ToolName>JTAGICE mkII</ToolName>
+    </com_atmel_avrdbg_tool_jtagicemkii>
+    <avrtoolinterface>ISP</avrtoolinterface>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>NDEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>DEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
+    </ToolchainSettings>
+    <UsesExternalMakeFile>False</UsesExternalMakeFile>
+    <BuildTarget>all</BuildTarget>
+    <CleanTarget>clean</CleanTarget>
+    <ExternalMakeFilePath>C:\Users\Michael\AVR_Studio\Projects\mikrocontroller\src\openmcp\makefile.txt</ExternalMakeFilePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="apps\apps_init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\apps_init.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\can\can_eth_rep.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\can\can_eth_rep.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\cron\cron.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\cron\cron.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\cgibin\cgi-bin.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\cgibin\cgi-bin.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\files.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\files.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\files_data.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\httpd2.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\httpd2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\httpd2_pharse.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\httpd\httpd2_pharse.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_adc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_arp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_arp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_cron.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_cron.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_dns.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_dns.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_dyndns.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_dyndns.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_eemem.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_eemem.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_foo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_foo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_ifconfig.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_ifconfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_mon.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_mon.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_ntp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_ntp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_onewire.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_onewire.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_openhab.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_openhab.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_reset.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_reset.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_stats.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_stats.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_stream.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_stream.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_tafel.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_tafel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_temp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_temp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_twi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_twitter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\cmd_twitter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\hal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\hal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\impulse.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\impulse.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\lcd_info.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\lcd_info.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\temp_json.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modules\temp_json.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modul_init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\modul_init.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\mp3-streamingclient\mp3-clientserver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\mp3-streamingclient\mp3-clientserver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\mp3-streamingclient\mp3-streaming.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\mp3-streamingclient\mp3-streaming.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\telnet\cmd_twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\telnet\cmd_twi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\telnet\cmd_twitter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\telnet\cmd_twitter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\telnet\telnet.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="apps\telnet\telnet.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ATXM2.config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="AVRNETIO.config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\1wire\1wire.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\1wire\1wire.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\1wire\DS16xxx.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\1wire\DS16xxx.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\adc\adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\adc\adc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\cpu_freq\cpu_freq.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\cpu_freq\cpu_freq.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\dcf77\dcf77.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\dcf77\dcf77.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\ext_int\ext_int.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\ext_int\ext_int.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\gpio\gpio_core.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\gpio\gpio_core.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\gpio\gpio_in.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\gpio\gpio_in.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\gpio\gpio_out.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\gpio\gpio_out.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\hal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\hal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\keyboard\keyboard.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\keyboard\keyboard.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\dogl128w6.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\dogl128w6.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\hd44780.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\hd44780.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\hd44780_gen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\hd44780_twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\hd44780_twi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\ks0073_twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\ks0073_twi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\lcd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\lcd\lcd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\led-tafel\font.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\led-tafel\led_tafel-par.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\led-tafel\led_tafel-par.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\led-tafel\led_tafel.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\led-tafel\led_tafel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\led\led_core.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\led\led_core.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\mem-check.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\mem-check.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\xram.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\memory\xram.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\network\enc28j60.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\network\enc28j60.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\pcint\pcint.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\pcint\pcint.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\rfm12\rfm12.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\rfm12\rfm12.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\sd_raw\sd-reader_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\sd_raw\sd_raw.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\sd_raw\sd_raw.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\sd_raw\sd_raw_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_2.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_core.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\spi_core.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\xmega_spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\spi\xmega_spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\timer0\timer0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\timer0\timer0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\timer1\timer1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\timer1\timer1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\ds1307.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\ds1307.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\hh10d.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\hh10d.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\lm75.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\lm75.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\twi\twi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\mega\uart_0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\mega\uart_0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\mega\uart_1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\mega\uart_1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\uart_core.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\uart_core.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_c0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_c0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_c1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_c1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_d0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_d0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_d1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_d1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_e0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_e0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_e1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_e1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_f0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_f0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_f1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_f1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\uart\xmega\uart_xmega.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\vs10xx\vs10xx.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\vs10xx\vs10xx.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware\xeemem\xeemem.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="OpenMCP.config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\base64\base64.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\base64\base64.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\buffer\fifo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\buffer\fifo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\clock\clock.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\clock\clock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\clock\delay_x.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\config\eeconfig.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\config\eeconfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\byteordering.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\byteordering.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\fat.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\fat.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\fat_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\filesystem.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\filesystem.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\partition.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\partition.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\filesystem\partition_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\init.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\math\checksum.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\math\checksum.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\math\crc8.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\math\crc8.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\math\math.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\math\math.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\nano_DB\highchart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\nano_DB\highchart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\nano_DB\logger.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\nano_DB\logger.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\nano_DB\nano_db.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\nano_DB\nano_db.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\arp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\arp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\dhcpc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\dhcpc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\dns.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\dns.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\dyndns.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\dyndns.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\endian.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\endian.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\ethernet.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\ethernet.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\icmp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\icmp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\ip.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\ip.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\network.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\network.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\ntp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\ntp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\n_buffer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\n_buffer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\tcp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\tcp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\twitter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\twitter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\udp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\net\udp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\sensor\temp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\sensor\temp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\shell\shell.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\shell\shell.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\softreset\softreset.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\softreset\softreset.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\stdout\stdout.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\stdout\stdout.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\string\string.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\string\string.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\thread\thread.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="system\thread\thread.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UPP.config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="XPLAIN.config.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Doxyfile.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="gdb.conf">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="gpl.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="makefile.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\headline.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\index.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\info.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\io.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\js\excanvas-compressed.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\js\highcharts.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\js\jquery.min.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\mainmenu.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\network.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\style.css">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\system.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\ATXM2\templogger.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\headline.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\index.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\info.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\io.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\js\excanvas-compressed.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\js\highcharts.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\js\jquery.min.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\mainmenu.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\network.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\style.css">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\system.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\AVRNETIO\templogger.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\headline.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\index.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\info.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\io.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\js\excanvas-compressed.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\js\highcharts.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\js\jquery.min.js">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\mainmenu.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\network.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\style.css">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\system.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="SC-Card Image\myAVR\templogger.html">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="apps" />
+    <Folder Include="apps\can" />
+    <Folder Include="apps\cron" />
+    <Folder Include="apps\httpd" />
+    <Folder Include="apps\httpd\cgibin" />
+    <Folder Include="apps\modules" />
+    <Folder Include="apps\mp3-streamingclient" />
+    <Folder Include="apps\telnet" />
+    <Folder Include="hardware" />
+    <Folder Include="hardware\1wire" />
+    <Folder Include="hardware\adc" />
+    <Folder Include="hardware\cpu_freq" />
+    <Folder Include="hardware\dcf77" />
+    <Folder Include="hardware\ext_int" />
+    <Folder Include="hardware\gpio" />
+    <Folder Include="hardware\keyboard" />
+    <Folder Include="hardware\lcd" />
+    <Folder Include="hardware\led" />
+    <Folder Include="hardware\led-tafel" />
+    <Folder Include="hardware\memory" />
+    <Folder Include="hardware\network" />
+    <Folder Include="hardware\uart\mega" />
+    <Folder Include="hardware\uart\xmega" />
+    <Folder Include="hardware\xeemem" />
+    <Folder Include="hardware\vs10xx" />
+    <Folder Include="hardware\uart" />
+    <Folder Include="hardware\twi" />
+    <Folder Include="hardware\timer1" />
+    <Folder Include="hardware\timer0" />
+    <Folder Include="hardware\spi" />
+    <Folder Include="hardware\sd_raw" />
+    <Folder Include="hardware\rfm12" />
+    <Folder Include="hardware\pcint" />
+    <Folder Include="system" />
+    <Folder Include="SC-Card Image" />
+    <Folder Include="SC-Card Image\ATXM2" />
+    <Folder Include="SC-Card Image\ATXM2\js" />
+    <Folder Include="SC-Card Image\AVRNETIO" />
+    <Folder Include="SC-Card Image\AVRNETIO\js" />
+    <Folder Include="SC-Card Image\myAVR" />
+    <Folder Include="SC-Card Image\myAVR\js" />
+    <Folder Include="system\base64" />
+    <Folder Include="system\buffer" />
+    <Folder Include="system\clock" />
+    <Folder Include="system\config" />
+    <Folder Include="system\filesystem" />
+    <Folder Include="system\math" />
+    <Folder Include="system\nano_DB" />
+    <Folder Include="system\net" />
+    <Folder Include="system\thread" />
+    <Folder Include="system\string" />
+    <Folder Include="system\stdout" />
+    <Folder Include="system\softreset" />
+    <Folder Include="system\shell" />
+    <Folder Include="system\sensor" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

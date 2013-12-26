@@ -1,0 +1,15 @@
+BODLEVEL = DISABLED
+OCDEN = [ ]
+JTAGEN = [ ]
+SPIEN = [X]
+WDTON = [ ]
+EESAVE = [ ]
+BOOTSZ = 1024W_7C00
+BOOTRST = [X]
+CKDIV8 = [ ]
+CKOUT = [ ]
+SUT_CKSEL = EXTXOSC_8MHZ_XX_16KCK_65MS
+
+EXTENDED = 0xFF (valid)
+HIGH = 0xDC (valid)
+LOW = 0xFF (valid)
