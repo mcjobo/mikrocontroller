@@ -68,7 +68,7 @@
 #ifndef TIMER128_H
 #define TIMER128_H
 
-#include "global.h"
+#include "conf/global.h"
 
 // constants/macros/typdefs
 

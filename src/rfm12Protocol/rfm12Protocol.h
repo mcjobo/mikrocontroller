@@ -34,7 +34,7 @@
 #define OVERHEAD 5
 
 
-#define STATE_UART_DEBUG	0
+#define STATE_UART_DEBUG	1
 
 
 // struct to hold the datastream and the length of it

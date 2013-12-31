@@ -631,7 +631,7 @@ void rfm12_init(void)
 	//set rx parameters: int-in/vdi-out pin is vdi-out,
 	//Bandwith, LNA, RSSI
 	rfm12_data(RFM12_CMD_RXCTRL | RFM12_RXCTRL_P16_VDI
-	| RFM12_RXCTRL_VDI_FAST | RFM12_RXCTRL_BW_400 | RFM12_RXCTRL_LNA_20
+	| RFM12_RXCTRL_VDI_FAST | RFM12_RXCTRL_BW_400 | RFM12_RXCTRL_LNA_0
 	| RFM12_RXCTRL_RSSI_79 );
 	// 5. command 0x942C
 	
@@ -651,7 +651,7 @@ void rfm12_init(void)
 	// 8. command 0xC4F7
 	
 	//set TX Power to -0dB, frequency shift = +-125kHz
-	rfm12_data(RFM12_CMD_TXCONF | RFM12_TXCONF_POWER_17_5 | RFM12_TXCONF_FS_CALC(125000) );
+	rfm12_data(RFM12_CMD_TXCONF | RFM12_TXCONF_POWER_0 | RFM12_TXCONF_FS_CALC(125000) );
 	// 9. command 0x9870
 	
 	//disable low dutycycle mode

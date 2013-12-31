@@ -62,7 +62,7 @@
 #ifndef UART2_H
 #define UART2_H
 
-#include "global.h"
+#include "conf/global.h"
 #include "buffer.h"
 
 //! Default uart baud rate.

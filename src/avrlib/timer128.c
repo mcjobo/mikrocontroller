@@ -20,16 +20,16 @@
 #include <avr/pgmspace.h>
 #include <avr/sleep.h>
 
-#include "global.h"
+#include "conf/global.h"
 #include "timer128.h"
 
 // Program ROM constants
 // the prescale division values stored in order of timer control register index
 // STOP, CLK, CLK/8, CLK/64, CLK/256, CLK/1024
-unsigned short __attribute__ ((progmem)) TimerPrescaleFactor[] = {0,1,8,64,256,1024};
+unsigned const short __attribute__ ((progmem)) TimerPrescaleFactor[] = {0,1,8,64,256,1024};
 // the prescale division values stored in order of timer control register index
 // STOP, CLK, CLK/8, CLK/32, CLK/64, CLK/128, CLK/256, CLK/1024
-unsigned short __attribute__ ((progmem)) TimerRTCPrescaleFactor[] = {0,1,8,32,64,128,256,1024};
+unsigned const short __attribute__ ((progmem)) TimerRTCPrescaleFactor[] = {0,1,8,32,64,128,256,1024};
 
 // Global variables
 // time registers
@@ -334,32 +334,32 @@ void timer1PWMAOn(void)
 {
 	// turn on channel A (OC1A) PWM output
 	// set OC1A as non-inverted PWM
-	sbi(TCCR1A,COMA1);
-	cbi(TCCR1A,COMA0);
+	sbi(TCCR1A,COM1A1);
+	cbi(TCCR1A,COM1A0);
 }
 
 void timer1PWMBOn(void)
 {
 	// turn on channel B (OC1B) PWM output
 	// set OC1B as non-inverted PWM
-	sbi(TCCR1A,COMB1);
-	cbi(TCCR1A,COMB0);
+	sbi(TCCR1A,COM1B1);
+	cbi(TCCR1A,COM1B0);
 }
 
 void timer1PWMCOn(void)
 {
 	// turn on channel C (OC1C) PWM output
 	// set OC1C as non-inverted PWM
-	sbi(TCCR1A,COMC1);
-	cbi(TCCR1A,COMC0);
+	sbi(TCCR1A,COM1C1);
+	cbi(TCCR1A,COM1C0);
 }
 
 void timer1PWMAOff(void)
 {
 	// turn off channel A (OC1A) PWM output
 	// set OC1A (OutputCompare action) to none
-	cbi(TCCR1A,COMA1);
-	cbi(TCCR1A,COMA0);
+	cbi(TCCR1A,COM1A1);
+	cbi(TCCR1A,COM1A0);
 }
 
 void timer1PWMBOff(void)
@@ -487,40 +487,40 @@ void timer3PWMAOn(void)
 {
 	// turn on channel A (OC3A) PWM output
 	// set OC3A as non-inverted PWM
-	sbi(TCCR3A,COMA1);
-	cbi(TCCR3A,COMA0);
+	sbi(TCCR3A,COM3A1);
+	cbi(TCCR3A,COM3A0);
 }
 
 void timer3PWMBOn(void)
 {
 	// turn on channel B (OC3B) PWM output
 	// set OC3B as non-inverted PWM
-	sbi(TCCR3A,COMB1);
-	cbi(TCCR3A,COMB0);
+	sbi(TCCR3A,COM3B1);
+	cbi(TCCR3A,COM3B0);
 }
 
 void timer3PWMCOn(void)
 {
 	// turn on channel C (OC3C) PWM output
 	// set OC3C as non-inverted PWM
-	sbi(TCCR3A,COMC1);
-	cbi(TCCR3A,COMC0);
+	sbi(TCCR3A,COM3C1);
+	cbi(TCCR3A,COM3C0);
 }
 
 void timer3PWMAOff(void)
 {
 	// turn off channel A (OC3A) PWM output
 	// set OC3A (OutputCompare action) to none
-	cbi(TCCR3A,COMA1);
-	cbi(TCCR3A,COMA0);
+	cbi(TCCR3A,COM3A1);
+	cbi(TCCR3A,COM3A0);
 }
 
 void timer3PWMBOff(void)
 {
 	// turn off channel B (OC3B) PWM output
 	// set OC3B (OutputCompare action) to none
-	cbi(TCCR3A,COMB1);
-	cbi(TCCR3A,COMB0);
+	cbi(TCCR3A,COM3B1);
+	cbi(TCCR3A,COM3B0);
 }
 
 void timer3PWMCOff(void)
@@ -566,7 +566,7 @@ void timer3PWMCSet(u16 pwmDuty)
 
 
 //! Interrupt handler for tcnt0 overflow interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW0)
+TIMER_INTERRUPT_HANDLER(TIMER0_OVF_vect)
 {
 	Timer0Reg0++;		// increment low-order counter
 	if(!Timer0Reg0)		// if low-order counter rollover
@@ -578,7 +578,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW0)
 }
 
 //! Interrupt handler for Timer1 overflow interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW1)
+TIMER_INTERRUPT_HANDLER(TIMER1_OVF_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1OVERFLOW_INT])
@@ -586,7 +586,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW1)
 }
 
 //! Interrupt handler for Timer2 overflow interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW2)
+TIMER_INTERRUPT_HANDLER(TIMER2_OVF_vect)
 {
 	Timer2Reg0++;		// increment low-order counter
 	if(!Timer2Reg0)		// if low-order counter rollover
@@ -601,7 +601,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW2)
 }
 
 //! Interrupt handler for Timer3 overflow interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW3)
+TIMER_INTERRUPT_HANDLER(TIMER3_OVF_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER3OVERFLOW_INT])
@@ -609,7 +609,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OVERFLOW3)
 }
 
 //! Interrupt handler for OutputCompare0 match (OC0) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE0)
+TIMER_INTERRUPT_HANDLER(TIMER0_COMP_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER0OUTCOMPARE_INT])
@@ -617,7 +617,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE0)
 }
 
 //! Interrupt handler for OutputCompare1A match (OC1A) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE1A)
+TIMER_INTERRUPT_HANDLER(TIMER1_COMPA_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1OUTCOMPAREA_INT])
@@ -625,7 +625,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE1A)
 }
 
 //! Interrupt handler for OutputCompare1B match (OC1B) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE1B)
+TIMER_INTERRUPT_HANDLER(TIMER1_COMPB_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1OUTCOMPAREB_INT])
@@ -633,7 +633,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE1B)
 }
 
 //! Interrupt handler for OutputCompare1C match (OC1C) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE1C)
+TIMER_INTERRUPT_HANDLER(TIMER1_COMPC_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1OUTCOMPAREC_INT])
@@ -641,7 +641,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE1C)
 }
 
 //! Interrupt handler for InputCapture1(IC1) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_INPUT_CAPTURE1)
+TIMER_INTERRUPT_HANDLER(TIMER1_CAPT_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1INPUTCAPTURE_INT])
@@ -649,7 +649,7 @@ TIMER_INTERRUPT_HANDLER(SIG_INPUT_CAPTURE1)
 }
 
 //! Interrupt handler for OutputCompare2 match (OC2) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE2)
+TIMER_INTERRUPT_HANDLER(TIMER2_COMP_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER2OUTCOMPARE_INT])
@@ -657,7 +657,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE2)
 }
 
 //! Interrupt handler for OutputCompare3A match (OC3A) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE3A)
+TIMER_INTERRUPT_HANDLER(TIMER3_COMPA_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER3OUTCOMPAREA_INT])
@@ -665,7 +665,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE3A)
 }
 
 //! Interrupt handler for OutputCompare3B match (OC3B) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE3B)
+TIMER_INTERRUPT_HANDLER(TIMER3_COMPB_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER3OUTCOMPAREB_INT])
@@ -673,7 +673,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE3B)
 }
 
 //! Interrupt handler for OutputCompare3C match (OC3C) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE3C)
+TIMER_INTERRUPT_HANDLER(TIMER3_COMPC_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER3OUTCOMPAREC_INT])
@@ -681,7 +681,7 @@ TIMER_INTERRUPT_HANDLER(SIG_OUTPUT_COMPARE3C)
 }
 
 //! Interrupt handler for InputCapture3 (IC3) interrupt
-TIMER_INTERRUPT_HANDLER(SIG_INPUT_CAPTURE3)
+TIMER_INTERRUPT_HANDLER(TIMER3_CAPT_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER3INPUTCAPTURE_INT])

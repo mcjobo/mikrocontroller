@@ -9,6 +9,12 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "timerx8", "timerx8.cproj", 
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "timer128", "timer128.cproj", "{8EBCDABC-895F-4B3C-85FC-C66532963D19}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "uart", "uart.cproj", "{DF0F9E59-8D47-4F43-B7B2-F3352435EA78}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "uart2", "uart2.cproj", "{15AF68F0-A54A-4A19-BDEB-F65B3022EFEE}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "extint", "extint.cproj", "{02261A79-B30E-43AF-94B1-26B54ED574F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -31,6 +37,18 @@ Global
 		{8EBCDABC-895F-4B3C-85FC-C66532963D19}.Debug|AVR.Build.0 = Debug|AVR
 		{8EBCDABC-895F-4B3C-85FC-C66532963D19}.Release|AVR.ActiveCfg = Release|AVR
 		{8EBCDABC-895F-4B3C-85FC-C66532963D19}.Release|AVR.Build.0 = Release|AVR
+		{DF0F9E59-8D47-4F43-B7B2-F3352435EA78}.Debug|AVR.ActiveCfg = Debug|AVR
+		{DF0F9E59-8D47-4F43-B7B2-F3352435EA78}.Debug|AVR.Build.0 = Debug|AVR
+		{DF0F9E59-8D47-4F43-B7B2-F3352435EA78}.Release|AVR.ActiveCfg = Release|AVR
+		{DF0F9E59-8D47-4F43-B7B2-F3352435EA78}.Release|AVR.Build.0 = Release|AVR
+		{15AF68F0-A54A-4A19-BDEB-F65B3022EFEE}.Debug|AVR.ActiveCfg = Debug|AVR
+		{15AF68F0-A54A-4A19-BDEB-F65B3022EFEE}.Debug|AVR.Build.0 = Debug|AVR
+		{15AF68F0-A54A-4A19-BDEB-F65B3022EFEE}.Release|AVR.ActiveCfg = Release|AVR
+		{15AF68F0-A54A-4A19-BDEB-F65B3022EFEE}.Release|AVR.Build.0 = Release|AVR
+		{02261A79-B30E-43AF-94B1-26B54ED574F4}.Debug|AVR.ActiveCfg = Debug|AVR
+		{02261A79-B30E-43AF-94B1-26B54ED574F4}.Debug|AVR.Build.0 = Debug|AVR
+		{02261A79-B30E-43AF-94B1-26B54ED574F4}.Release|AVR.ActiveCfg = Release|AVR
+		{02261A79-B30E-43AF-94B1-26B54ED574F4}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

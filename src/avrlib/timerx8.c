@@ -332,7 +332,7 @@ void timer1PWMOff(void)
 }
 
 void timer1PWMAOn(void)
-{
+{ 
 	// turn on channel A (OC1A) PWM output
 	// set OC1A as non-inverted PWM
 	sbi(TCCR1A,COM1A1);
