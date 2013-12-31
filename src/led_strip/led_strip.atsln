@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "led_strip", "led_strip.cproj", "{0F42A6E3-B5E7-4CD7-B62B-492C8E414B0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F42A6E3-B5E7-4CD7-B62B-492C8E414B0F}.Debug|AVR.ActiveCfg = Debug|AVR
+		{0F42A6E3-B5E7-4CD7-B62B-492C8E414B0F}.Debug|AVR.Build.0 = Debug|AVR
+		{0F42A6E3-B5E7-4CD7-B62B-492C8E414B0F}.Release|AVR.ActiveCfg = Release|AVR
+		{0F42A6E3-B5E7-4CD7-B62B-492C8E414B0F}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
