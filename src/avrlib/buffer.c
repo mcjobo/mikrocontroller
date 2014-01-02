@@ -16,7 +16,7 @@
 //*****************************************************************************
 
 #include "buffer.h"
-#include "global.h"
+#include "conf/global.h"
 #include "avr/io.h"
 
 #ifndef CRITICAL_SECTION_START

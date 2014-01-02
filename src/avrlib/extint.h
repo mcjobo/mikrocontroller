@@ -28,7 +28,7 @@
 #ifndef EXTINT_H
 #define EXTINT_H
 
-#include "global.h"
+#include "conf/global.h"
 
 // constants/macros/typdefs
 
@@ -64,7 +64,7 @@
 #ifdef SIG_INTERRUPT2
 	#define EXTINT_NUM_INTERRUPTS	3
 #else
-#ifdef SIG_INTERRUPT1
+#ifdef INT1_vect
 	#define EXTINT_NUM_INTERRUPTS	2
 #else
 	#define EXTINT_NUM_INTERRUPTS	1

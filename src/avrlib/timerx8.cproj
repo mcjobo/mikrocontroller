@@ -41,6 +41,8 @@
         </avrgcc.linker.libraries.Libraries>
       </AvrGcc>
     </ToolchainSettings>
+    <PostBuildEvent>copy $(SolutionDir)$(MSBuildProjectName).h $(SolutionDir)..\lib\
+copy $(OutputDirectory)\$(OutputFileName)$(OutputFileExtension) $(SolutionDir)..\lib\</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>

@@ -44,6 +44,8 @@
         </avrgcc.linker.libraries.Libraries>
       </AvrGcc>
     </ToolchainSettings>
+    <PostBuildEvent>copy $(SolutionDir)$(MSBuildProjectName).h $(SolutionDir)..\lib\
+copy $(OutputDirectory)\$(OutputFileName)$(OutputFileExtension) $(SolutionDir)..\lib\</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
@@ -67,7 +69,7 @@
         <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
       </AvrGcc>
     </ToolchainSettings>
-    <PostBuildEvent>copy $(SolutionDir)$(SolutionName).h $(SolutionDir)..\lib\
+    <PostBuildEvent>copy $(SolutionDir)$(MSBuildProjectName).h $(SolutionDir)..\lib\
 copy $(OutputDirectory)\$(OutputFileName)$(OutputFileExtension) $(SolutionDir)..\lib\</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>

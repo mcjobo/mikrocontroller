@@ -49,7 +49,9 @@ void uartInit(void)
 	UartRxFunc = 0;
 
 	// enable RxD/TxD and interrupts
-	outb(UCR, BV(RXCIE)|BV(TXCIE)|BV(RXEN)|BV(TXEN));
+	//outb(UCR, BV(RXCIE)|BV(TXCIE)|BV(RXEN)|BV(TXEN));
+	outb(UCR, BV(RXEN)|BV(TXEN));
+	outb(UCSR0C, BV(UCSZ00)|BV(UCSZ01));
 
 	// set default baud rate
 	uartSetBaudRate(UART_DEFAULT_BAUD_RATE);  
@@ -90,6 +92,7 @@ void uartSetBaudRate(u32 baudrate)
 {
 	// calculate division factor for requested baud rate, and set it
 	u16 bauddiv = ((F_CPU+(baudrate*8L))/(baudrate*16L)-1);
+	//u16 bauddiv = ((F_CPU)/(baudrate*16L)-1);
 	outb(UBRRL, bauddiv);
 	#ifdef UBRRH
 	outb(UBRRH, bauddiv>>8);

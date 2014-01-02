@@ -4,28 +4,35 @@
  * Created: 31.12.2013 09:13:17
  *  Author: jbolay
  */ 
-
-#define F_CPU 4915200UL  // 1 MHz
+#include "conf/global.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
+
+#include "extint.h"
+#include "uart2.h"
+#include "rprintf.h"
 
 
 
 int main(void)
 {
-
+		
+	uart_init();
+	rprintfInit(uart_putc);
 	
-	//PORTB &= ~(1 << PB0);
-	//DDRB |= (1 << DDB0);
+	rprintf1("init\r\n");
 	
 	DDRB |= (_BV(PB0));
-	PORTB &= ~(_BV(PB0));
+	DDRB &= ~(_BV(PB1));
     while(1)
     {
-		_delay_ms(1000);
-		PORTB &= ~(_BV(PB0));
-		_delay_ms(1000);
-		PORTB |= (_BV(PB0));
+		u08 input = PINB & 2;
+		if(input){
+			PORTB |= (_BV(PB0));
+		} else {
+			PORTB &= ~(_BV(PB0));
+		}
+		
     }
 }

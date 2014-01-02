@@ -28,7 +28,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include "global.h"
+#include "conf/global.h"
 #include "extint.h"
 
 // Global variables
@@ -56,7 +56,7 @@ void extintConfigure(u08 interruptNum, u08 configuration)
 		MCUCR &= ~((1<<ISC01) | (1<<ISC00));
 		MCUCR |= configuration;
 	}
-	#ifdef SIG_INTERRUPT1
+	#ifdef INT1_vect
 	else if(interruptNum == EXTINT1)
 	{
 		MCUCR &= ~((1<<ISC11) | (1<<ISC10));
@@ -102,16 +102,16 @@ void extintDetach(u08 interruptNum)
 }
 
 //! Interrupt handler for INT0
-EXTINT_INTERRUPT_HANDLER(SIG_INTERRUPT0)
+EXTINT_INTERRUPT_HANDLER(INT0_vect)
 {
 	// if a user function is defined, execute it
 	if(ExtIntFunc[EXTINT0])
 		ExtIntFunc[EXTINT0]();
 }
 
-#ifdef SIG_INTERRUPT1
+#ifdef INT1_vect
 //! Interrupt handler for INT1
-EXTINT_INTERRUPT_HANDLER(SIG_INTERRUPT1)
+EXTINT_INTERRUPT_HANDLER(INT1_vect)
 {
 	// if a user function is defined, execute it
 	if(ExtIntFunc[EXTINT1])
