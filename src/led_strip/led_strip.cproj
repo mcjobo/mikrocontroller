@@ -76,6 +76,8 @@
       <Value>rprintf</Value>
       <Value>uart2</Value>
       <Value>timerx8</Value>
+      <Value>time</Value>
+      <Value>a2d</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
   <avrgcc.linker.libraries.LibrarySearchPaths>
