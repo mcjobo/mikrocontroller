@@ -5,7 +5,7 @@ F_CPU=8000000
 TARGET=ir_send
 
 LIBDIR=../common/
-CLIBS=uart.c rprintf.c dhcp_client.c enc28j60.c ip_arp_udp_tcp.c irmp.c timerx8.c
+CLIBS=uart.c rprintf.c dhcp_client.c enc28j60.c ip_arp_udp_tcp.c irsnd.c timerx8.c
 FUSES      = -U lfuse:w:0xe2:m -U hfuse:w:0xd9:m -U efuse:w:0x07:m
 
 CFLAGS = -g -Os -mmcu=$(MCU)
@@ -71,15 +71,6 @@ fuses:
 
 program-fuses:
 	avrdude -P usb -p $(MCU) -c avrispv2  $(FUSES) -B 32
-	#avrdude -P usb -p $(MCU) -c avrispv2  -U lfuse:w:0xe2:m
-	#avrdude -P usb -p $(MCU) -c avrispv2  -U hfuse:w:0xd9:m
-	#avrdude -P usb -p $(MCU) -c avrispv2  -U efuse:w:0x07:m
-    
-	#avrdude -P usb -p $(MCU) -c avrispv2  -U lfuse:w:$(OBJDIR)/$(TARGET)-lfuse.hex
-	#avrdude -P usb -p $(MCU) -c avrispv2  -U hfuse:w:$(OBJDIR)/$(TARGET)-hfuse.hex
-	#avrdude -P usb -p $(MCU) -c avrispv2  -U efuse:w:$(OBJDIR)/$(TARGET)-efuse.hex
-    #avrdude -p$(avrType) -c$(programmerType) -P$(programmerDev) -b$(baud) -v -U hfuse:w:$(src).hfuse.hex
-    #avrdude -p$(avrType) -c$(programmerType) -P$(programmerDev) -b$(baud) -v -U efuse:w:$(src).efuse.hex
 	date
 
 clean:
