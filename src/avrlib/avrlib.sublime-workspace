@@ -1,0 +1,626 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"res",
+				"result"
+			],
+			[
+				"ui",
+				"uint16_t"
+			],
+			[
+				"bu",
+				"buf"
+			],
+			[
+				"eve",
+				"everyMinute"
+			],
+			[
+				"rp",
+				"rprintf"
+			],
+			[
+				"le",
+				"LEDOFF"
+			],
+			[
+				"LED_",
+				"LED_ON"
+			],
+			[
+				"fu",
+				"FUSES"
+			],
+			[
+				"li",
+				"LIBDIR"
+			],
+			[
+				"rpr",
+				"rprintfInit"
+			],
+			[
+				"uart",
+				"uart_puts"
+			],
+			[
+				"timer",
+				"timerFired"
+			],
+			[
+				"LED",
+				"LEDOFF"
+			],
+			[
+				"get",
+				"get_ip_from_Dhcp"
+			],
+			[
+				"send",
+				"send_udp"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"m",
+				"MCU"
+			],
+			[
+				"obj",
+				"OBJS"
+			],
+			[
+				"ob",
+				"OBJDIR"
+			],
+			[
+				"cs",
+				"CSRC"
+			],
+			[
+				"O",
+				"OBJDIR"
+			],
+			[
+				"ua",
+				"uartSendByte"
+			],
+			[
+				"cal",
+				"calId"
+			],
+			[
+				"array_p",
+				"array_push〔function〕"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"getCa",
+				"getCalendarForId〔function〕"
+			],
+			[
+				"calendar",
+				"calendar_fk"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "cmdline.c",
+			"settings":
+			{
+				"buffer_size": 11374,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cmdline.h",
+			"settings":
+			{
+				"buffer_size": 4930,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				"Clean"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 312.0,
+		"last_filter": "avr",
+		"selected_items":
+		[
+			[
+				"avr",
+				"AVR: Create/Update Project"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"open fi",
+				"SublimeLinter: Report (Open Files)"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 521.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"cd ~/src/",
+			"pwd",
+			"cd ir_receive",
+			"cd src   ",
+			"./make",
+			"make",
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/home/jbolay/src/mikrocontroller/src/ir_send/Makefile",
+		"/home/jbolay/src/mikrocontroller/src/common/ip_arp_udp_tcp.h",
+		"/home/jbolay/src/mikrocontroller/src/common/ip_config.h",
+		"/home/jbolay/src/mikrocontroller/src/ir_send/ip_config.h",
+		"/home/jbolay/src/mikrocontroller/src/common/ip_arp_udp_tcp.c",
+		"/home/jbolay/src/mikrocontroller/src/common/enc28j60.c",
+		"/home/jbolay/src/mikrocontroller/src/common/enc28j60.h",
+		"/home/jbolay/src/mikrocontroller/src/ir_receive/ir_receiver.c",
+		"/home/jbolay/src/mikrocontroller/src/common/dhcp_client.c",
+		"/home/jbolay/src/mikrocontroller/src/common/dhcp_client.h",
+		"/home/jbolay/src/mikrocontroller/src/ir_receive/ip_arp_udp_tcp.c",
+		"/home/jbolay/src/mikrocontroller/src/ir_receive/ip_arp_udp_tcp.h",
+		"/home/jbolay/src/mikrocontroller/src/ir_receive/irmp.h",
+		"/home/jbolay/src/mikrocontroller/ir_send/Makefile",
+		"/home/jbolay/src/mikrocontroller/ir_receive/ir_receiver.c",
+		"/home/jbolay/src/mikrocontroller/ir_send/ir_send.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/irmpconfig.h",
+		"/home/jbolay/src/eagle/ir_receiver/ir_receiver/ir_receiver_21.job",
+		"/home/jbolay/src/mikrocontroller/ir_receive/global.h",
+		"/home/jbolay/src/mikrocontroller/ir_receive/timerx8.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/Makefile",
+		"/home/jbolay/src/mikrocontroller/ir_receive/timerx8.h",
+		"/home/jbolay/src/eth_tcp_client_server-dhcp-5.10/client-www-dhcp/test_dhcp_www_client_pushbutton.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/dhcp_client.h",
+		"/home/jbolay/src/mikrocontroller/ir_receive/dhcp_client.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/ip_config.h",
+		"/home/jbolay/src/mikrocontroller/ir_receive/uart.h",
+		"/home/jbolay/src/mikrocontroller/ir_receive/timeout.h",
+		"/home/jbolay/src/mikrocontroller/ir_receive/uart.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/buffer.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/fuses.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/rprintf.c",
+		"/home/jbolay/src/mikrocontroller/ir_receive/rprintf.h",
+		"/home/jbolay/src/mikrocontroller/ir_receive/Makefile-old",
+		"/home/jbolay/src/mikrocontroller/ir_receive/mikrocontroller.sublime-build",
+		"/home/jbolay/src/eth_tcp_client_server-dhcp-5.10/Makefile",
+		"/home/jbolay/src/eth_tcp_client_server-dhcp-5.10/WhatIsWhat.htm",
+		"/home/jbolay/src/eth_tcp_client_server-dhcp-5.10/ip_arp_udp_tcp.c",
+		"/home/jbolay/src/eth_tcp_client_server-dhcp-5.10/udpcom/README_udpcom.txt",
+		"/home/jbolay/src/eth_tcp_client_server-dhcp-5.10/files/identi_ca.jpg",
+		"/home/jbolay/src/smarthomatic/firmware/shc_soil_moisture_meter/Makefile",
+		"/home/jbolay/src/smarthomatic/smarthomatic.sublime-project",
+		"/home/jbolay/src/html/content/rrcalendar/php/JsonService.php",
+		"/run/user/1000/gvfs/smb-share:server=openhab-r0,share=openhab/etc/README",
+		"/run/user/1000/gvfs/smb-share:server=openhab-r0,share=openhab/configurations/persistence/rrd4j.persist",
+		"/run/user/1000/gvfs/smb-share:server=openhab-r0,share=openhab/etc/quartz.properties",
+		"/home/jbolay/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/jbolay/.config/sublime-text-3/Packages/User/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"<project>",
+			"/home/jbolay/src/mikrocontroller/ir_receive",
+			"/home/jbolay/src/mikrocontroller/src/ir_receive",
+			"<project>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"IRSND_OCx",
+			"IROUT",
+			"enc28j60PacketReceive",
+			"dhcp_6sec_cnt",
+			"packetl",
+			"packe",
+			"packetloop_icmp_checkreply",
+			"client_icmp_request",
+			"packetloop_icmp_tcp",
+			"ip_config.h",
+			"/*********************************************",
+			"strBufRprintf",
+			"str",
+			"dat_p",
+			"_delay_loop_1",
+			"F_INTERRUPTS",
+			"dhcp_6sec_cnt",
+			"packetloop_dhcp_initial_ip_assignment",
+			"otherside_www_ip",
+			"CSRC",
+			"buf ",
+			"buf",
+			"itoh",
+			"timerFired",
+			"TOIE1",
+			"TIMER_PRESCALE_MASK",
+			"OCR1A",
+			"timer",
+			"timer1_init",
+			"COMPA_VECT",
+			"TIMER1_COMPA",
+			"DHCP_SRV_DST_PORT",
+			"DHCP_SRV_SRC_PORT",
+			"send_udp",
+			"/*********************************************",
+			"PD0",
+			"f_cpu",
+			"UART_BAUD_SELECT",
+			"xtalCpu",
+			"f_cpu",
+			"F_CPU",
+			"avrdud",
+			"REMOVEDIR",
+			"MAIN",
+			"avr-gcc",
+			"bufferadd",
+			"UART_BUFFERS_EXTERNAL_RAM",
+			"CDEFS",
+			"F_CPU",
+			"outb",
+			"--combine",
+			".o",
+			"enc28j60clkout",
+			"mymac",
+			"LEDON"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"strBuf",
+			"TARGET"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "cmdline.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11160,
+								11160
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"function_name_status_row": 438,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 6141.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "cmdline.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4930,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"function_name_status_row": 0,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": -0.0,
+						"translation.y": 1125.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Makefile/Make.sublime-build",
+	"project": "avrlib.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/src/eth_tcp_client_server-dhcp-5.10/client-www-dhcp/avrlib.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 310.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
