@@ -1,6 +1,8 @@
 MCU=atmega328p
 
 F_CPU=8000000
+UART_DEBUG = 1
+UART_BAUD_RATE = 9600
 
 TARGET=ir_receiver
 
@@ -12,6 +14,15 @@ CFLAGS = -g -Os -mmcu=$(MCU)
 CFLAGS += -D__AVR_ATmega328P__
 CFLAGS += -DF_CPU=$(F_CPU)UL
 #CFLAGS += -Wno-deprecated-declarations -D__PROG_TYPES_COMPAT__
+CFLAGS += -DUART_BAUD_RATE=$(UART_BAUD_RATE)UL
+# add UART defines used to compile some object files
+ifeq ($(UART_DEBUG),1)
+	CFLAGS += -DUART_DEBUG
+	
+	ifeq ($(UART_RX),1)
+		CFLAGS += -DUART_RX
+	endif
+endif
 
 OBJDIR=obj
 
@@ -40,7 +51,7 @@ setup:
 	mkdir -p $(OBJDIR)
 
 program:
-	avrdude -P usb -p $(MCU) -c avrispv2 -e -U flash:w:$(OBJDIR)/$(TARGET).hex
+	avrdude -P usb -p $(MCU) -c avrispv2 -e -U flash:w:$(OBJDIR)/$(TARGET).hex -B 0.5
 	date
 
 fuses:
