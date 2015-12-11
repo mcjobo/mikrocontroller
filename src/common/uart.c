@@ -1,776 +1,358 @@
-/*************************************************************************
-Title:    Interrupt UART library with receive/transmit circular buffers
-Author:   Peter Fleury <pfleury@gmx.ch>   http://jump.to/fleury
-File:     $Id: uart.c,v 1.6.2.1 2007/07/01 11:14:38 peter Exp $
-Software: AVR-GCC 4.1, AVR Libc 1.4.6 or higher
-Hardware: any AVR with built-in UART, 
-License:  GNU General Public License 
-          
-DESCRIPTION:
-    An interrupt is generated when the UART has finished transmitting or
-    receiving a byte. The interrupt handling routines use circular buffers
-    for buffering received and transmitted data.
-    
-    The UART_RX_BUFFER_SIZE and UART_TX_BUFFER_SIZE variables define
-    the buffer size in bytes. Note that these variables must be a 
-    power of 2.
-    
-USAGE:
-    Refere to the header file uart.h for a description of the routines. 
-    See also example test_uart.c.
-
-NOTES:
-    Based on Atmel Application Note AVR306
-                    
-LICENSE:
-    Copyright (C) 2006 Peter Fleury
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-                        
-*************************************************************************/
-
-/************************************************************************
-uart_available, uart_flush, uart1_available, and uart1_flush functions
-were adapted from the Arduino HardwareSerial.h library by Tim Sharpe on 
-11 Jan 2009.  The license info for HardwareSerial.h is as follows:
-
-  HardwareSerial.cpp - Hardware serial library for Wiring
-  Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-  
-  Modified 23 November 2006 by David A. Mellis
-************************************************************************/
-
-/************************************************************************
-Changelog for modifications made by Tim Sharpe, starting with the current
-  library version on his Web site as of 05/01/2009. 
-
-Date        Description
-=========================================================================
-05/11/2009  Changed all existing UARTx_RECEIVE_INTERRUPT and UARTx_TRANSMIT_INTERRUPT
-              macros to use the "_vect" format introduced in AVR-Libc
-			  v1.4.0.  Had to split the 3290 and 6490 out of their existing
-			  macro due to an inconsistency in the UART0_RECEIVE_INTERRUPT 
-			  vector name (seems like a typo: USART_RX_vect for the 3290/6490
-			  vice USART0_RX_vect for the others in the macro).
-			Verified all existing macro register names against the device
-			  header files in AVR-Libc v1.6.6 to catch any inconsistencies.
-05/12/2009  Added support for 48P, 88P, 168P, and 328P by adding them to the
-               existing 48/88/168 macro.
-			Added Arduino-style available() and flush() functions for both
-			supported UARTs.  Really wanted to keep them out of the library, so
-			that it would be as close as possible to Peter Fleury's original
-			library, but has scoping issues accessing internal variables from
-			another program.  Go C!
-05/13/2009  Changed Interrupt Service Routine label from the old "SIGNAL" to
-               the "ISR" format introduced in AVR-Libc v1.4.0.
-
-************************************************************************/
+/*
+* This file is part of smarthomatic, http://www.smarthomatic.org.
+* Copyright (c) 2013 Uwe Freese
+*
+* smarthomatic is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the
+* Free Software Foundation, either version 3 of the License, or (at your
+* option) any later version.
+*
+* smarthomatic is distributed in the hope that it will be useful, but
+* WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+* Public License for more details.
+*
+* You should have received a copy of the GNU General Public License along
+* with smarthomatic. If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <avr/pgmspace.h>
+#include <stdlib.h>
+#include <avr/eeprom.h>
+#include <string.h>
+
 #include "uart.h"
 
+// This buffer is used for sending strings over UART using UART_PUT... functions.
+char uartbuf[128];
 
-/*
- *  constants and macros
- */
+#ifdef UART_RX
+	// All received bytes from UART are stored in this buffer by the interrupt routine. This is a ringbuffer.
+	// No characters which will not make sense as a command are filtered out here.
+	#define RXBUF_LENGTH 60
+	char rxbuf[RXBUF_LENGTH];
+	uint8_t rxbuf_startpos = 0; // points to the first (oldest) byte to be processed from the buffer
+	uint8_t rxbuf_count = 0; // number of bytes currently in the buffer
 
-/* size of RX/TX buffers */
-#define UART_RX_BUFFER_MASK ( UART_RX_BUFFER_SIZE - 1)
-#define UART_TX_BUFFER_MASK ( UART_TX_BUFFER_SIZE - 1)
+	// This buffer stores the command string, which is a copy of the allowed bytes from the rxbuf, filled in the main loop (not ISR!).
+	char cmdbuf[56];
 
-#if ( UART_RX_BUFFER_SIZE & UART_RX_BUFFER_MASK )
-#error RX buffer size is not a power of 2
-#endif
-#if ( UART_TX_BUFFER_SIZE & UART_TX_BUFFER_MASK )
-#error TX buffer size is not a power of 2
-#endif
-
-#if defined(__AVR_AT90S2313__) \
- || defined(__AVR_AT90S4414__) || defined(__AVR_AT90S4434__) \
- || defined(__AVR_AT90S8515__) || defined(__AVR_AT90S8535__) \
- || defined(__AVR_ATmega103__)
- /* old AVR classic or ATmega103 with one UART */
- #define AT90_UART
- #define UART0_RECEIVE_INTERRUPT   UART_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  UART_UDRE_vect
- #define UART0_STATUS   USR
- #define UART0_CONTROL  UCR
- #define UART0_DATA     UDR  
- #define UART0_UDRIE    UDRIE
-#elif defined(__AVR_AT90S2333__) || defined(__AVR_AT90S4433__)
- /* old AVR classic with one UART */
- #define AT90_UART
- #define UART0_RECEIVE_INTERRUPT   UART_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  UART_UDRE_vect
- #define UART0_STATUS   UCSRA
- #define UART0_CONTROL  UCSRB
- #define UART0_DATA     UDR 
- #define UART0_UDRIE    UDRIE
-#elif  defined(__AVR_ATmega8__)  || defined(__AVR_ATmega16__) || defined(__AVR_ATmega32__) \
-  || defined(__AVR_ATmega323__)
-  /* ATmega with one USART */
- #define ATMEGA_USART
- #define UART0_RECEIVE_INTERRUPT   USART_RXC_vect
- #define UART0_TRANSMIT_INTERRUPT  USART_UDRE_vect
- #define UART0_STATUS   UCSRA
- #define UART0_CONTROL  UCSRB
- #define UART0_DATA     UDR
- #define UART0_UDRIE    UDRIE
-#elif  defined(__AVR_ATmega8515__) || defined(__AVR_ATmega8535__)
-  /* ATmega with one USART */
- #define ATMEGA_USART
- #define UART0_RECEIVE_INTERRUPT   USART_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  USART_UDRE_vect
- #define UART0_STATUS   UCSRA
- #define UART0_CONTROL  UCSRB
- #define UART0_DATA     UDR
- #define UART0_UDRIE    UDRIE
-#elif defined(__AVR_ATmega163__) 
-  /* ATmega163 with one UART */
- #define ATMEGA_UART
- #define UART0_RECEIVE_INTERRUPT   UART_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  UART_UDRE_vect
- #define UART0_STATUS   UCSRA
- #define UART0_CONTROL  UCSRB
- #define UART0_DATA     UDR
- #define UART0_UDRIE    UDRIE
-#elif defined(__AVR_ATmega162__) 
- /* ATmega with two USART */
- #define ATMEGA_USART0
- #define ATMEGA_USART1
- #define UART0_RECEIVE_INTERRUPT   USART0_RXC_vect
- #define UART1_RECEIVE_INTERRUPT   USART1_RXC_vect
- #define UART0_TRANSMIT_INTERRUPT  USART0_UDRE_vect
- #define UART1_TRANSMIT_INTERRUPT  USART1_UDRE_vect
- #define UART0_STATUS   UCSR0A
- #define UART0_CONTROL  UCSR0B
- #define UART0_DATA     UDR0
- #define UART0_UDRIE    UDRIE0
- #define UART1_STATUS   UCSR1A
- #define UART1_CONTROL  UCSR1B
- #define UART1_DATA     UDR1
- #define UART1_UDRIE    UDRIE1
-#elif defined(__AVR_ATmega64__) || defined(__AVR_ATmega128__) 
- /* ATmega with two USART */
- #define ATMEGA_USART0
- #define ATMEGA_USART1
- #define UART0_RECEIVE_INTERRUPT   USART0_RX_vect
- #define UART1_RECEIVE_INTERRUPT   USART1_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  USART0_UDRE_vect
- #define UART1_TRANSMIT_INTERRUPT  USART1_UDRE_vect
- #define UART0_STATUS   UCSR0A
- #define UART0_CONTROL  UCSR0B
- #define UART0_DATA     UDR0
- #define UART0_UDRIE    UDRIE0
- #define UART1_STATUS   UCSR1A
- #define UART1_CONTROL  UCSR1B
- #define UART1_DATA     UDR1
- #define UART1_UDRIE    UDRIE1
-#elif defined(__AVR_ATmega161__)
- /* ATmega with UART */
- #error "AVR ATmega161 currently not supported by this libaray !"
-#elif defined(__AVR_ATmega169__) 
- /* ATmega with one USART */
- #define ATMEGA_USART
- #define UART0_RECEIVE_INTERRUPT   USART0_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  USART0_UDRE_vect
- #define UART0_STATUS   UCSRA
- #define UART0_CONTROL  UCSRB
- #define UART0_DATA     UDR
- #define UART0_UDRIE    UDRIE
-#elif defined(__AVR_ATmega48__) ||defined(__AVR_ATmega88__) || defined(__AVR_ATmega168__) || \
-      defined(__AVR_ATmega48P__) ||defined(__AVR_ATmega88P__) || defined(__AVR_ATmega168P__) || \
-      defined(__AVR_ATmega328P__) 
- /* TLS-Added 48P/88P/168P/328P */
- /* ATmega with one USART */
- #define ATMEGA_USART0
- #define UART0_RECEIVE_INTERRUPT   USART_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  USART_UDRE_vect
- #define UART0_STATUS   UCSR0A
- #define UART0_CONTROL  UCSR0B
- #define UART0_DATA     UDR0
- #define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATtiny2313__)
- #define ATMEGA_USART
- #define UART0_RECEIVE_INTERRUPT   USART_RX_vect 
- #define UART0_TRANSMIT_INTERRUPT  USART_UDRE_vect
- #define UART0_STATUS   UCSRA
- #define UART0_CONTROL  UCSRB
- #define UART0_DATA     UDR
- #define UART0_UDRIE    UDRIE
-#elif defined(__AVR_ATmega329__) ||\
-      defined(__AVR_ATmega649__) ||\
-      defined(__AVR_ATmega325__) ||defined(__AVR_ATmega3250__) ||\
-      defined(__AVR_ATmega645__) ||defined(__AVR_ATmega6450__)
-  /* ATmega with one USART */
-  #define ATMEGA_USART0
-  #define UART0_RECEIVE_INTERRUPT   USART0_RX_vect
-  #define UART0_TRANSMIT_INTERRUPT  USART0_UDRE_vect
-  #define UART0_STATUS   UCSR0A
-  #define UART0_CONTROL  UCSR0B
-  #define UART0_DATA     UDR0
-  #define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATmega3290__) ||\
-      defined(__AVR_ATmega6490__) 
-  /* TLS-Separated these two from the previous group because of inconsistency in the USART_RX */
-  /* ATmega with one USART */
-  #define ATMEGA_USART0
-  #define UART0_RECEIVE_INTERRUPT   USART_RX_vect
-  #define UART0_TRANSMIT_INTERRUPT  USART0_UDRE_vect
-  #define UART0_STATUS   UCSR0A
-  #define UART0_CONTROL  UCSR0B
-  #define UART0_DATA     UDR0
-  #define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega640__)
-/* ATmega with two USART */
-  #define ATMEGA_USART0
-  #define ATMEGA_USART1
-  #define UART0_RECEIVE_INTERRUPT   USART0_RX_vect
-  #define UART1_RECEIVE_INTERRUPT   USART0_UDRE_vect
-  #define UART0_TRANSMIT_INTERRUPT  USART1_RX_vect
-  #define UART1_TRANSMIT_INTERRUPT  USART1_UDRE_vect
-  #define UART0_STATUS   UCSR0A
-  #define UART0_CONTROL  UCSR0B
-  #define UART0_DATA     UDR0
-  #define UART0_UDRIE    UDRIE0
-  #define UART1_STATUS   UCSR1A
-  #define UART1_CONTROL  UCSR1B
-  #define UART1_DATA     UDR1
-  #define UART1_UDRIE    UDRIE1  
-#elif defined(__AVR_ATmega644__)
- /* ATmega with one USART */
- #define ATMEGA_USART0
- #define UART0_RECEIVE_INTERRUPT   USART0_RX_vect
- #define UART0_TRANSMIT_INTERRUPT  USART0_UDRE_vect
- #define UART0_STATUS   UCSR0A
- #define UART0_CONTROL  UCSR0B
- #define UART0_DATA     UDR0
- #define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATmega164P__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega644P__)
- /* ATmega with two USART */
- #define ATMEGA_USART0
- #define ATMEGA_USART1
- #define UART0_RECEIVE_INTERRUPT   USART0_RX_vect
- #define UART1_RECEIVE_INTERRUPT   USART0_UDRE_vect
- #define UART0_TRANSMIT_INTERRUPT  USART1_RX_vect
- #define UART1_TRANSMIT_INTERRUPT  USART1_UDRE_vect
- #define UART0_STATUS   UCSR0A
- #define UART0_CONTROL  UCSR0B
- #define UART0_DATA     UDR0
- #define UART0_UDRIE    UDRIE0
- #define UART1_STATUS   UCSR1A
- #define UART1_CONTROL  UCSR1B
- #define UART1_DATA     UDR1
- #define UART1_UDRIE    UDRIE1
-#else
- #error "no UART definition for MCU available"
+	uint8_t uart_timeout = 0;
 #endif
 
+// This buffer is used to store the bytes that will be sent by the RFM module.
+#ifdef UART_RX
+bool enable_write_eeprom = false;
+uint8_t bytes_to_read = 0;
+uint8_t bytes_pos = 0;
+bool send_data_avail = false;
 
-/*
- *  module global variables
- */
-static volatile unsigned char UART_TxBuf[UART_TX_BUFFER_SIZE];
-static volatile unsigned char UART_RxBuf[UART_RX_BUFFER_SIZE];
-static volatile unsigned char UART_TxHead;
-static volatile unsigned char UART_TxTail;
-static volatile unsigned char UART_RxHead;
-static volatile unsigned char UART_RxTail;
-static volatile unsigned char UART_LastRxError;
-
-#if defined( ATMEGA_USART1 )
-static volatile unsigned char UART1_TxBuf[UART_TX_BUFFER_SIZE];
-static volatile unsigned char UART1_RxBuf[UART_RX_BUFFER_SIZE];
-static volatile unsigned char UART1_TxHead;
-static volatile unsigned char UART1_TxTail;
-static volatile unsigned char UART1_RxHead;
-static volatile unsigned char UART1_RxTail;
-static volatile unsigned char UART1_LastRxError;
-#endif
-
-
-
-ISR(UART0_RECEIVE_INTERRUPT)
-/*************************************************************************
-Function: UART Receive Complete interrupt
-Purpose:  called when the UART has received a character
-**************************************************************************/
+// Store received byte in ringbuffer. No processing.
+ISR(USART_RX_vect)
 {
-    unsigned char tmphead;
-    unsigned char data;
-    unsigned char usr;
-    unsigned char lastRxError;
- 
- 
-    /* read UART status register and UART data register */ 
-    usr  = UART0_STATUS;
-    data = UART0_DATA;
-    
-    /* */
-#if defined( AT90_UART )
-    lastRxError = (usr & (_BV(FE)|_BV(DOR)) );
-#elif defined( ATMEGA_USART )
-    lastRxError = (usr & (_BV(FE)|_BV(DOR)) );
-#elif defined( ATMEGA_USART0 )
-    lastRxError = (usr & (_BV(FE0)|_BV(DOR0)) );
-#elif defined ( ATMEGA_UART )
-    lastRxError = (usr & (_BV(FE)|_BV(DOR)) );
-#endif
-        
-    /* calculate buffer index */ 
-    tmphead = ( UART_RxHead + 1) & UART_RX_BUFFER_MASK;
-    
-    if ( tmphead == UART_RxTail ) {
-        /* error: receive buffer overflow */
-        lastRxError = UART_BUFFER_OVERFLOW >> 8;
-    }else{
-        /* store new index */
-        UART_RxHead = tmphead;
-        /* store received data in buffer */
-        UART_RxBuf[tmphead] = data;
-    }
-    UART_LastRxError = lastRxError;   
+	if (rxbuf_count < RXBUF_LENGTH)
+	{
+		rxbuf[(rxbuf_startpos + rxbuf_count) % RXBUF_LENGTH] = UDR0;
+		rxbuf_count++;
+	} // else: Buffer overflow (undetected!)
 }
 
+#endif // UART_RX
 
-ISR(UART0_TRANSMIT_INTERRUPT)
-/*************************************************************************
-Function: UART Data Register Empty interrupt
-Purpose:  called when the UART is ready to transmit the next byte
-**************************************************************************/
+// configure UART using a specific UBBR value
+void uart_init_ubbr(uint16_t ubrr_val)
 {
-    unsigned char tmptail;
+#ifdef UART_DEBUG
+	PORTD |= 0x01;                          // switch on pull-up on RXD
 
-    
-    if ( UART_TxHead != UART_TxTail) {
-        /* calculate and store new buffer index */
-        tmptail = (UART_TxTail + 1) & UART_TX_BUFFER_MASK;
-        UART_TxTail = tmptail;
-        /* get one byte from buffer and write it to UART */
-        UART0_DATA = UART_TxBuf[tmptail];  /* start transmission */
-    }else{
-        /* tx buffer empty, disable UDRE interrupt */
-        UART0_CONTROL &= ~_BV(UART0_UDRIE);
-    }
-}
-
-
-/*************************************************************************
-Function: uart_init()
-Purpose:  initialize UART and set baudrate
-Input:    baudrate using macro UART_BAUD_SELECT()
-Returns:  none
-**************************************************************************/
-void uart_init(unsigned int baudrate)
-{
-    UART_TxHead = 0;
-    UART_TxTail = 0;
-    UART_RxHead = 0;
-    UART_RxTail = 0;
-    
-#if defined( AT90_UART )
-    /* set baud rate */
-    UBRR = (unsigned char)baudrate; 
-
-    /* enable UART receiver and transmmitter and receive complete interrupt */
-    UART0_CONTROL = _BV(RXCIE)|_BV(RXEN)|_BV(TXEN);
-
-#elif defined (ATMEGA_USART)
-    /* Set baud rate */
-    if ( baudrate & 0x8000 )
-    {
-    	 UART0_STATUS = (1<<U2X);  //Enable 2x speed 
-    	 baudrate &= ~0x8000;
-    }
-    UBRRH = (unsigned char)(baudrate>>8);
-    UBRRL = (unsigned char) baudrate;
-   
-    /* Enable USART receiver and transmitter and receive complete interrupt */
-    UART0_CONTROL = _BV(RXCIE)|(1<<RXEN)|(1<<TXEN);
-    
-    /* Set frame format: asynchronous, 8data, no parity, 1stop bit */
-    #ifdef URSEL
-    UCSRC = (1<<URSEL)|(3<<UCSZ0);
-    #else
-    UCSRC = (3<<UCSZ0);
-    #endif 
-    
-#elif defined (ATMEGA_USART0 )
-    /* Set baud rate */
-    if ( baudrate & 0x8000 ) 
-    {
-   		UART0_STATUS = (1<<U2X0);  //Enable 2x speed 
-   		baudrate &= ~0x8000;
-   	}
-    UBRR0H = (unsigned char)(baudrate>>8);
-    UBRR0L = (unsigned char) baudrate;
-
-    /* Enable USART receiver and transmitter and receive complete interrupt */
-    UART0_CONTROL = _BV(RXCIE0)|(1<<RXEN0)|(1<<TXEN0);
-    
-    /* Set frame format: asynchronous, 8data, no parity, 1stop bit */
-    #ifdef URSEL0
-    UCSR0C = (1<<URSEL0)|(3<<UCSZ00);
-    #else
-    UCSR0C = (3<<UCSZ00);
-    #endif 
-
-#elif defined ( ATMEGA_UART )
-    /* set baud rate */
-    if ( baudrate & 0x8000 ) 
-    {
-    	UART0_STATUS = (1<<U2X);  //Enable 2x speed 
-    	baudrate &= ~0x8000;
-    }
-    UBRRHI = (unsigned char)(baudrate>>8);
-    UBRR   = (unsigned char) baudrate;
-
-    /* Enable UART receiver and transmitter and receive complete interrupt */
-    UART0_CONTROL = _BV(RXCIE)|(1<<RXEN)|(1<<TXEN);
-
-#endif
-
-}/* uart_init */
-
-
-/*************************************************************************
-Function: uart_getc()
-Purpose:  return byte from ringbuffer  
-Returns:  lower byte:  received byte from ringbuffer
-          higher byte: last receive error
-**************************************************************************/
-unsigned int uart_getc(void)
-{    
-    unsigned char tmptail;
-    unsigned char data;
-
-
-    if ( UART_RxHead == UART_RxTail ) {
-        return UART_NO_DATA;   /* no data available */
-    }
-    
-    /* calculate /store buffer index */
-    tmptail = (UART_RxTail + 1) & UART_RX_BUFFER_MASK;
-    UART_RxTail = tmptail; 
-    
-    /* get data from receive buffer */
-    data = UART_RxBuf[tmptail];
-    
-    return (UART_LastRxError << 8) + data;
-
-}/* uart_getc */
-
-
-/*************************************************************************
-Function: uart_putc()
-Purpose:  write byte to ringbuffer for transmitting via UART
-Input:    byte to be transmitted
-Returns:  none          
-**************************************************************************/
-void uart_putc(unsigned char data)
-{
-    unsigned char tmphead;
-
-    
-    tmphead  = (UART_TxHead + 1) & UART_TX_BUFFER_MASK;
-    
-    while ( tmphead == UART_TxTail ){
-        ;/* wait for free space in buffer */
-    }
-    
-    UART_TxBuf[tmphead] = data;
-    UART_TxHead = tmphead;
-
-    /* enable UDRE interrupt */
-    UART0_CONTROL    |= _BV(UART0_UDRIE);
-
-}/* uart_putc */
-
-
-/*************************************************************************
-Function: uart_puts()
-Purpose:  transmit string to UART
-Input:    string to be transmitted
-Returns:  none          
-**************************************************************************/
-void uart_puts(const char *s )
-{
-    while (*s) 
-      uart_putc(*s++);
-
-}/* uart_puts */
-
-
-/*************************************************************************
-Function: uart_puts_p()
-Purpose:  transmit string from program memory to UART
-Input:    program memory string to be transmitted
-Returns:  none
-**************************************************************************/
-void uart_puts_p(const char *progmem_s )
-{
-    register char c;
-    
-    while ( (c = pgm_read_byte(progmem_s++)) ) 
-      uart_putc(c);
-
-}/* uart_puts_p */
-
-
-
-/*************************************************************************
-Function: uart_available()
-Purpose:  Determine the number of bytes waiting in the receive buffer
-Input:    None
-Returns:  Integer number of bytes in the receive buffer
-**************************************************************************/
-int uart_available(void)
-{
-        return (UART_RX_BUFFER_MASK + UART_RxHead - UART_RxTail) % UART_RX_BUFFER_MASK;
-}/* uart_available */
-
-
-
-/*************************************************************************
-Function: uart_flush()
-Purpose:  Flush bytes waiting the receive buffer.  Acutally ignores them.
-Input:    None
-Returns:  None
-**************************************************************************/
-void uart_flush(void)
-{
-        UART_RxHead = UART_RxTail;
-}/* uart_flush */
-
-
-/*
- * these functions are only for ATmegas with two USART
- */
-#if defined( ATMEGA_USART1 )
-
-SIGNAL(UART1_RECEIVE_INTERRUPT)
-/*************************************************************************
-Function: UART1 Receive Complete interrupt
-Purpose:  called when the UART1 has received a character
-**************************************************************************/
-{
-    unsigned char tmphead;
-    unsigned char data;
-    unsigned char usr;
-    unsigned char lastRxError;
+ 	UCSR0B |= (1 << TXEN0);                 // turn on UART TX
+ 	UCSR0C |= (1 << USBS0) | (3 << UCSZ00); // asynchronous mode 8N1
+ 	UCSR0B |= (1 << RXEN0 );                // turn on UART RX
  
- 
-    /* read UART status register and UART data register */ 
-    usr  = UART1_STATUS;
-    data = UART1_DATA;
-    
-    /* */
-    lastRxError = (usr & (_BV(FE1)|_BV(DOR1)) );
-        
-    /* calculate buffer index */ 
-    tmphead = ( UART1_RxHead + 1) & UART_RX_BUFFER_MASK;
-    
-    if ( tmphead == UART1_RxTail ) {
-        /* error: receive buffer overflow */
-        lastRxError = UART_BUFFER_OVERFLOW >> 8;
-    }else{
-        /* store new index */
-        UART1_RxHead = tmphead;
-        /* store received data in buffer */
-        UART1_RxBuf[tmphead] = data;
-    }
-    UART1_LastRxError = lastRxError;   
+ 	UBRR0H = (uint8_t)(ubrr_val >> 8);
+ 	UBRR0L = (uint8_t)(ubrr_val & 0xFF);
+
+#ifdef UART_RX
+	UCSR0B |= (1 << RXCIE0);                // activate rx IRQ
+#endif // UART_RX
+
+#endif // UART_DEBUG
 }
 
-
-SIGNAL(UART1_TRANSMIT_INTERRUPT)
-/*************************************************************************
-Function: UART1 Data Register Empty interrupt
-Purpose:  called when the UART1 is ready to transmit the next byte
-**************************************************************************/
+// configure UART using UBBR_VAL from makefile
+void uart_init(void)
 {
-    unsigned char tmptail;
-
-    
-    if ( UART1_TxHead != UART1_TxTail) {
-        /* calculate and store new buffer index */
-        tmptail = (UART1_TxTail + 1) & UART_TX_BUFFER_MASK;
-        UART1_TxTail = tmptail;
-        /* get one byte from buffer and write it to UART */
-        UART1_DATA = UART1_TxBuf[tmptail];  /* start transmission */
-    }else{
-        /* tx buffer empty, disable UDRE interrupt */
-        UART1_CONTROL &= ~_BV(UART1_UDRIE);
-    }
+	uart_init_ubbr(UBRR_VAL);
 }
 
-
-/*************************************************************************
-Function: uart1_init()
-Purpose:  initialize UART1 and set baudrate
-Input:    baudrate using macro UART_BAUD_SELECT()
-Returns:  none
-**************************************************************************/
-void uart1_init(unsigned int baudrate)
+#ifdef UART_DEBUG
+void uart_putc(char c)
 {
-    UART1_TxHead = 0;
-    UART1_TxTail = 0;
-    UART1_RxHead = 0;
-    UART1_RxTail = 0;
-    
+	while (!(UCSR0A & (1<<UDRE0))); /* warten bis Senden moeglich                   */
+	UDR0 = c;                       /* schreibt das Zeichen x auf die Schnittstelle */
+}
+#endif // UART_DEBUG
 
-    /* Set baud rate */
-    if ( baudrate & 0x8000 ) 
-    {
-    	UART1_STATUS = (1<<U2X1);  //Enable 2x speed 
-      baudrate &= ~0x8000;
-    }
-    UBRR1H = (unsigned char)(baudrate>>8);
-    UBRR1L = (unsigned char) baudrate;
-
-    /* Enable USART receiver and transmitter and receive complete interrupt */
-    UART1_CONTROL = _BV(RXCIE1)|(1<<RXEN1)|(1<<TXEN1);
-    
-    /* Set frame format: asynchronous, 8data, no parity, 1stop bit */   
-    #ifdef URSEL1
-    UCSR1C = (1<<URSEL1)|(3<<UCSZ10);
-    #else
-    UCSR1C = (3<<UCSZ10);
-    #endif 
-}/* uart_init */
-
-
-/*************************************************************************
-Function: uart1_getc()
-Purpose:  return byte from ringbuffer  
-Returns:  lower byte:  received byte from ringbuffer
-          higher byte: last receive error
-**************************************************************************/
-unsigned int uart1_getc(void)
-{    
-    unsigned char tmptail;
-    unsigned char data;
-
-
-    if ( UART1_RxHead == UART1_RxTail ) {
-        return UART_NO_DATA;   /* no data available */
-    }
-    
-    /* calculate /store buffer index */
-    tmptail = (UART1_RxTail + 1) & UART_RX_BUFFER_MASK;
-    UART1_RxTail = tmptail; 
-    
-    /* get data from receive buffer */
-    data = UART1_RxBuf[tmptail];
-    
-    return (UART1_LastRxError << 8) + data;
-
-}/* uart1_getc */
-
-
-/*************************************************************************
-Function: uart1_putc()
-Purpose:  write byte to ringbuffer for transmitting via UART
-Input:    byte to be transmitted
-Returns:  none          
-**************************************************************************/
-void uart1_putc(unsigned char data)
+void uart_putstr(char *str)
 {
-    unsigned char tmphead;
+#ifdef UART_DEBUG
+	while (*str)
+	{
+		uart_putc(*str++);
+	}
+#endif // UART_DEBUG
+}
 
-    
-    tmphead  = (UART1_TxHead + 1) & UART_TX_BUFFER_MASK;
-    
-    while ( tmphead == UART1_TxTail ){
-        ;/* wait for free space in buffer */
-    }
-    
-    UART1_TxBuf[tmphead] = data;
-    UART1_TxHead = tmphead;
-
-    /* enable UDRE interrupt */
-    UART1_CONTROL    |= _BV(UART1_UDRIE);
-
-}/* uart1_putc */
-
-
-/*************************************************************************
-Function: uart1_puts()
-Purpose:  transmit string to UART1
-Input:    string to be transmitted
-Returns:  none          
-**************************************************************************/
-void uart1_puts(const char *s )
+void uart_putstr_P(PGM_P str)
 {
-    while (*s) 
-      uart1_putc(*s++);
+#ifdef UART_DEBUG
+	char tmp;
 
-}/* uart1_puts */
+	while ((tmp = pgm_read_byte(str)))
+	{
+		uart_putc(tmp);
+		str++;
+	}
+#endif // UART_DEBUG
+}
 
-
-/*************************************************************************
-Function: uart1_puts_p()
-Purpose:  transmit string from program memory to UART1
-Input:    program memory string to be transmitted
-Returns:  none
-**************************************************************************/
-void uart1_puts_p(const char *progmem_s )
+void uart_putstr_P_B(PGM_P str)
 {
-    register char c;
-    
-    while ( (c = pgm_read_byte(progmem_s++)) ) 
-      uart1_putc(c);
+#ifdef UART_DEBUG
+	char tmp;
+	uint8_t oldlen = strlen(uartbuf);
+	uint8_t i = 0;
 
-}/* uart1_puts_p */
+	while ((tmp = pgm_read_byte(str)))
+	{
+		uartbuf[oldlen + i] = tmp;
+		str++;
+		i++;
+	}
+	
+	uartbuf[oldlen + i] = 0;
+#endif // UART_DEBUG
+}
 
-
-
-/*************************************************************************
-Function: uart1_available()
-Purpose:  Determine the number of bytes waiting in the receive buffer
-Input:    None
-Returns:  Integer number of bytes in the receive buffer
-**************************************************************************/
-int uart1_available(void)
+// printf for floating point numbers takes ~1500 bytes program size.
+// Therefore, we use a smaller special function instead
+// as long it is used so rarely.
+void print_signed(int16_t i)
 {
-        return (UART_RX_BUFFER_MASK + UART1_RxHead - UART1_RxTail) % UART_RX_BUFFER_MASK;
-}/* uart1_available */
+#ifdef UART_DEBUG
+	if (i < 0)
+	{
+		UART_PUTS("-");
+		i = -i;
+	}
+	
+	UART_PUTF2("%d.%02d", i / 100, i % 100);
+#endif // UART_DEBUG
+}
 
-
-
-/*************************************************************************
-Function: uart1_flush()
-Purpose:  Flush bytes waiting the receive buffer.  Acutally ignores them.
-Input:    None
-Returns:  None
-**************************************************************************/
-void uart1_flush(void)
+void print_bytearray(uint8_t * b, uint8_t len)
 {
-        UART1_RxHead = UART1_RxTail;
-}/* uart1_flush */
+#ifdef UART_DEBUG
+	uint8_t i;
+	
+	for (i = 0; i < len; i++)
+	{
+		UART_PUTF("%02x ", b[i]);
+	}
+	
+	UART_PUTS ("\r\n");
+#endif // UART_DEBUG
+}
 
-#endif
+#ifdef UART_RX
+
+// Process the user command now contained in the cmdbuf array.
+void process_cmd(void)
+{
+	uart_putstr("Processing command: ");
+	uart_putstr(cmdbuf);
+	UART_PUTS("\r\n");
+	
+	if ((cmdbuf[0] == 'w') && (strlen(cmdbuf) == 5)) // E2P write command
+	{
+		if (enable_write_eeprom)
+		{
+			uint16_t adr = hex_to_uint8((uint8_t *)cmdbuf, 1);
+			uint8_t val = hex_to_uint8((uint8_t *)cmdbuf, 3);
+			UART_PUTF2("Writing data 0x%x to EEPROM pos 0x%x.\r\n", val, adr);
+			eeprom_write_byte((uint8_t *)adr, val);
+		}
+		else
+		{
+			UART_PUTS("Ignoring EEPROM write, since write mode is DISABLED.\r\n");
+		}
+	}
+	else if ((cmdbuf[0] == 'r') && (strlen(cmdbuf) == 3)) // E2P read command
+	{
+		uint16_t adr = hex_to_uint8((uint8_t *)cmdbuf, 1);
+		uint8_t val = eeprom_read_byte((uint8_t *)adr);
+		UART_PUTF2("EEPROM value at position 0x%x is 0x%x.\r\n", adr, val);
+	}
+	else if ((cmdbuf[0] == 's') && (strlen(cmdbuf) > 6)) // "send" command
+	{
+		send_data_avail = true;
+	}
+	else if ((cmdbuf[0] == 'c') && (strlen(cmdbuf) > 14)) // "send" command with CRC
+	{
+		uint8_t len = strlen(cmdbuf);
+		
+		// Warning! The following two lines were originally in the reverse order.
+		// This obviously should not change anything.
+		// But the "avr-gcc (GCC) 4.7.2" on my linux machine produced a firmware
+		// which resulted in a wrong "calculated_crc" (whereas the
+		// "avr-gcc (WinAVR 20100110) 4.3.3" on my Windows machine didn't).
+		// I could recalculate the calculated_crc a 2nd time, call a UART_PUTS
+		// or some other commands, which all produced a firmware which did not
+		// have this issue. It's unknown why the GCC 4.7.2 produced this
+		// wrong output.
+		// Current workaround: I reversed the following two lines.
+
+		uint32_t given_crc = hex_to_uint32((uint8_t *)cmdbuf, len - 8);
+		uint32_t calculated_crc = crc32((uint8_t *)cmdbuf, len - 8);
+		
+		if (calculated_crc != given_crc)
+		{
+			UART_PUTF("CRC Error! %08lx does not match. Ignoring command.\r\n", calculated_crc);
+		}
+		else
+		{
+			cmdbuf[len - 8] = 0; // strip CRC from command
+			send_data_avail = true;
+		}
+	}
+	else
+	{
+		UART_PUTS("Unknown command.\r\n");
+	}
+}
+
+// Process all bytes in the UART RX ringbuffer ("rxbuf"). This function should be called in the
+// main loop. It can be interrupted by a UART RX interrupt, so additional bytes can be added
+// into the ringbuffer while this function is running.
+void process_rxbuf(void)
+{
+	// Only process characters if the cmdbuf is clear to be overwritten.
+	// If not, wait for the main loop to clear it by processing the user "send" command.	
+	if (send_data_avail)
+	{
+		return;
+	}
+	
+	while (rxbuf_count > 0)
+	{
+		char input;
+		
+		// get one char from the ringbuffer and reduce its size without interruption through the UART ISR
+		cli();
+		input = rxbuf[rxbuf_startpos];
+		rxbuf_startpos = (rxbuf_startpos + 1) % RXBUF_LENGTH;
+		rxbuf_count--;
+		sei();
+		
+		// process character	
+		if (uart_timeout == 0)
+		{
+			bytes_to_read = bytes_pos = 0;
+		}
+		
+		if (bytes_to_read > bytes_pos)
+		{
+			if (input == 13)
+			{
+				bytes_to_read = bytes_pos;
+			}
+			else if (((input >= 48) && (input <= 57)) || ((input >= 65) && (input <= 70)) || ((input >= 97) && (input <= 102)))
+			{
+				cmdbuf[bytes_pos] = input;
+				bytes_pos++;
+				UART_PUTF("*** 0x%x\r\n", hex_to_byte(input));
+			}
+			else
+			{
+				UART_PUTS("*** Illegal character. Use only 0..9, a..f, A..F. ***\r\n");
+			}
+			
+			if (bytes_pos == bytes_to_read)
+			{
+				cmdbuf[bytes_pos] = '\0';
+				//led_dbg(1);
+				process_cmd();
+			}
+		}	
+		else if (input == 'h')
+		{
+			UART_PUTS("*** Help ***\r\n");
+			UART_PUTS("h..............this help\r\n");
+			UART_PUTS("rAA............read EEPROM at hex address AA\r\n");
+			UART_PUTS("wAAXX..........write EEPROM at hex address AA to hex value XX\r\n");
+			UART_PUTS("x..............enable writing to EEPROM\r\n");
+			UART_PUTS("z..............disable writing to EEPROM\r\n");
+			UART_PUTS("sKKTT{D}.......Use AES key KK to send a packet with MessageType TT, followed\r\n");
+			UART_PUTS("               by all necessary extension header fields and message data D.\r\n");
+			UART_PUTS("               Fields are: ReceiverID (RRRR), MessageGroup (GG), MessageID (MM)\r\n");
+			UART_PUTS("               AckSenderID (SSSS), AckPacketCounter (PPPPPP), Error (EE).\r\n");
+			UART_PUTS("               MessageData (DD) can be 0..17 bytes with bits moved to the left.\r\n");
+			UART_PUTS("               End data with ENTER. SenderID, PacketCounter and CRC are automatically added.\r\n");
+			UART_PUTS("sKK00RRRRGGMMDD...........Get\r\n");
+			UART_PUTS("sKK01RRRRGGMMDD...........Set\r\n");
+			UART_PUTS("sKK02RRRRGGMMDD...........SetGet\r\n");
+			UART_PUTS("sKK08GGMMDD...............Status\r\n");
+			UART_PUTS("sKK09SSSSPPPPPPEE.........Ack\r\n");
+			UART_PUTS("sKK0ASSSSPPPPPPEEGGMMDD...AckStatus\r\n");
+			UART_PUTS("cKKTT{D}{CRC}..Same as s..., but a CRC32 checksum of the command has to be appended.\r\n");
+			UART_PUTS("               If it doesn't match, the command is ignored.\r\n");
+		}
+		else if (input == 'x')
+		{
+			enable_write_eeprom = true;
+			UART_PUTS("*** Writing to EEPROM is now ENABLED. ***\r\n");
+		}
+		else if (input == 'z')
+		{
+			enable_write_eeprom = false;
+			UART_PUTS("*** Writing to EEPROM is now DISABLED. ***\r\n");
+		}
+		else if (input == 'r')
+		{
+			UART_PUTS("*** Read from EEPROM. Enter address (2 characters). ***\r\n");
+			cmdbuf[0] = 'r';
+			bytes_to_read = 3;
+			bytes_pos = 1;
+		}
+		else if (input == 'w')
+		{
+			UART_PUTS("*** Write to EEPROM. Enter address and data (4 characters). ***\r\n");
+			cmdbuf[0] = 'w';
+			bytes_to_read = 5;
+			bytes_pos = 1;
+		}
+		else if (input == 's')
+		{
+			UART_PUTS("*** Enter data, finish with ENTER. ***\r\n");
+			cmdbuf[0] = 's';
+			bytes_to_read = 54; // 2 characters for key nr + 2 characters for MessageType + 16 characters for hdr.ext. + 2*17 characters for data
+			bytes_pos = 1;
+		}
+		else if (input == 'c')
+		{
+			UART_PUTS("*** Enter data, finish with ENTER. ***\r\n");
+			cmdbuf[0] = 'c';
+			bytes_to_read = 62; // 2 characters for key nr + 2 characters for MessageType + 16 characters for hdr.ext. + 2*17 characters for data + 8 characters for CRC
+			bytes_pos = 1;
+		}
+		else
+		{
+			UART_PUTS("*** Character ignored. Press h for help. ***\r\n");
+		}
+		
+		// enable user timeout if waiting for further input
+		uart_timeout = bytes_to_read == bytes_pos ? 0 : 255;
+	}
+}
+#endif // UART_RX
