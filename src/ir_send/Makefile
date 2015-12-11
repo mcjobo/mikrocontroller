@@ -1,6 +1,8 @@
 MCU=atmega328p
 
 F_CPU=8000000
+UART_DEBUG = 1
+UART_BAUD_RATE = 9600
 
 TARGET=ir_send
 
@@ -11,7 +13,15 @@ FUSES      = -U lfuse:w:0xe2:m -U hfuse:w:0xd9:m -U efuse:w:0x07:m
 CFLAGS = -g -Os -mmcu=$(MCU)
 CFLAGS += -D__AVR_ATmega328P__
 CFLAGS += -DF_CPU=$(F_CPU)UL
-
+CFLAGS += -DUART_BAUD_RATE=$(UART_BAUD_RATE)UL
+# add UART defines used to compile some object files
+ifeq ($(UART_DEBUG),1)
+	CFLAGS += -DUART_DEBUG
+	
+	ifeq ($(UART_RX),1)
+		CFLAGS += -DUART_RX
+	endif
+endif
 
 # you should not need to change anything below here
 #--------------------------------------------------------------------------------

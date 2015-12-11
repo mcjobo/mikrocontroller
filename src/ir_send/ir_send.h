@@ -39,7 +39,7 @@ static uint8_t netmask[4];
 // packet buffer
 #define BUFFER_SIZE 350
 static uint8_t buf[BUFFER_SIZE+1];
-
+	
 // set output to VCC, red LED off
 #define LED_ON LED_PORT |= _BV(LED_BIT)
 // set output to GND, red LED on

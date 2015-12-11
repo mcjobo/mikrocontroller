@@ -135,7 +135,7 @@ int main (void) {
     blink(100);
     blink(100);
 
-    uart_init(UART_BAUD_SELECT(9600,8000000));
+    uart_init();
     rprintfInit(uart_putc);
     rprintf("\r\nhello running\r\n");
 
