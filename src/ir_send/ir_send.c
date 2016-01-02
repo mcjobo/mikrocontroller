@@ -110,11 +110,25 @@ void bufferFunction(unsigned char c){
 }
 
 uint16_t parseString(char* string, uint8_t start, uint8_t length){
-    char buf[5];
-    memcpy( buf, &string[start], length );
-    uint16_t number = atoi(buf);
-    //rprintfStr(buf);rprintfCRLF();
-    //rprintf("parsed:'%d'%d'%d'\r\n", number, start, length);
+    int i = start+length-1;
+    int j = 0;
+    uint32_t number = 0;
+    for(; i>=start; --i){
+        uint16_t power = (pow(16.0, j)+0.5);
+        uint8_t digit = string[i];
+        if(digit >= 48 && digit <=57){
+            number += power * (digit - 48);
+        }
+        if(digit >= 65 && digit <=70){
+            number += power * (digit - 55);
+        }
+        if(digit >= 97 && digit <=102){
+            number += power * (digit - 87);
+        }
+        rprintf("'%d'%d'%d'%c'%d';;", i, j, power, digit, number);
+        ++j;
+    }
+    rprintf("parsed:'%d'%d'%d'\r\n", number, start, length);
     return number;
 }
 
@@ -182,7 +196,9 @@ int main (void) {
                 rprintf("\r\nco com\r\n", plen);
             } else if(memcmp("ir:", data, 3) == 0){
                 // example ir:pr=15;ad=00FF;co=1034;fl=00
-                rprintf("\r\nir command\r\n", plen);
+                rprintf("\r\nir command: \r\n");
+                rprintfStr(data);
+                rprintf("\r\n");
 
                 irmp_data.protocol = parseString(data, 6, 2);
                 irmp_data.address = parseString(data, 12, 4);

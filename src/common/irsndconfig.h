@@ -41,8 +41,8 @@
 
 // typical protocols, disable here!             Enable  Remarks                 F_INTERRUPTS            Program Space
 #define IRSND_SUPPORT_SIRCS_PROTOCOL            0       // Sony SIRCS           >= 10000                 ~200 bytes
-#define IRSND_SUPPORT_NEC_PROTOCOL              0       // NEC + APPLE          >= 10000                 ~100 bytes
-#define IRSND_SUPPORT_SAMSUNG_PROTOCOL          0       // Samsung + Samsung32  >= 10000                 ~300 bytes
+#define IRSND_SUPPORT_NEC_PROTOCOL              1       // NEC + APPLE          >= 10000                 ~100 bytes
+#define IRSND_SUPPORT_SAMSUNG_PROTOCOL          1       // Samsung + Samsung32  >= 10000                 ~300 bytes
 #define IRSND_SUPPORT_MATSUSHITA_PROTOCOL       0       // Matsushita           >= 10000                 ~200 bytes
 #define IRSND_SUPPORT_KASEIKYO_PROTOCOL         0       // Kaseikyo             >= 10000                 ~300 bytes
 

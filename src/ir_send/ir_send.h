@@ -3,6 +3,7 @@
 #include <avr/interrupt.h>
 #include <string.h>
 #include <avr/eeprom.h>
+#include <math.h>
 #include "ip_config.h"
 #include "../common/uart.h"
 #include "../common/rprintf.h"
@@ -14,7 +15,7 @@
 #include "../common/irsnd.h"
 #include "../common/timerx8.h"
 
-uint8_t dstip[4]={192,168,100,125};
+uint8_t dstip[4]={192,168,2,50};
 // listen port for udp
 uint16_t  listenUdpPort = 6500;
 

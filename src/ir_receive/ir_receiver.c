@@ -19,7 +19,7 @@
 #include "irmp.h"
 #include "timerx8.h"
 
-uint8_t dstip[4]={192,168,100,139};
+uint8_t dstip[4]={192,168,2,50};
 
 
 //
@@ -233,8 +233,8 @@ rprintf("before dhcp\n");
 
         if (irmp_get_data (&irmp_data))
         {
-            rprintf("prot:%d;addr:%d;com:%d;flags:%d\n", irmp_data.protocol, irmp_data.address, irmp_data.command, irmp_data.flags);
-            send_udp(buf, strBufRprintf, 50, 7001, dstip, 6000, gwmac);
+            rprintf("prot:%d;addr:%x;com:%x;flags:%d\n", irmp_data.protocol, irmp_data.address, irmp_data.command, irmp_data.flags);
+            send_udp(buf, strBufRprintf, 50, 7001, dstip, 5000, gwmac);
             uart_putstr(strBufRprintf);
             clearBuffer();
             blink(200);
