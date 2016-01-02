@@ -2,14 +2,14 @@
 <export version="D">
   <design>
     <source>/home/jbolay/src/mikrocontroller/kicad/motion-sensor/motion-sensor.sch</source>
-    <date>Sa 12 Dez 2015 23:26:33 CET</date>
+    <date>Di 29 Dez 2015 08:41:25 CET</date>
     <tool>Eeschema no-vcs-found-product</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
-        <title/>
-        <company/>
-        <rev/>
-        <date/>
+        <title>Motion Sensor with PWM LED Strip</title>
+        <company>Jörg Bolay</company>
+        <rev>1.0.0</rev>
+        <date>2015-12-13</date>
         <source>motion-sensor.sch</source>
         <comment number="1" value=""/>
         <comment number="2" value=""/>
@@ -20,130 +20,171 @@
   </design>
   <components>
     <comp ref="IC1">
-      <value>ATMEGA328P-A</value>
+      <value>ATMEGA328P-A AU 1537</value>
+      <footprint>Housings_QFP:TQFP-32_7x7mm_Pitch0.8mm</footprint>
+      <datasheet>http://www.atmel.com/images/atmel-8271-8-bit-avr-microcontroller-atmega48a-48pa-88a-88pa-168a-168pa-328-328p_datasheet_summary.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
       <libsource lib="atmel" part="ATMEGA328P-A"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566926EE</tstamp>
     </comp>
-    <comp ref="CIN1">
+    <comp ref="C3">
       <value>100uF</value>
-      <footprint>Capacitors_SMD:c_elec_4x5.8</footprint>
-      <libsource lib="device" part="CP"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5669299B</tstamp>
-    </comp>
-    <comp ref="COUT1">
-      <value>470uF</value>
-      <footprint>Capacitors_SMD:c_elec_6.3x5.8</footprint>
+      <footprint>Capacitors_SMD:c_elec_6.3x7.7</footprint>
+      <datasheet>https://www.reichelt.de/index.html?&amp;ACTION=7&amp;LA=3&amp;OPEN=0&amp;INDEX=0&amp;FILENAME=B300%252FDATASHEET_PANASONIC_VFP_SERIES.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
       <libsource lib="device" part="CP"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56692A0A</tstamp>
     </comp>
-    <comp ref="U1">
-      <value>LM2574HVH-3.3</value>
-      <libsource lib="motion-sensor-cache" part="LM2574HVH-3.3"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>56692AD3</tstamp>
-    </comp>
     <comp ref="D1">
       <value>B140F</value>
+      <footprint>Diodes_SMD:DO-214AB_Handsoldering</footprint>
+      <datasheet>http://cdn-reichelt.de/documents/datenblatt/A400/B120-B160.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
       <libsource lib="device" part="D_Schottky"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56692BF4</tstamp>
     </comp>
     <comp ref="L1">
-      <value>330uH</value>
+      <value>35uH</value>
+      <footprint>bolay library:SRN_1060_Power_Inductors</footprint>
+      <datasheet>http://www.bourns.com/docs/Product-Datasheets/SRN1060.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">SRN1060-470MCT-ND</field>
+      </fields>
       <libsource lib="device" part="INDUCTOR"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56692C8F</tstamp>
     </comp>
-    <comp ref="C3">
+    <comp ref="C2">
       <value>100nF</value>
       <footprint>Capacitors_SMD:C_1206_HandSoldering</footprint>
+      <datasheet>http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1276-2854-1-ND</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566944E6</tstamp>
     </comp>
     <comp ref="R1">
       <value>1K</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">311-1.0KERCT-ND</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56694619</tstamp>
     </comp>
     <comp ref="R2">
       <value>1M</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">311-1.0MERCT-ND</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56694914</tstamp>
     </comp>
     <comp ref="Q1">
-      <value>Q_NMOS_DGS</value>
+      <value>FDN337N</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23_Handsoldering</footprint>
+      <datasheet>https://www.fairchildsemi.com/datasheets/FD/FDN337N.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">FDN337NTR-ND</field>
+      </fields>
       <libsource lib="device" part="Q_NMOS_DGS"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56694EF9</tstamp>
     </comp>
     <comp ref="P1">
       <value>ISP</value>
+      <footprint>bolay library:6x1pin_50mil_header</footprint>
+      <datasheet>http://www.sullinscorp.com/drawings/86_LPPB___1NFS_-RC,_10965.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">S9005E-06-ND</field>
+      </fields>
       <libsource lib="conn" part="CONN_02X03"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5669831C</tstamp>
     </comp>
-    <comp ref="P3">
-      <value>CONN_01X03</value>
-      <libsource lib="conn" part="CONN_01X03"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>566A7590</tstamp>
-    </comp>
-    <comp ref="P4">
-      <value>CONN_01X03</value>
-      <libsource lib="conn" part="CONN_01X03"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>566A7C7F</tstamp>
-    </comp>
     <comp ref="CON1">
-      <value>BARREL_JACK</value>
+      <value>LUM 1613-14</value>
+      <footprint>bolay library:barrel_jack_ds_1613_14</footprint>
+      <datasheet>https://www.reichelt.de/index.html?&amp;ACTION=7&amp;LA=3&amp;OPEN=0&amp;INDEX=0&amp;FILENAME=C160%252FDS_1613_14.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
       <libsource lib="conn" part="BARREL_JACK"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566AC197</tstamp>
     </comp>
-    <comp ref="P5">
-      <value>CONN_01X02</value>
-      <libsource lib="conn" part="CONN_01X02"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>566ACA49</tstamp>
-    </comp>
     <comp ref="D3">
-      <value>LED</value>
+      <value>LED_STRIP</value>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
       <libsource lib="device" part="LED"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566AD052</tstamp>
     </comp>
     <comp ref="SW1">
       <value>Motion-Sensor-1</value>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
       <libsource lib="device" part="SWITCH_INV"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566B00C1</tstamp>
     </comp>
     <comp ref="SW2">
       <value>Motion-Sensor-2</value>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
       <libsource lib="device" part="SWITCH_INV"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566B0514</tstamp>
     </comp>
     <comp ref="P2">
       <value>ESP8266</value>
+      <footprint>bolay library:8pin_Header_SMD</footprint>
+      <datasheet>http://sullinscorp.com/drawings/103_NPxCxx2KFMx-RC,_10488-G.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">S5674-ND</field>
+      </fields>
       <libsource lib="conn" part="CONN_02X04"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566B21B4</tstamp>
     </comp>
     <comp ref="D2">
       <value>LED</value>
+      <footprint>LEDs:LED-1206</footprint>
+      <datasheet>http://optoelectronics.liteon.com/upload/download/DS22-2000-253/S_110_LTST-C230KRKT.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">160-1457-1-ND</field>
+      </fields>
       <libsource lib="device" part="LED"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566B37F7</tstamp>
     </comp>
     <comp ref="R3">
       <value>560</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">311-560ERCT-ND</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566B38A0</tstamp>
@@ -151,9 +192,145 @@
     <comp ref="C1">
       <value>100nF</value>
       <footprint>Capacitors_SMD:C_1206_HandSoldering</footprint>
+      <datasheet>http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1276-2854-1-ND</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>566C9FBD</tstamp>
+    </comp>
+    <comp ref="CIN1">
+      <value>50uF</value>
+      <footprint>Capacitors_SMD:c_elec_6.3x7.7</footprint>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+        <field name="Bemerkungen">100uF Kondens von reichelt</field>
+      </fields>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5669299B</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>0.33</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&amp;DocNm=1773269&amp;DocType=DS&amp;DocLang=English</datasheet>
+      <fields>
+        <field name="Schaltregler-Name">R_SC</field>
+        <field name="Digi-Key">A103274CT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>566F1004</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>18k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">311-18KERCT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>566F132C</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>11k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">RC1206JR-0711KL</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>566F13A6</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>MC34063</value>
+      <footprint>SMD_Packages:SOIC-8-N</footprint>
+      <datasheet>http://www.onsemi.com/pub_link/Collateral/MC34063A-D.PDF</datasheet>
+      <fields>
+        <field name="Digi-Key">497-7852-1-ND</field>
+      </fields>
+      <libsource lib="motion-sensor-rescue" part="MC34063-RESCUE-motion-sensor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>566F3D0D</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>160pF</value>
+      <footprint>Capacitors_SMD:C_1206_HandSoldering</footprint>
+      <datasheet>http://www.samsungsem.com/kr/support/product-search/mlcc/__icsFiles/afieldfile/2015/06/03/CL31C151JBCNNNC.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1276-2811-1-ND</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>566F646F</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>100nF</value>
+      <footprint>Capacitors_SMD:C_1206_HandSoldering</footprint>
+      <datasheet>http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1276-2854-1-ND</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5671D8BE</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>RJ10_4p4c</value>
+      <footprint>bolay library:RJ10_SMD_4p4c</footprint>
+      <datasheet>http://portal.fciconnect.com/Comergent//fci/drawing/73306.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">609-4469-1-ND</field>
+      </fields>
+      <libsource lib="bolay-library" part="RJ10_4p4c"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5680F36B</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>RJ10_4p4c</value>
+      <footprint>bolay library:RJ10_SMD_4p4c</footprint>
+      <datasheet>http://portal.fciconnect.com/Comergent//fci/drawing/73306.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">609-4469-1-ND</field>
+      </fields>
+      <libsource lib="bolay-library" part="RJ10_4p4c"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5680F75E</tstamp>
+    </comp>
+    <comp ref="CON2">
+      <value>LUM 1613-14</value>
+      <footprint>bolay library:barrel_jack_ds_1613_14</footprint>
+      <datasheet>https://www.reichelt.de/index.html?&amp;ACTION=7&amp;LA=3&amp;OPEN=0&amp;INDEX=0&amp;FILENAME=C160%252FDS_1613_14.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
+      <libsource lib="conn" part="BARREL_JACK"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>56823177</tstamp>
+    </comp>
+    <comp ref="D4">
+      <value>B140F</value>
+      <footprint>Diodes_SMD:DO-214AB_Handsoldering</footprint>
+      <datasheet>http://cdn-reichelt.de/documents/datenblatt/A400/B120-B160.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
+      <libsource lib="device" part="D_Schottky"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5682436C</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>Case</value>
+      <datasheet>http://www.hammondmfg.com/pdf/1551H.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">HM376-ND</field>
+      </fields>
+      <libsource lib="bolay-library" part="Case"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>56825B43</tstamp>
     </comp>
   </components>
   <libparts>
@@ -239,41 +416,6 @@
         <pin num="2" name="~" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="conn" part="CONN_01X02">
-      <description>Connector 01x02</description>
-      <footprints>
-        <fp>Pin_Header_Straight_1X02</fp>
-        <fp>Pin_Header_Angled_1X02</fp>
-        <fp>Socket_Strip_Straight_1X02</fp>
-        <fp>Socket_Strip_Angled_1X02</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">P</field>
-        <field name="Value">CONN_01X02</field>
-      </fields>
-      <pins>
-        <pin num="1" name="P1" type="passive"/>
-        <pin num="2" name="P2" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="conn" part="CONN_01X03">
-      <description>Connector 01x03</description>
-      <footprints>
-        <fp>Pin_Header_Straight_1X03</fp>
-        <fp>Pin_Header_Angled_1X03</fp>
-        <fp>Socket_Strip_Straight_1X03</fp>
-        <fp>Socket_Strip_Angled_1X03</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">P</field>
-        <field name="Value">CONN_01X03</field>
-      </fields>
-      <pins>
-        <pin num="1" name="P1" type="passive"/>
-        <pin num="2" name="P2" type="passive"/>
-        <pin num="3" name="P3" type="passive"/>
-      </pins>
-    </libpart>
     <libpart lib="conn" part="CONN_02X03">
       <description>Connector 02x03</description>
       <footprints>
@@ -337,6 +479,12 @@
         <pin num="2" name="~" type="passive"/>
       </pins>
     </libpart>
+    <libpart lib="bolay-library" part="Case">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">Case</field>
+      </fields>
+    </libpart>
     <libpart lib="device" part="D_Schottky">
       <description>Diode schottky</description>
       <footprints>
@@ -384,27 +532,20 @@
         <pin num="2" name="A" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="motion-sensor-cache" part="LM2574HVH-12">
-      <aliases>
-        <alias>LM2574HVH-3.3</alias>
-        <alias>LM2574HVH-5</alias>
-        <alias>LM2574HVH-15</alias>
-        <alias>LM2574HVH-ADJ</alias>
-      </aliases>
-      <footprints>
-        <fp>DIP*</fp>
-      </footprints>
+    <libpart lib="motion-sensor-rescue" part="MC34063-RESCUE-motion-sensor">
       <fields>
         <field name="Reference">U</field>
-        <field name="Value">LM2574HVH-12</field>
-        <field name="Footprint">DIP-8</field>
+        <field name="Value">MC34063-RESCUE-motion-sensor</field>
       </fields>
       <pins>
-        <pin num="1" name="FB" type="input"/>
-        <pin num="3" name="ON/~OFF" type="input"/>
-        <pin num="4" name="PGND" type="power_in"/>
-        <pin num="5" name="VIN" type="power_in"/>
-        <pin num="7" name="OUT" type="output"/>
+        <pin num="1" name="Sw_Coll" type="input"/>
+        <pin num="2" name="Sw_Emit" type="input"/>
+        <pin num="3" name="Tim_Cap" type="input"/>
+        <pin num="4" name="GND" type="power_in"/>
+        <pin num="5" name="V_Sense" type="input"/>
+        <pin num="6" name="VCC" type="power_in"/>
+        <pin num="7" name="I_Sense" type="input"/>
+        <pin num="8" name="Drv_Coll" type="input"/>
       </pins>
     </libpart>
     <libpart lib="device" part="Q_NMOS_DGS">
@@ -434,6 +575,20 @@
         <pin num="2" name="~" type="passive"/>
       </pins>
     </libpart>
+    <libpart lib="bolay-library" part="RJ10_4p4c">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">RJ10_4p4c</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+        <pin num="3" name="~" type="passive"/>
+        <pin num="4" name="~" type="passive"/>
+        <pin num="6" name="soulder_mount_2" type="passive"/>
+        <pin num="7" name="soulder_mount_1" type="passive"/>
+      </pins>
+    </libpart>
     <libpart lib="device" part="SWITCH_INV">
       <description>inverseur</description>
       <fields>
@@ -448,6 +603,9 @@
     </libpart>
   </libparts>
   <libraries>
+    <library logical="motion-sensor-rescue">
+      <uri>/home/jbolay/src/mikrocontroller/kicad/motion-sensor/motion-sensor-rescue.lib</uri>
+    </library>
     <library logical="device">
       <uri>/usr/share/kicad/library/device.lib</uri>
     </library>
@@ -457,175 +615,207 @@
     <library logical="atmel">
       <uri>/usr/share/kicad/library/atmel.lib</uri>
     </library>
-    <library logical="motion-sensor-cache">
-      <uri>/home/jbolay/src/mikrocontroller/kicad/motion-sensor/motion-sensor-cache.lib</uri>
+    <library logical="bolay-library">
+      <uri>/home/jbolay/src/mikrocontroller/kicad/library/bolay-library.lib</uri>
     </library>
   </libraries>
   <nets>
-    <net code="1" name="RESET">
-      <node ref="IC1" pin="29"/>
-      <node ref="P1" pin="5"/>
-    </net>
-    <net code="2" name="GND">
+    <net code="1" name="GND">
+      <node ref="J2" pin="6"/>
+      <node ref="J2" pin="4"/>
+      <node ref="C5" pin="2"/>
+      <node ref="C4" pin="2"/>
+      <node ref="P1" pin="6"/>
       <node ref="Q1" pin="3"/>
       <node ref="R2" pin="2"/>
+      <node ref="C2" pin="2"/>
+      <node ref="SW1" pin="3"/>
+      <node ref="SW2" pin="3"/>
+      <node ref="CON1" pin="3"/>
+      <node ref="J1" pin="7"/>
+      <node ref="J1" pin="6"/>
+      <node ref="J1" pin="4"/>
+      <node ref="J2" pin="7"/>
+      <node ref="U1" pin="4"/>
+      <node ref="R6" pin="1"/>
+      <node ref="P2" pin="7"/>
+      <node ref="R3" pin="2"/>
       <node ref="IC1" pin="21"/>
       <node ref="IC1" pin="5"/>
       <node ref="IC1" pin="3"/>
-      <node ref="COUT1" pin="2"/>
-      <node ref="CIN1" pin="2"/>
-      <node ref="P4" pin="3"/>
-      <node ref="CON1" pin="3"/>
       <node ref="CON1" pin="2"/>
-      <node ref="P3" pin="3"/>
-      <node ref="P1" pin="6"/>
-      <node ref="P2" pin="7"/>
-      <node ref="R3" pin="2"/>
-      <node ref="C3" pin="2"/>
       <node ref="D1" pin="2"/>
-      <node ref="U1" pin="4"/>
-      <node ref="U1" pin="3"/>
+      <node ref="C3" pin="2"/>
+      <node ref="CIN1" pin="2"/>
       <node ref="C1" pin="2"/>
-      <node ref="SW2" pin="1"/>
-      <node ref="SW1" pin="1"/>
+    </net>
+    <net code="2" name="Net-(Q1-Pad2)">
+      <node ref="Q1" pin="2"/>
+      <node ref="R2" pin="1"/>
+      <node ref="R1" pin="1"/>
     </net>
     <net code="3" name="+3V3">
-      <node ref="P2" pin="2"/>
-      <node ref="C3" pin="1"/>
-      <node ref="L1" pin="2"/>
-      <node ref="IC1" pin="4"/>
-      <node ref="P3" pin="1"/>
-      <node ref="P4" pin="1"/>
-      <node ref="COUT1" pin="1"/>
+      <node ref="J1" pin="1"/>
+      <node ref="CIN1" pin="1"/>
+      <node ref="C1" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="P1" pin="2"/>
+      <node ref="J2" pin="1"/>
+      <node ref="R5" pin="1"/>
+      <node ref="C2" pin="1"/>
+      <node ref="SW2" pin="1"/>
+      <node ref="SW1" pin="1"/>
       <node ref="IC1" pin="18"/>
       <node ref="IC1" pin="6"/>
-      <node ref="U1" pin="1"/>
-      <node ref="P1" pin="2"/>
-      <node ref="C1" pin="1"/>
-      <node ref="P2" pin="4"/>
-      <node ref="SW2" pin="3"/>
-      <node ref="SW1" pin="3"/>
-    </net>
-    <net code="4" name="MOSI">
-      <node ref="IC1" pin="15"/>
-      <node ref="P1" pin="4"/>
-    </net>
-    <net code="5" name="MISO">
-      <node ref="IC1" pin="16"/>
-      <node ref="P1" pin="1"/>
-    </net>
-    <net code="6" name="SCK">
-      <node ref="IC1" pin="17"/>
-      <node ref="P1" pin="3"/>
-    </net>
-    <net code="7" name="PWM_Pin">
-      <node ref="IC1" pin="10"/>
-      <node ref="R1" pin="2"/>
-    </net>
-    <net code="8" name="Motion_Sensor_Pin_2">
-      <node ref="IC1" pin="24"/>
-      <node ref="P4" pin="2"/>
-      <node ref="SW2" pin="2"/>
-    </net>
-    <net code="9" name="Motion_Sensor_Pin_1">
-      <node ref="IC1" pin="23"/>
-      <node ref="P3" pin="2"/>
-      <node ref="SW1" pin="2"/>
-    </net>
-    <net code="10" name="Net-(IC1-Pad26)">
-      <node ref="IC1" pin="26"/>
-    </net>
-    <net code="11" name="Net-(P2-Pad3)">
-      <node ref="P2" pin="3"/>
-    </net>
-    <net code="12" name="Net-(P2-Pad5)">
-      <node ref="P2" pin="5"/>
-    </net>
-    <net code="13" name="Net-(P2-Pad6)">
+      <node ref="IC1" pin="4"/>
+      <node ref="L1" pin="2"/>
       <node ref="P2" pin="6"/>
+      <node ref="P2" pin="2"/>
+      <node ref="P2" pin="4"/>
     </net>
-    <net code="14" name="Net-(IC1-Pad12)">
-      <node ref="IC1" pin="12"/>
+    <net code="4" name="Net-(R5-Pad2)">
+      <node ref="U1" pin="5"/>
+      <node ref="R5" pin="2"/>
+      <node ref="R6" pin="2"/>
     </net>
-    <net code="15" name="Net-(IC1-Pad13)">
-      <node ref="IC1" pin="13"/>
+    <net code="5" name="Motion_Sensor_Pin_1">
+      <node ref="SW1" pin="2"/>
+      <node ref="IC1" pin="23"/>
+      <node ref="J1" pin="2"/>
     </net>
-    <net code="16" name="Net-(IC1-Pad14)">
-      <node ref="IC1" pin="14"/>
+    <net code="6" name="Motion_Sensor_Pin_2">
+      <node ref="SW2" pin="2"/>
+      <node ref="J2" pin="2"/>
+      <node ref="IC1" pin="24"/>
     </net>
-    <net code="17" name="Net-(IC1-Pad7)">
-      <node ref="IC1" pin="7"/>
-    </net>
-    <net code="18" name="Net-(IC1-Pad8)">
-      <node ref="IC1" pin="8"/>
-    </net>
-    <net code="19" name="Net-(IC1-Pad27)">
-      <node ref="IC1" pin="27"/>
-    </net>
-    <net code="20" name="Net-(IC1-Pad28)">
-      <node ref="IC1" pin="28"/>
-    </net>
-    <net code="21" name="Net-(IC1-Pad32)">
-      <node ref="IC1" pin="32"/>
-    </net>
-    <net code="22" name="Net-(IC1-Pad1)">
-      <node ref="IC1" pin="1"/>
-    </net>
-    <net code="23" name="Net-(IC1-Pad2)">
-      <node ref="IC1" pin="2"/>
-    </net>
-    <net code="24" name="Net-(IC1-Pad9)">
-      <node ref="IC1" pin="9"/>
-    </net>
-    <net code="25" name="Net-(IC1-Pad11)">
-      <node ref="IC1" pin="11"/>
-    </net>
-    <net code="26" name="Net-(IC1-Pad22)">
-      <node ref="IC1" pin="22"/>
-    </net>
-    <net code="27" name="Net-(IC1-Pad19)">
-      <node ref="IC1" pin="19"/>
-    </net>
-    <net code="28" name="Net-(IC1-Pad20)">
-      <node ref="IC1" pin="20"/>
-    </net>
-    <net code="29" name="TXD">
-      <node ref="IC1" pin="31"/>
+    <net code="7" name="TXD">
       <node ref="P2" pin="1"/>
+      <node ref="IC1" pin="31"/>
     </net>
-    <net code="30" name="RXD">
-      <node ref="P2" pin="8"/>
+    <net code="8" name="RXD">
       <node ref="IC1" pin="30"/>
+      <node ref="P2" pin="8"/>
     </net>
-    <net code="31" name="Net-(D2-Pad1)">
-      <node ref="R3" pin="1"/>
-      <node ref="D2" pin="1"/>
-    </net>
-    <net code="32" name="LED_PIN">
+    <net code="9" name="LED_PIN">
       <node ref="IC1" pin="25"/>
       <node ref="D2" pin="2"/>
     </net>
-    <net code="33" name="Net-(D1-Pad1)">
-      <node ref="U1" pin="7"/>
-      <node ref="D1" pin="1"/>
-      <node ref="L1" pin="1"/>
+    <net code="10" name="Net-(D2-Pad1)">
+      <node ref="D2" pin="1"/>
+      <node ref="R3" pin="1"/>
     </net>
-    <net code="34" name="Net-(D3-Pad1)">
-      <node ref="Q1" pin="1"/>
-      <node ref="D3" pin="1"/>
-      <node ref="P5" pin="2"/>
+    <net code="11" name="PWM_Pin">
+      <node ref="IC1" pin="10"/>
+      <node ref="R1" pin="2"/>
     </net>
-    <net code="35" name="+12V">
+    <net code="12" name="SCK">
+      <node ref="IC1" pin="17"/>
+      <node ref="P1" pin="3"/>
+    </net>
+    <net code="13" name="MISO">
+      <node ref="IC1" pin="16"/>
+      <node ref="P1" pin="1"/>
+    </net>
+    <net code="14" name="MOSI">
+      <node ref="IC1" pin="15"/>
+      <node ref="P1" pin="4"/>
+    </net>
+    <net code="15" name="RESET">
+      <node ref="P1" pin="5"/>
+      <node ref="IC1" pin="29"/>
+    </net>
+    <net code="16" name="Net-(CON2-Pad1)">
       <node ref="D3" pin="2"/>
-      <node ref="U1" pin="5"/>
-      <node ref="CIN1" pin="1"/>
-      <node ref="CON1" pin="1"/>
-      <node ref="P5" pin="1"/>
+      <node ref="D4" pin="1"/>
+      <node ref="CON2" pin="1"/>
     </net>
-    <net code="36" name="Net-(Q1-Pad2)">
-      <node ref="R1" pin="1"/>
-      <node ref="Q1" pin="2"/>
-      <node ref="R2" pin="1"/>
+    <net code="17" name="+12V">
+      <node ref="D4" pin="2"/>
+      <node ref="R4" pin="2"/>
+      <node ref="U1" pin="6"/>
+      <node ref="C3" pin="1"/>
+      <node ref="CON1" pin="1"/>
+    </net>
+    <net code="18" name="Net-(CON2-Pad2)">
+      <node ref="Q1" pin="1"/>
+      <node ref="CON2" pin="3"/>
+      <node ref="CON2" pin="2"/>
+      <node ref="D3" pin="1"/>
+    </net>
+    <net code="19" name="Net-(J2-Pad3)">
+      <node ref="J2" pin="3"/>
+    </net>
+    <net code="20" name="Net-(J1-Pad3)">
+      <node ref="J1" pin="3"/>
+    </net>
+    <net code="21" name="Net-(C4-Pad1)">
+      <node ref="U1" pin="3"/>
+      <node ref="C4" pin="1"/>
+    </net>
+    <net code="22" name="Net-(D1-Pad1)">
+      <node ref="U1" pin="2"/>
+      <node ref="L1" pin="1"/>
+      <node ref="D1" pin="1"/>
+    </net>
+    <net code="23" name="Net-(IC1-Pad20)">
+      <node ref="IC1" pin="20"/>
+    </net>
+    <net code="24" name="Net-(IC1-Pad14)">
+      <node ref="IC1" pin="14"/>
+    </net>
+    <net code="25" name="Net-(IC1-Pad13)">
+      <node ref="IC1" pin="13"/>
+    </net>
+    <net code="26" name="Net-(IC1-Pad32)">
+      <node ref="IC1" pin="32"/>
+    </net>
+    <net code="27" name="Net-(IC1-Pad22)">
+      <node ref="IC1" pin="22"/>
+    </net>
+    <net code="28" name="Net-(IC1-Pad12)">
+      <node ref="IC1" pin="12"/>
+    </net>
+    <net code="29" name="Net-(IC1-Pad11)">
+      <node ref="IC1" pin="11"/>
+    </net>
+    <net code="30" name="Net-(IC1-Pad9)">
+      <node ref="IC1" pin="9"/>
+    </net>
+    <net code="31" name="Net-(IC1-Pad8)">
+      <node ref="IC1" pin="8"/>
+    </net>
+    <net code="32" name="Net-(IC1-Pad7)">
+      <node ref="IC1" pin="7"/>
+    </net>
+    <net code="33" name="Net-(IC1-Pad2)">
+      <node ref="IC1" pin="2"/>
+    </net>
+    <net code="34" name="Net-(IC1-Pad19)">
+      <node ref="IC1" pin="19"/>
+    </net>
+    <net code="35" name="Net-(IC1-Pad28)">
+      <node ref="IC1" pin="28"/>
+    </net>
+    <net code="36" name="Net-(IC1-Pad27)">
+      <node ref="IC1" pin="27"/>
+    </net>
+    <net code="37" name="Net-(IC1-Pad26)">
+      <node ref="IC1" pin="26"/>
+    </net>
+    <net code="38" name="Net-(P2-Pad3)">
+      <node ref="P2" pin="3"/>
+    </net>
+    <net code="39" name="Net-(P2-Pad5)">
+      <node ref="P2" pin="5"/>
+    </net>
+    <net code="40" name="Net-(R4-Pad1)">
+      <node ref="U1" pin="8"/>
+      <node ref="R4" pin="1"/>
+      <node ref="U1" pin="7"/>
+      <node ref="U1" pin="1"/>
+    </net>
+    <net code="41" name="Net-(IC1-Pad1)">
+      <node ref="IC1" pin="1"/>
     </net>
   </nets>
 </export>
