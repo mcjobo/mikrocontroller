@@ -233,7 +233,7 @@ rprintf("before dhcp\n");
 
         if (irmp_get_data (&irmp_data))
         {
-            rprintf("prot:%d;addr:%x;com:%x;flags:%d\n", irmp_data.protocol, irmp_data.address, irmp_data.command, irmp_data.flags);
+            rprintf("prot:%x;addr:%x;com:%x;flags:%x\n", irmp_data.protocol, irmp_data.address, irmp_data.command, irmp_data.flags);
             send_udp(buf, strBufRprintf, 50, 7001, dstip, 5000, gwmac);
             uart_putstr(strBufRprintf);
             clearBuffer();
