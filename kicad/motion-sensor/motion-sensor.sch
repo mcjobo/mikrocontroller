@@ -69,10 +69,10 @@ F 3 "" H 1200 1150 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CP C3
+L CP C1
 U 1 1 56692A0A
 P 1500 1750
-F 0 "C3" H 1525 1850 50  0000 L CNN
+F 0 "C1" H 1525 1850 50  0000 L CNN
 F 1 "100uF" H 1525 1650 50  0000 L CNN
 F 2 "Capacitors_SMD:c_elec_6.3x7.7" H 1538 1600 50  0001 C CNN
 F 3 "https://www.reichelt.de/index.html?&ACTION=7&LA=3&OPEN=0&INDEX=0&FILENAME=B300%252FDATASHEET_PANASONIC_VFP_SERIES.pdf" H 1500 1750 50  0001 C CNN
@@ -86,7 +86,7 @@ U 1 1 56692BF4
 P 3650 1550
 F 0 "D1" H 3650 1650 50  0000 C CNN
 F 1 "B140F" H 3650 1450 50  0000 C CNN
-F 2 "Diodes_SMD:DO-214AB_Handsoldering" H 3650 1550 50  0001 C CNN
+F 2 "Diodes_SMD:SMA_Handsoldering" H 3650 1550 50  0001 C CNN
 F 3 "http://cdn-reichelt.de/documents/datenblatt/A400/B120-B160.pdf" H 3650 1550 50  0001 C CNN
 F 4 "vorhanden" H 3650 1550 60  0001 C CNN "Digi-Key"
 	1    3650 1550
@@ -127,10 +127,10 @@ F 3 "" H 4700 1250 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C2
+L C C3
 U 1 1 566944E6
 P 2900 4500
-F 0 "C2" H 2925 4600 50  0000 L CNN
+F 0 "C3" H 2925 4600 50  0000 L CNN
 F 1 "100nF" H 2925 4400 50  0000 L CNN
 F 2 "Capacitors_SMD:C_1206_HandSoldering" H 2938 4350 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf" H 2900 4500 50  0001 C CNN
@@ -139,10 +139,10 @@ F 4 "1276-2854-1-ND" H 2900 4500 60  0001 C CNN "Digi-Key"
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R R5
 U 1 1 56694619
 P 8850 4500
-F 0 "R1" V 8930 4500 50  0000 C CNN
+F 0 "R5" V 8930 4500 50  0000 C CNN
 F 1 "1K" V 8850 4500 50  0000 C CNN
 F 2 "Resistors_SMD:R_1206_HandSoldering" V 8780 4500 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8850 4500 50  0001 C CNN
@@ -151,10 +151,10 @@ F 4 "311-1.0KERCT-ND" V 8850 4500 60  0001 C CNN "Digi-Key"
 	0    1    1    0   
 $EndComp
 $Comp
-L R R2
+L R R6
 U 1 1 56694914
 P 9100 4800
-F 0 "R2" V 9180 4800 50  0000 C CNN
+F 0 "R6" V 9180 4800 50  0000 C CNN
 F 1 "1M" V 9100 4800 50  0000 C CNN
 F 2 "Resistors_SMD:R_1206_HandSoldering" V 9030 4800 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9100 4800 50  0001 C CNN
@@ -232,10 +232,10 @@ F 4 "vorhanden" H 900 1700 60  0001 C CNN "Digi-Key"
 	1    0    0    -1  
 $EndComp
 $Comp
-L LED D3
+L LED D4
 U 1 1 566AD052
 P 10600 4200
-F 0 "D3" H 10600 4300 50  0000 C CNN
+F 0 "D4" H 10600 4300 50  0000 C CNN
 F 1 "LED_STRIP" H 10600 4100 50  0000 C CNN
 F 2 "" H 10600 4200 50  0000 C CNN
 F 3 "" H 10600 4200 50  0000 C CNN
@@ -331,9 +331,9 @@ Text GLabel 8000 2250 0    60   Input ~ 0
 Motion_Sensor_Pin_1
 Text GLabel 8000 3300 0    60   Input ~ 0
 Motion_Sensor_Pin_2
-Text GLabel 5250 4450 2    60   Input ~ 0
+Text GLabel 5250 5500 2    60   Input ~ 0
 Motion_Sensor_Pin_1
-Text GLabel 5250 4550 2    60   Input ~ 0
+Text GLabel 5250 5400 2    60   Input ~ 0
 Motion_Sensor_Pin_2
 Text GLabel 8600 4500 0    60   Input ~ 0
 PWM_Pin
@@ -376,17 +376,17 @@ U 1 1 566B37F7
 P 6100 1800
 F 0 "D2" H 6100 1900 50  0000 C CNN
 F 1 "LED" H 6100 1700 50  0000 C CNN
-F 2 "LEDs:LED-1206" H 6100 1800 50  0001 C CNN
+F 2 "LEDs:LED_1206" H 6100 1800 50  0001 C CNN
 F 3 "http://optoelectronics.liteon.com/upload/download/DS22-2000-253/S_110_LTST-C230KRKT.pdf" H 6100 1800 50  0001 C CNN
 F 4 "160-1457-1-ND" H 6100 1800 60  0001 C CNN "Digi-Key"
 	1    6100 1800
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R3
+L R R4
 U 1 1 566B38A0
 P 6100 2200
-F 0 "R3" V 6180 2200 50  0000 C CNN
+F 0 "R4" V 6180 2200 50  0000 C CNN
 F 1 "560" V 6100 2200 50  0000 C CNN
 F 2 "Resistors_SMD:R_1206_HandSoldering" V 6030 2200 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 6100 2200 50  0001 C CNN
@@ -412,8 +412,6 @@ NoConn ~ 3250 5050
 NoConn ~ 5150 5900
 NoConn ~ 5150 5700
 NoConn ~ 5150 5600
-NoConn ~ 5150 5500
-NoConn ~ 5150 5400
 NoConn ~ 5150 4950
 NoConn ~ 5150 4850
 NoConn ~ 5150 4750
@@ -483,10 +481,10 @@ F 3 "" H 8450 1350 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C1
+L C C5
 U 1 1 566C9FBD
 P 8350 5850
-F 0 "C1" H 8375 5950 50  0000 L CNN
+F 0 "C5" H 8375 5950 50  0000 L CNN
 F 1 "100nF" H 8375 5750 50  0000 L CNN
 F 2 "Capacitors_SMD:C_1206_HandSoldering" H 8388 5700 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf" H 8350 5850 50  0001 C CNN
@@ -516,10 +514,10 @@ F 5 "100uF Kondens von reichelt" H 4600 1650 60  0001 C CNN "Bemerkungen"
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R4
+L R R1
 U 1 1 566F1004
 P 2000 1200
-F 0 "R4" V 2080 1200 50  0000 C CNN
+F 0 "R1" V 2080 1200 50  0000 C CNN
 F 1 "0.33" V 2000 1200 50  0000 C CNN
 F 2 "Resistors_SMD:R_1206_HandSoldering" V 1930 1200 50  0001 C CNN
 F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=1773269&DocType=DS&DocLang=English" H 2000 1200 50  0001 C CNN
@@ -529,10 +527,10 @@ F 5 "A103274CT-ND" V 2000 1200 60  0001 C CNN "Digi-Key"
 	0    1    1    0   
 $EndComp
 $Comp
-L R R5
+L R R2
 U 1 1 566F132C
 P 4300 1600
-F 0 "R5" V 4380 1600 50  0000 C CNN
+F 0 "R2" V 4380 1600 50  0000 C CNN
 F 1 "18k" V 4300 1600 50  0000 C CNN
 F 2 "Resistors_SMD:R_1206_HandSoldering" H 4230 1600 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4300 1600 50  0001 C CNN
@@ -541,10 +539,10 @@ F 4 "311-18KERCT-ND" V 4300 1600 60  0001 C CNN "Digi-Key"
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R6
+L R R3
 U 1 1 566F13A6
 P 4300 2050
-F 0 "R6" H 4380 2050 50  0000 C CNN
+F 0 "R3" H 4380 2050 50  0000 C CNN
 F 1 "11k" V 4300 2050 50  0000 C CNN
 F 2 "Resistors_SMD:R_1206_HandSoldering" H 4230 2050 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4300 2050 50  0001 C CNN
@@ -654,10 +652,6 @@ Wire Wire Line
 	8000 5600 7850 5600
 Wire Wire Line
 	8700 4500 8600 4500
-Wire Wire Line
-	5250 4550 5150 4550
-Wire Wire Line
-	5250 4450 5150 4450
 Wire Wire Line
 	3800 7300 3700 7300
 Wire Wire Line
@@ -818,10 +812,10 @@ Wire Notes Line
 Wire Wire Line
 	4300 1300 4900 1300
 $Comp
-L C C4
+L C C2
 U 1 1 566F646F
 P 1700 2100
-F 0 "C4" H 1725 2200 50  0000 L CNN
+F 0 "C2" H 1725 2200 50  0000 L CNN
 F 1 "160pF" H 1725 2000 50  0000 L CNN
 F 2 "Capacitors_SMD:C_1206_HandSoldering" H 1738 1950 50  0001 C CNN
 F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/__icsFiles/afieldfile/2015/06/03/CL31C151JBCNNNC.pdf" H 1700 2100 50  0001 C CNN
@@ -830,10 +824,10 @@ F 4 "1276-2811-1-ND" H 1700 2100 60  0001 C CNN "Digi-Key"
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C5
+L C C4
 U 1 1 5671D8BE
 P 8200 2050
-F 0 "C5" H 8225 2150 50  0000 L CNN
+F 0 "C4" H 8225 2150 50  0000 L CNN
 F 1 "100nF" H 8225 1950 50  0000 L CNN
 F 2 "Capacitors_SMD:C_1206_HandSoldering" H 8238 1900 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf" H 8200 2050 50  0001 C CNN
@@ -846,30 +840,6 @@ Wire Wire Line
 Connection ~ 1700 2300
 Wire Wire Line
 	8000 5800 7850 5800
-$Comp
-L RJ10_4p4c J2
-U 1 1 5680F36B
-P 8900 2800
-F 0 "J2" H 9100 3300 50  0000 C CNN
-F 1 "RJ10_4p4c" H 8750 3300 50  0000 C CNN
-F 2 "bolay library:RJ10_SMD_4p4c" H 8900 2800 50  0001 C CNN
-F 3 "http://portal.fciconnect.com/Comergent//fci/drawing/73306.pdf" H 8900 2800 50  0001 C CNN
-F 4 "609-4469-1-ND" H 8900 2800 60  0001 C CNN "Digi-Key"
-	1    8900 2800
-	1    0    0    -1  
-$EndComp
-$Comp
-L RJ10_4p4c J1
-U 1 1 5680F75E
-P 8900 1600
-F 0 "J1" H 9100 2100 50  0000 C CNN
-F 1 "RJ10_4p4c" H 8750 2100 50  0000 C CNN
-F 2 "bolay library:RJ10_SMD_4p4c" H 8900 1600 50  0001 C CNN
-F 3 "http://portal.fciconnect.com/Comergent//fci/drawing/73306.pdf" H 8900 1600 50  0001 C CNN
-F 4 "609-4469-1-ND" H 8900 1600 60  0001 C CNN "Digi-Key"
-	1    8900 1600
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9400 1200 9400 3250
 Wire Wire Line
@@ -938,12 +908,12 @@ Wire Wire Line
 	9750 4100 9750 3950
 Connection ~ 9750 4300
 $Comp
-L D_Schottky D4
+L D_Schottky D3
 U 1 1 5682436C
 P 9550 4100
-F 0 "D4" H 9550 4200 50  0000 C CNN
+F 0 "D3" H 9550 4200 50  0000 C CNN
 F 1 "B140F" H 9550 4000 50  0000 C CNN
-F 2 "Diodes_SMD:DO-214AB_Handsoldering" H 9550 4100 50  0001 C CNN
+F 2 "Diodes_SMD:SMA_Handsoldering" H 9550 4100 50  0001 C CNN
 F 3 "http://cdn-reichelt.de/documents/datenblatt/A400/B120-B160.pdf" H 9550 4100 50  0001 C CNN
 F 4 "vorhanden" H 9550 4100 60  0001 C CNN "Digi-Key"
 	1    9550 4100
@@ -961,8 +931,140 @@ F 0 "U2" H 6500 7300 60  0000 C CNN
 F 1 "Case" H 6550 7700 60  0000 C CNN
 F 2 "" H 6500 7500 60  0000 C CNN
 F 3 "http://www.hammondmfg.com/pdf/1551H.pdf" H 6500 7500 60  0001 C CNN
-F 4 "HM376-ND" H 6500 7500 60  0001 C CNN "Digi-Key"
+F 4 "HM361-ND" H 6500 7500 60  0001 C CNN "Digi-Key"
 	1    6500 7500
 	1    0    0    -1  
 $EndComp
+$Comp
+L RJ10_4p4c J2
+U 1 1 56912E30
+P 8900 2800
+F 0 "J2" H 9100 3300 50  0000 C CNN
+F 1 "RJ10_4p4c" H 8750 3300 50  0000 C CNN
+F 2 "bolay library:RJ10_SMD_4p4c" H 8900 2800 50  0001 C CNN
+F 3 "http://portal.fciconnect.com/Comergent//fci/drawing/73306.pdf" H 8900 2800 50  0001 C CNN
+F 4 "609-4469-1-ND" H 8900 2800 60  0001 C CNN "Digi-Key"
+	1    8900 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L RJ10_4p4c J1
+U 1 1 5691303D
+P 8900 1600
+F 0 "J1" H 9100 2100 50  0000 C CNN
+F 1 "RJ10_4p4c" H 8750 2100 50  0000 C CNN
+F 2 "bolay library:RJ10_SMD_4p4c" H 8900 1600 50  0001 C CNN
+F 3 "http://portal.fciconnect.com/Comergent//fci/drawing/73306.pdf" H 8900 1600 50  0001 C CNN
+F 4 "609-4469-1-ND" H 8900 1600 60  0001 C CNN "Digi-Key"
+	1    8900 1600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 5400 5250 5400
+Wire Wire Line
+	5150 5500 5250 5500
+NoConn ~ 5150 4450
+NoConn ~ 5150 4550
+$Comp
+L +3.3V #PWR020
+U 1 1 56B23B4C
+P 1850 3400
+F 0 "#PWR020" H 1850 3250 50  0001 C CNN
+F 1 "+3.3V" H 1850 3540 50  0000 C CNN
+F 2 "" H 1850 3400 50  0000 C CNN
+F 3 "" H 1850 3400 50  0000 C CNN
+	1    1850 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L +3.3V #PWR021
+U 1 1 56B23BAE
+P 2250 3400
+F 0 "#PWR021" H 2250 3250 50  0001 C CNN
+F 1 "+3.3V" H 2250 3540 50  0000 C CNN
+F 2 "" H 2250 3400 50  0000 C CNN
+F 3 "" H 2250 3400 50  0000 C CNN
+	1    2250 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR022
+U 1 1 56B23D32
+P 1850 4150
+F 0 "#PWR022" H 1850 3900 50  0001 C CNN
+F 1 "GND" H 1850 4000 50  0000 C CNN
+F 2 "" H 1850 4150 50  0000 C CNN
+F 3 "" H 1850 4150 50  0000 C CNN
+	1    1850 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR023
+U 1 1 56B23D94
+P 2250 4150
+F 0 "#PWR023" H 2250 3900 50  0001 C CNN
+F 1 "GND" H 2250 4000 50  0000 C CNN
+F 2 "" H 2250 4150 50  0000 C CNN
+F 3 "" H 2250 4150 50  0000 C CNN
+	1    2250 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R7
+U 1 1 56B23ECF
+P 2050 3500
+F 0 "R7" V 2130 3500 50  0000 C CNN
+F 1 "0" V 2050 3500 50  0000 C CNN
+F 2 "Resistors_SMD:R_1206_HandSoldering" V 1980 3500 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2050 3500 50  0001 C CNN
+F 4 "311-0.0ERCT-ND" H 2050 3500 60  0001 C CNN "Digi-Key"
+	1    2050 3500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1850 3400 1850 3500
+Wire Wire Line
+	1850 3500 1900 3500
+Wire Wire Line
+	2200 3500 2250 3500
+Wire Wire Line
+	2250 3500 2250 3400
+Wire Wire Line
+	2250 3900 2250 4150
+Wire Wire Line
+	2250 4050 2200 4050
+Wire Wire Line
+	1900 4050 1850 4050
+Wire Wire Line
+	1850 3900 1850 4150
+$Comp
+L R R8
+U 1 1 56B243CB
+P 2050 4050
+F 0 "R8" V 2130 4050 50  0000 C CNN
+F 1 "0" V 2050 4050 50  0000 C CNN
+F 2 "Resistors_SMD:R_1206_HandSoldering" V 1980 4050 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2050 4050 50  0001 C CNN
+F 4 "311-0.0ERCT-ND" H 2050 4050 60  0001 C CNN "Digi-Key"
+	1    2050 4050
+	0    1    1    0   
+$EndComp
+$Comp
+L R R9
+U 1 1 56B24DF4
+P 2050 3900
+F 0 "R9" V 2130 3900 50  0000 C CNN
+F 1 "0" V 2050 3900 50  0000 C CNN
+F 2 "Resistors_SMD:R_1206_HandSoldering" V 1980 3900 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2050 3900 50  0001 C CNN
+F 4 "311-0.0ERCT-ND" H 2050 3900 60  0001 C CNN "Digi-Key"
+	1    2050 3900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2200 3900 2250 3900
+Connection ~ 2250 4050
+Wire Wire Line
+	1900 3900 1850 3900
+Connection ~ 1850 4050
 $EndSCHEMATC
