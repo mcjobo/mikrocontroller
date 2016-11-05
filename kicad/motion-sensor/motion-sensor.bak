@@ -165,13 +165,13 @@ $EndComp
 $Comp
 L Q_NMOS_DGS Q1
 U 1 1 56694EF9
-P 9400 4500
-F 0 "Q1" H 9700 4550 50  0000 R CNN
-F 1 "FDN337N" H 10050 4450 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 9600 4600 50  0001 C CNN
-F 3 "https://www.fairchildsemi.com/datasheets/FD/FDN337N.pdf" H 9400 4500 50  0001 C CNN
-F 4 "FDN337NTR-ND" H 9400 4500 60  0001 C CNN "Digi-Key"
-	1    9400 4500
+P 9400 4700
+F 0 "Q1" H 9700 4750 50  0000 R CNN
+F 1 "FDN337N" H 10050 4650 50  0000 R CNN
+F 2 "bolay library:SOT-23_Handsoldering-FDN-337N" H 9600 4800 50  0001 C CNN
+F 3 "https://www.fairchildsemi.com/datasheets/FD/FDN337N.pdf" H 9400 4700 50  0001 C CNN
+F 4 "FDN337NTR-ND" H 9400 4700 60  0001 C CNN "Digi-Key"
+	1    9400 4700
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -730,12 +730,11 @@ Connection ~ 9500 4950
 Wire Wire Line
 	9100 4950 9500 4950
 Wire Wire Line
-	9500 4700 9500 5050
-Connection ~ 9100 4500
+	9500 4900 9500 5050
 Wire Wire Line
 	9100 4650 9100 4500
 Wire Wire Line
-	9000 4500 9200 4500
+	9100 4500 9000 4500
 Wire Wire Line
 	1200 2350 1450 2350
 Wire Wire Line
@@ -903,8 +902,6 @@ $EndComp
 Wire Wire Line
 	9750 4200 9750 4450
 Wire Wire Line
-	9750 4300 9500 4300
-Wire Wire Line
 	9750 4100 9750 3950
 Connection ~ 9750 4300
 $Comp
@@ -990,23 +987,23 @@ $EndComp
 $Comp
 L GND #PWR4
 U 1 1 56B23D32
-P 1850 3850
-F 0 "#PWR4" H 1850 3600 50  0001 C CNN
-F 1 "GND" H 1850 3700 50  0000 C CNN
-F 2 "" H 1850 3850 50  0000 C CNN
-F 3 "" H 1850 3850 50  0000 C CNN
-	1    1850 3850
+P 1850 4150
+F 0 "#PWR4" H 1850 3900 50  0001 C CNN
+F 1 "GND" H 1850 4000 50  0000 C CNN
+F 2 "" H 1850 4150 50  0000 C CNN
+F 3 "" H 1850 4150 50  0000 C CNN
+	1    1850 4150
 	1    0    0    -1  
 $EndComp
 $Comp
 L GND #PWR6
 U 1 1 56B23D94
-P 2250 3850
-F 0 "#PWR6" H 2250 3600 50  0001 C CNN
-F 1 "GND" H 2250 3700 50  0000 C CNN
-F 2 "" H 2250 3850 50  0000 C CNN
-F 3 "" H 2250 3850 50  0000 C CNN
-	1    2250 3850
+P 2250 4150
+F 0 "#PWR6" H 2250 3900 50  0001 C CNN
+F 1 "GND" H 2250 4000 50  0000 C CNN
+F 2 "" H 2250 4150 50  0000 C CNN
+F 3 "" H 2250 4150 50  0000 C CNN
+	1    2250 4150
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1030,23 +1027,66 @@ Wire Wire Line
 Wire Wire Line
 	2250 3500 2250 3400
 Wire Wire Line
-	2250 3850 2250 3750
+	2250 3900 2250 4150
 Wire Wire Line
-	2250 3750 2200 3750
+	2250 4050 2200 4050
 Wire Wire Line
-	1900 3750 1850 3750
+	1900 4050 1850 4050
 Wire Wire Line
-	1850 3750 1850 3850
+	1850 3900 1850 4150
 $Comp
 L R R8
 U 1 1 56B243CB
-P 2050 3750
-F 0 "R8" V 2130 3750 50  0000 C CNN
-F 1 "0" V 2050 3750 50  0000 C CNN
-F 2 "Resistors_SMD:R_1206_HandSoldering" V 1980 3750 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2050 3750 50  0001 C CNN
-F 4 "311-0.0ERCT-ND" H 2050 3750 60  0001 C CNN "Digi-Key"
-	1    2050 3750
+P 2050 4050
+F 0 "R8" V 2130 4050 50  0000 C CNN
+F 1 "0" V 2050 4050 50  0000 C CNN
+F 2 "Resistors_SMD:R_1206_HandSoldering" V 1980 4050 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2050 4050 50  0001 C CNN
+F 4 "311-0.0ERCT-ND" H 2050 4050 60  0001 C CNN "Digi-Key"
+	1    2050 4050
 	0    1    1    0   
 $EndComp
+$Comp
+L R R9
+U 1 1 56B24DF4
+P 2050 3900
+F 0 "R9" V 2130 3900 50  0000 C CNN
+F 1 "0" V 2050 3900 50  0000 C CNN
+F 2 "Resistors_SMD:R_1206_HandSoldering" V 1980 3900 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2050 3900 50  0001 C CNN
+F 4 "311-0.0ERCT-ND" H 2050 3900 60  0001 C CNN "Digi-Key"
+	1    2050 3900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2200 3900 2250 3900
+Connection ~ 2250 4050
+Wire Wire Line
+	1900 3900 1850 3900
+Connection ~ 1850 4050
+Wire Wire Line
+	9200 4600 9200 4700
+Wire Wire Line
+	9200 4600 9100 4600
+Connection ~ 9100 4600
+$Comp
+L R R10
+U 1 1 56C89AC4
+P 9550 4300
+F 0 "R10" V 9630 4300 50  0000 C CNN
+F 1 "0" V 9550 4300 50  0000 C CNN
+F 2 "Resistors_SMD:R_1206_HandSoldering" V 9480 4300 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9550 4300 50  0001 C CNN
+F 4 "311-0.0ERCT-ND" H 9550 4300 60  0001 C CNN "Digi-Key"
+	1    9550 4300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9750 4300 9700 4300
+Wire Wire Line
+	9400 4300 9400 4450
+Wire Wire Line
+	9400 4450 9500 4450
+Wire Wire Line
+	9500 4450 9500 4500
 $EndSCHEMATC

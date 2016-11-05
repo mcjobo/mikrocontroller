@@ -1,0 +1,11 @@
+M48
+;DRILL file {KiCad no-vcs-found-product} date Fri Nov  4 22:44:58 2016
+;FORMAT={2:4/ absolute / inch / keep zeros}
+FMAT,2
+INCH,TZ
+%
+G90
+G05
+M72
+T0
+M30
