@@ -280,6 +280,95 @@ long timer2GetOverflowCount(void)
 }
 #endif
 
+void timer0PWMInit()
+{
+	// configures timer0 for use with PWM output
+	// on OC0A and OC0B pins
+
+	sbi(DDRD, PD6);
+
+	// default 8bit mode
+	sbi(TCCR0A, COM0A1);
+	sbi(TCCR0A, WGM01);
+	sbi(TCCR0A, WGM00);
+	sbi(TCCR0B, CS01);
+	sbi(TCCR0B, CS00);
+
+	// clear output compare value A
+	OCR0A = 0;
+	// clear output compare value B
+	OCR0B = 0;
+}
+
+void timer0PWMOff(void)
+{
+	// turn off timer1 PWM mode
+	cbi(TCCR0A,PWM11);
+	cbi(TCCR0A,PWM10);
+	// set PWM1A/B (OutputCompare action) to none
+	timer1PWMAOff();
+	timer1PWMBOff();
+}
+
+void timer0PWMAOn(void)
+{
+	// turn on channel A (OC0A) PWM output
+	// set OC1A as non-inverted PWM
+	sbi(TCCR0A,COM0A1);
+	//cbi(TCCR0A,COM0A0);
+}
+
+void timer0PWMBOn(void)
+{
+	// turn on channel B (OC0B) PWM output
+	// set OC1B as non-inverted PWM
+	sbi(TCCR0A,COM0B1);
+	cbi(TCCR0A,COM0B0);
+}
+
+void timer0PWMAOff(void)
+{
+	// turn off channel A (OC0A) PWM output
+	// set OC1A (OutputCompare action) to none
+	cbi(TCCR0A,COM0A1);
+	//cbi(TCCR0A,COM0A0);
+}
+
+void timer0PWMBOff(void)
+{
+	// turn off channel B (OC0B) PWM output
+	// set OC1B (OutputCompare action) to none
+	cbi(TCCR0A,COM0B1);
+	cbi(TCCR0A,COM0B0);
+}
+
+void timer0PWMASet(u08 pwmDuty)
+{
+	// set PWM (output compare) duty for channel A
+	// this PWM output is generated on OC1A pin
+	// NOTE:	pwmDuty should be in the range 0-255 for 8bit PWM
+	//			pwmDuty should be in the range 0-511 for 9bit PWM
+	//			pwmDuty should be in the range 0-1023 for 10bit PWM
+	//outp( (pwmDuty>>8), OCR1AH);		// set the high 8bits of OCR1A
+	//outp( (pwmDuty&0x00FF), OCR1AL);	// set the low 8bits of OCR1A
+	OCR0A = pwmDuty;
+}
+
+void timer0PWMBSet(u08 pwmDuty)
+{
+	// set PWM (output compare) duty for channel B
+	// this PWM output is generated on OC1B pin
+	// NOTE:	pwmDuty should be in the range 0-255 for 8bit PWM
+	//			pwmDuty should be in the range 0-511 for 9bit PWM
+	//			pwmDuty should be in the range 0-1023 for 10bit PWM
+	//outp( (pwmDuty>>8), OCR1BH);		// set the high 8bits of OCR1B
+	//outp( (pwmDuty&0x00FF), OCR1BL);	// set the low 8bits of OCR1B
+	OCR0B = pwmDuty;
+}
+
+
+
+
 void timer1PWMInit(u08 bitRes)
 {
 	// configures timer1 for use with PWM output

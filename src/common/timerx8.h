@@ -285,6 +285,15 @@ long timer2GetOverflowCount(void);		///< read timer0's overflow counter
 //			prescaler for timer1
 //@{
 
+void timer0PWMInit();
+void timer0PWMOff(void);
+void timer0PWMAOn(void);			///< Turn on timer1 Channel A (OC1A) PWM output.
+void timer0PWMBOn(void);			///< Turn on timer1 Channel B (OC1B) PWM output.
+void timer0PWMAOff(void);			///< turn off timer1 Channel A (OC1A) PWM output
+void timer0PWMBOff(void);			///< turn off timer1 Channel B (OC1B) PWM output
+
+void timer0PWMASet(u08 pwmDuty);	///< set duty of timer1 Channel A (OC1A) PWM output
+void timer0PWMBSet(u08 pwmDuty);	///< set duty of timer1 Channel B (OC1B) PWM output
 
 /// Enter standard PWM Mode on timer1.
 /// \param bitRes	indicates the period/resolution to use for PWM output in timer bits.

@@ -7,10 +7,7 @@
 #include <util/delay.h>
 
 #ifndef LED_PIN
-	#warning "LED_PIN not yet defined"
-	#define LED_PIN 7
-	#define LED_PORT PORTD
-	#define LED_DDR DDRD
+	#error "LED_PIN not yet defined"
 #endif
 
 #define sbi(ADDRESS,BIT) ((ADDRESS) |= (1<<(BIT)))
