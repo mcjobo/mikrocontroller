@@ -699,7 +699,7 @@ Wire Wire Line
 Wire Wire Line
 	10600 4450 10600 4400
 Wire Wire Line
-	9750 4450 10600 4450
+	9500 4450 10600 4450
 Wire Wire Line
 	10600 3950 10600 4000
 Wire Wire Line
@@ -900,10 +900,7 @@ F 4 "vorhanden" H 10050 4200 60  0001 C CNN "Digi-Key"
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	9750 4200 9750 4450
-Wire Wire Line
 	9750 4100 9750 3950
-Connection ~ 9750 4300
 $Comp
 L D_Schottky D3
 U 1 1 5682436C
@@ -1084,9 +1081,12 @@ $EndComp
 Wire Wire Line
 	9750 4300 9700 4300
 Wire Wire Line
-	9400 4300 9400 4450
-Wire Wire Line
-	9400 4450 9500 4450
-Wire Wire Line
 	9500 4450 9500 4500
+Connection ~ 9750 4450
+Wire Wire Line
+	9750 4200 9400 4200
+Wire Wire Line
+	9400 4200 9400 4300
+Wire Wire Line
+	9750 4450 9750 4300
 $EndSCHEMATC

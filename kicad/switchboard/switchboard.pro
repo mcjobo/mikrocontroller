@@ -1,4 +1,4 @@
-update=Sa 05 Nov 2016 22:08:05 CET
+update=Sa 05 Nov 2016 22:48:40 CET
 version=1
 last_client=kicad
 [pcbnew]
@@ -60,3 +60,4 @@ LibName28=contrib
 LibName29=valves
 LibName30=bolay-library
 LibName31=kicad-ESP8266/ESP8266
+LibName32=mcp34063

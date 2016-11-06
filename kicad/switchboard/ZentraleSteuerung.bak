@@ -35,7 +35,7 @@ EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 3
+Sheet 2 3
 Title ""
 Date ""
 Rev ""
@@ -47,30 +47,19 @@ Comment4 ""
 $EndDescr
 $Comp
 L ESP-12E U?
-U 1 1 581E4AF7
-P 4750 3250
-F 0 "U?" H 4750 4015 50  0000 C CNN
-F 1 "ESP-12E" H 4750 3924 50  0000 C CNN
-F 2 "" H 4750 3250 50  0001 C CNN
-F 3 "" H 4750 3250 50  0001 C CNN
-	1    4750 3250
-	1    0    0    -1  
-$EndComp
-$Comp
-L PCF8574 U?
-U 1 1 581E4CAC
-P 6900 2050
-F 0 "U?" H 6900 2928 50  0000 C CNN
-F 1 "PCF8574" H 6900 2837 50  0000 C CNN
-F 2 "" H 6900 2050 50  0000 C CNN
-F 3 "" H 6900 2050 50  0000 C CNN
-	1    6900 2050
+U 1 1 581E5462
+P 7350 3350
+F 0 "U?" H 7350 4115 50  0000 C CNN
+F 1 "ESP-12E" H 7350 4024 50  0000 C CNN
+F 2 "" H 7350 3350 50  0001 C CNN
+F 3 "" H 7350 3350 50  0001 C CNN
+	1    7350 3350
 	1    0    0    -1  
 $EndComp
 $Sheet
-S 5500 4350 500  150 
-U 581E51AE
-F0 "ZentraleSteuerung" 79
-F1 "ZentraleSteuerung.sch" 79
+S 3550 3250 500  150 
+U 581E5562
+F0 "Step Down Regler" 60
+F1 "StepDown.sch" 60
 $EndSheet
 $EndSCHEMATC
