@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/jbolay/src/mikrocontroller/kicad/switchboard/central-board/central-board.sch</source>
+    <date>Sa 26 Nov 2016 15:38:52 CET</date>
+    <tool>Eeschema 4.0.4-1.fc24-product</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>central-board.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U2">
+      <value>ESP-12E</value>
+      <footprint>ESP8266:ESP-12E</footprint>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
+      <libsource lib="ESP8266" part="ESP-12E"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278344</tstamp>
+    </comp>
+    <comp ref="P3">
+      <value>Conn_jack_conn_board</value>
+      <footprint>bolay:4x2pin_50mil_header</footprint>
+      <datasheet>http://sullinscorp.com/drawings/89_LPPB___2NFSP-RC,_11018.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">S9007E-04-ND</field>
+      </fields>
+      <libsource lib="conn" part="CONN_01X08"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278375</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>MC34063</value>
+      <footprint>SMD_Packages:SOIC-8-N</footprint>
+      <datasheet>http://www.onsemi.com/pub_link/Collateral/MC34063A-D.PDF</datasheet>
+      <fields>
+        <field name="Digi-Key">497-7852-1-ND</field>
+      </fields>
+      <libsource lib="mcp34063" part="MC34063"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5827884A</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>RS1MTR</value>
+      <footprint>Diodes_SMD:SMA_Handsoldering</footprint>
+      <datasheet>http://www.smc-diodes.com/propdf/RS1A-M%20N0988%20REV.A.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1655-1501-1-ND</field>
+      </fields>
+      <libsource lib="device" part="D"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278A3D</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>470uF</value>
+      <footprint>Capacitors_SMD:c_elec_10x10.5</footprint>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278AC0</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>50uF</value>
+      <footprint>Capacitors_SMD:c_elec_6.3x7.7</footprint>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+        <field name="Bemerkungen">100uF Kondens von reichelt</field>
+      </fields>
+      <libsource lib="device" part="CP"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278B49</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>0.33</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&amp;DocNm=1773269&amp;DocType=DS&amp;DocLang=English</datasheet>
+      <fields>
+        <field name="Digi-Key">A103274CT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278BB7</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>18k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">311-18KERCT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278C04</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>11k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">RC1206JR-0711KL</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278CCD</tstamp>
+    </comp>
+    <comp ref="D5">
+      <value>B140F</value>
+      <footprint>Diodes_SMD:SMA_Handsoldering</footprint>
+      <datasheet>http://cdn-reichelt.de/documents/datenblatt/A400/B120-B160.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">vorhanden</field>
+      </fields>
+      <libsource lib="device" part="D_Schottky"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278D15</tstamp>
+    </comp>
+    <comp ref="L1">
+      <value>35uH</value>
+      <footprint>bolay:SRN_1060_Power_Inductors</footprint>
+      <datasheet>http://www.bourns.com/docs/Product-Datasheets/SRN1060.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">SRN1060-470MCT-ND</field>
+      </fields>
+      <libsource lib="device" part="INDUCTOR"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278D4E</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>160pF</value>
+      <footprint>Capacitors_SMD:C_1206_HandSoldering</footprint>
+      <datasheet>http://www.samsungsem.com/kr/support/product-search/mlcc/__icsFiles/afieldfile/2015/06/03/CL31C151JBCNNNC.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1276-2811-1-ND</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58278DBD</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://rohmfs.rohm.com/en/products/databook/datasheet/passive/resistor/chip_resistor/ltr.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">RHM10KZCT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58289433</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>100nF</value>
+      <footprint>Capacitors_SMD:C_1206_HandSoldering</footprint>
+      <datasheet>http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1276-2854-1-ND</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58289485</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>RS1MTR</value>
+      <footprint>Diodes_SMD:SMA_Handsoldering</footprint>
+      <datasheet>http://www.smc-diodes.com/propdf/RS1A-M%20N0988%20REV.A.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1655-1501-1-ND</field>
+      </fields>
+      <libsource lib="device" part="D"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58396CD9</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>RS1MTR</value>
+      <footprint>Diodes_SMD:SMA_Handsoldering</footprint>
+      <datasheet>http://www.smc-diodes.com/propdf/RS1A-M%20N0988%20REV.A.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1655-1501-1-ND</field>
+      </fields>
+      <libsource lib="device" part="D"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58396D34</tstamp>
+    </comp>
+    <comp ref="D4">
+      <value>RS1MTR</value>
+      <footprint>Diodes_SMD:SMA_Handsoldering</footprint>
+      <datasheet>http://www.smc-diodes.com/propdf/RS1A-M%20N0988%20REV.A.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1655-1501-1-ND</field>
+      </fields>
+      <libsource lib="device" part="D"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58396DA4</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>100nF</value>
+      <footprint>Capacitors_SMD:C_1206_HandSoldering</footprint>
+      <datasheet>http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31F104MBCNNNC_Spec.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">1276-2854-1-ND</field>
+      </fields>
+      <libsource lib="device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58397957</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://rohmfs.rohm.com/en/products/databook/datasheet/passive/resistor/chip_resistor/ltr.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">RHM10KZCT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58397D9E</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://rohmfs.rohm.com/en/products/databook/datasheet/passive/resistor/chip_resistor/ltr.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">RHM10KZCT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58398026</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://rohmfs.rohm.com/en/products/databook/datasheet/passive/resistor/chip_resistor/ltr.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">RHM10KZCT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>583980EC</tstamp>
+    </comp>
+    <comp ref="P1">
+      <value>CONN_01X06_Power</value>
+      <footprint>Connect:bornier6</footprint>
+      <datasheet>http://www.on-shore.com/wp-content/uploads/2015/09/ed120ds.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">ED2229-ND</field>
+      </fields>
+      <libsource lib="conn" part="CONN_01X06"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>58398ED0</tstamp>
+    </comp>
+    <comp ref="P2">
+      <value>Conn_ftdi_serial</value>
+      <footprint>bolay:6x1pin_50mil_header</footprint>
+      <datasheet>http://www.sullinscorp.com/drawings/86_LPPB___1NFS_-RC,_10965.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">S9005E-06-ND</field>
+      </fields>
+      <libsource lib="conn" part="CONN_01X06"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>583999F0</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C?</fp>
+        <fp>C_????_*</fp>
+        <fp>C_????</fp>
+        <fp>SMD*_c</fp>
+        <fp>Capacitor*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X06">
+      <description>Connector, single row, 01x06</description>
+      <footprints>
+        <fp>Pin_Header_Straight_1X06</fp>
+        <fp>Pin_Header_Angled_1X06</fp>
+        <fp>Socket_Strip_Straight_1X06</fp>
+        <fp>Socket_Strip_Angled_1X06</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">CONN_01X06</field>
+      </fields>
+      <pins>
+        <pin num="1" name="P1" type="passive"/>
+        <pin num="2" name="P2" type="passive"/>
+        <pin num="3" name="P3" type="passive"/>
+        <pin num="4" name="P4" type="passive"/>
+        <pin num="5" name="P5" type="passive"/>
+        <pin num="6" name="P6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="conn" part="CONN_01X08">
+      <description>Connector, single row, 01x08</description>
+      <footprints>
+        <fp>Pin_Header_Straight_1X08</fp>
+        <fp>Pin_Header_Angled_1X08</fp>
+        <fp>Socket_Strip_Straight_1X08</fp>
+        <fp>Socket_Strip_Angled_1X08</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">CONN_01X08</field>
+      </fields>
+      <pins>
+        <pin num="1" name="P1" type="passive"/>
+        <pin num="2" name="P2" type="passive"/>
+        <pin num="3" name="P3" type="passive"/>
+        <pin num="4" name="P4" type="passive"/>
+        <pin num="5" name="P5" type="passive"/>
+        <pin num="6" name="P6" type="passive"/>
+        <pin num="7" name="P7" type="passive"/>
+        <pin num="8" name="P8" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="CP">
+      <description>Polarised capacitor</description>
+      <footprints>
+        <fp>CP*</fp>
+        <fp>C_Axial*</fp>
+        <fp>C_Radial*</fp>
+        <fp>TantalC*</fp>
+        <fp>C*elec</fp>
+        <fp>c_elec*</fp>
+        <fp>SMD*_Pol</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="D">
+      <description>Diode</description>
+      <footprints>
+        <fp>Diode_*</fp>
+        <fp>D-Pak_TO252AA</fp>
+        <fp>*SingleDiode</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="D_Schottky">
+      <description>Diode schottky</description>
+      <footprints>
+        <fp>D-Pak_TO252AA</fp>
+        <fp>Diode_*</fp>
+        <fp>*SingleDiode</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>*_Diode_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Schottky</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="ESP8266" part="ESP-12E">
+      <description>ESP8266 ESP-12E module, 22 pins, 2mm, PCB antenna</description>
+      <docs>http://l0l.org.uk/2014/12/esp8266-modules-hardware-guide-gotta-catch-em-all/</docs>
+      <footprints>
+        <fp>ESP-12E</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">ESP-12E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="REST" type="input"/>
+        <pin num="2" name="ADC" type="passive"/>
+        <pin num="3" name="CH_PD" type="input"/>
+        <pin num="4" name="GPIO16" type="BiDi"/>
+        <pin num="5" name="GPIO14" type="BiDi"/>
+        <pin num="6" name="GPIO12" type="BiDi"/>
+        <pin num="7" name="GPIO13" type="BiDi"/>
+        <pin num="8" name="VCC" type="power_in"/>
+        <pin num="9" name="CS0" type="BiDi"/>
+        <pin num="10" name="MISO" type="BiDi"/>
+        <pin num="11" name="GPIO9" type="BiDi"/>
+        <pin num="12" name="GPIO10" type="BiDi"/>
+        <pin num="13" name="MOSI" type="BiDi"/>
+        <pin num="14" name="SCLK" type="BiDi"/>
+        <pin num="15" name="GND" type="power_in"/>
+        <pin num="16" name="GPIO15" type="BiDi"/>
+        <pin num="17" name="GPIO2" type="BiDi"/>
+        <pin num="18" name="GPIO0" type="BiDi"/>
+        <pin num="19" name="GPIO4" type="BiDi"/>
+        <pin num="20" name="GPIO5" type="BiDi"/>
+        <pin num="21" name="RXD" type="input"/>
+        <pin num="22" name="TXD" type="output"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="INDUCTOR">
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">INDUCTOR</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="mcp34063" part="MC34063">
+      <description>1.5A step up/down/inverting switching regulator</description>
+      <docs>regulator/mc34063.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MC34063</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Sw_Coll" type="input"/>
+        <pin num="2" name="Sw_Emit" type="input"/>
+        <pin num="3" name="Tim_Cap" type="input"/>
+        <pin num="4" name="GND" type="power_in"/>
+        <pin num="5" name="V_Sense" type="input"/>
+        <pin num="6" name="VCC" type="power_in"/>
+        <pin num="7" name="I_Sense" type="input"/>
+        <pin num="8" name="Drv_Coll" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+        <fp>Resistor_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="conn">
+      <uri>/usr/share/kicad/library/conn.lib</uri>
+    </library>
+    <library logical="device">
+      <uri>/usr/share/kicad/library/device.lib</uri>
+    </library>
+    <library logical="mcp34063">
+      <uri>/home/jbolay/src/mikrocontroller/kicad/library/mcp34063.lib</uri>
+    </library>
+    <library logical="ESP8266">
+      <uri>/home/jbolay/src/mikrocontroller/kicad/library/kicad-ESP8266/ESP8266.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(R6-Pad1)">
+      <node ref="R6" pin="1"/>
+      <node ref="U2" pin="16"/>
+    </net>
+    <net code="2" name="Net-(C4-Pad1)">
+      <node ref="U2" pin="18"/>
+      <node ref="C4" pin="1"/>
+      <node ref="P2" pin="4"/>
+      <node ref="R7" pin="2"/>
+    </net>
+    <net code="3" name="Net-(R5-Pad2)">
+      <node ref="R5" pin="2"/>
+      <node ref="U2" pin="1"/>
+    </net>
+    <net code="4" name="Net-(C4-Pad2)">
+      <node ref="R4" pin="2"/>
+      <node ref="U2" pin="3"/>
+      <node ref="C4" pin="2"/>
+    </net>
+    <net code="5" name="Net-(P2-Pad3)">
+      <node ref="U2" pin="21"/>
+      <node ref="P2" pin="3"/>
+    </net>
+    <net code="6" name="Net-(P2-Pad2)">
+      <node ref="P2" pin="2"/>
+      <node ref="U2" pin="22"/>
+    </net>
+    <net code="7" name="+3V3">
+      <node ref="R5" pin="1"/>
+      <node ref="R7" pin="1"/>
+      <node ref="U2" pin="8"/>
+      <node ref="C5" pin="1"/>
+      <node ref="L1" pin="2"/>
+      <node ref="R2" pin="1"/>
+      <node ref="C3" pin="1"/>
+      <node ref="R4" pin="1"/>
+      <node ref="P3" pin="3"/>
+    </net>
+    <net code="8" name="Net-(R2-Pad2)">
+      <node ref="R3" pin="1"/>
+      <node ref="U1" pin="5"/>
+      <node ref="R2" pin="2"/>
+    </net>
+    <net code="9" name="Net-(P1-Pad4)">
+      <node ref="P1" pin="4"/>
+    </net>
+    <net code="10" name="Net-(P1-Pad3)">
+      <node ref="P1" pin="3"/>
+    </net>
+    <net code="11" name="Net-(P1-Pad5)">
+      <node ref="P1" pin="5"/>
+    </net>
+    <net code="12" name="Net-(P1-Pad6)">
+      <node ref="P1" pin="6"/>
+    </net>
+    <net code="13" name="GND">
+      <node ref="C3" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="D5" pin="2"/>
+      <node ref="U1" pin="4"/>
+      <node ref="P3" pin="1"/>
+      <node ref="U2" pin="15"/>
+      <node ref="R6" pin="2"/>
+      <node ref="C2" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="R3" pin="2"/>
+      <node ref="D4" pin="2"/>
+      <node ref="P2" pin="1"/>
+      <node ref="D2" pin="2"/>
+    </net>
+    <net code="14" name="Net-(P2-Pad5)">
+      <node ref="P2" pin="5"/>
+    </net>
+    <net code="15" name="Net-(P2-Pad6)">
+      <node ref="P2" pin="6"/>
+    </net>
+    <net code="16" name="Net-(U2-Pad13)">
+      <node ref="U2" pin="13"/>
+    </net>
+    <net code="17" name="Net-(P3-Pad4)">
+      <node ref="P3" pin="4"/>
+      <node ref="U2" pin="20"/>
+    </net>
+    <net code="18" name="Net-(P3-Pad5)">
+      <node ref="U2" pin="19"/>
+      <node ref="P3" pin="5"/>
+    </net>
+    <net code="19" name="Net-(P3-Pad6)">
+      <node ref="P3" pin="6"/>
+      <node ref="U2" pin="17"/>
+    </net>
+    <net code="20" name="Net-(U2-Pad2)">
+      <node ref="U2" pin="2"/>
+    </net>
+    <net code="21" name="Net-(U2-Pad4)">
+      <node ref="U2" pin="4"/>
+    </net>
+    <net code="22" name="Net-(U2-Pad5)">
+      <node ref="U2" pin="5"/>
+    </net>
+    <net code="23" name="Net-(U2-Pad9)">
+      <node ref="U2" pin="9"/>
+    </net>
+    <net code="24" name="Net-(U2-Pad10)">
+      <node ref="U2" pin="10"/>
+    </net>
+    <net code="25" name="Net-(U2-Pad11)">
+      <node ref="U2" pin="11"/>
+    </net>
+    <net code="26" name="Net-(U2-Pad12)">
+      <node ref="U2" pin="12"/>
+    </net>
+    <net code="27" name="Net-(U2-Pad14)">
+      <node ref="U2" pin="14"/>
+    </net>
+    <net code="28" name="Net-(P3-Pad7)">
+      <node ref="U2" pin="7"/>
+      <node ref="P3" pin="7"/>
+    </net>
+    <net code="29" name="Net-(P3-Pad8)">
+      <node ref="P3" pin="8"/>
+      <node ref="U2" pin="6"/>
+    </net>
+    <net code="30" name="+12V">
+      <node ref="D3" pin="1"/>
+      <node ref="C1" pin="1"/>
+      <node ref="R1" pin="2"/>
+      <node ref="U1" pin="6"/>
+      <node ref="D1" pin="1"/>
+      <node ref="P3" pin="2"/>
+    </net>
+    <net code="31" name="Net-(R1-Pad1)">
+      <node ref="U1" pin="8"/>
+      <node ref="U1" pin="7"/>
+      <node ref="R1" pin="1"/>
+      <node ref="U1" pin="1"/>
+    </net>
+    <net code="32" name="Net-(D5-Pad1)">
+      <node ref="D5" pin="1"/>
+      <node ref="U1" pin="2"/>
+      <node ref="L1" pin="1"/>
+    </net>
+    <net code="33" name="Net-(C2-Pad1)">
+      <node ref="C2" pin="1"/>
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="34" name="+12VA">
+      <node ref="P1" pin="1"/>
+      <node ref="D1" pin="2"/>
+      <node ref="D2" pin="1"/>
+    </net>
+    <net code="35" name="GNDPWR">
+      <node ref="D3" pin="2"/>
+      <node ref="P1" pin="2"/>
+      <node ref="D4" pin="1"/>
+    </net>
+  </nets>
+</export>

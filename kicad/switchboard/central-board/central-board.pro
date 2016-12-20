@@ -1,10 +1,6 @@
-update=22/05/2015 07:44:53
+update=So 13 Nov 2016 17:35:00 CET
 version=1
 last_client=kicad
-[general]
-version=1
-RootSch=
-BoardNm=
 [pcbnew]
 version=1
 LastNetListRead=
@@ -27,6 +23,8 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
+[general]
+version=1
 [eeschema]
 version=1
 LibDir=
@@ -60,3 +58,17 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
+LibName30=/home/jbolay/src/mikrocontroller/kicad/library/bolay-library
+LibName31=/home/jbolay/src/mikrocontroller/kicad/library/mcp34063
+LibName32=/home/jbolay/src/mikrocontroller/kicad/library/borniers
+LibName33=/home/jbolay/src/mikrocontroller/kicad/library/kicad-ESP8266/ESP8266
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=../../../../../Schreibtisch/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60

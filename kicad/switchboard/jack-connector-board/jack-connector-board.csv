@@ -1,0 +1,9 @@
+Reference, Value, Footprint, Datasheet, Digi-Key
+"P1","ConnMainboard","bolay:8x1pin_50mil_header","http://www.sullinscorp.com/catalogs/86_PAGE92-93_.050_FEMALE_HDR_ST_RA_SMT.pdf",",S9005E-08-ND",""
+"J1","ConnBus","bolay:RJ45_vertical_8","http://www.assmann-wsw.com/fileadmin/datasheets/A-2014-2-4-R_REV00.pdf",",AE10392-ND",""
+"J2","ConnBus","bolay:RJ45_vertical_8","http://www.assmann-wsw.com/fileadmin/datasheets/A-2014-2-4-R_REV00.pdf",",AE10392-ND",""
+"JP1","Jumper_NC_Small","Resistors_SMD:R_0603_HandSoldering","","",""
+"JP2","Jumper_NC_Small","Resistors_SMD:R_0603_HandSoldering","","",""
+"R1","4,7k","Resistors_SMD:R_1206_HandSoldering","http://www.yageo.com/NewPortal/yageodocoutput?fileName=/pdf/R-Chip/PYu-RC_Group_51_RoHS_L_4.pdf",",311-4.7KERCT-ND",""
+"R2","4,7k","Resistors_SMD:R_1206_HandSoldering","http://www.yageo.com/NewPortal/yageodocoutput?fileName=/pdf/R-Chip/PYu-RC_Group_51_RoHS_L_4.pdf",",311-4.7KERCT-ND",""
+"U1","Case","","http://www.budind.com/pdf/hb4770.pdf",",377-1807-ND",""

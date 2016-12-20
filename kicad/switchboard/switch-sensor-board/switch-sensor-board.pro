@@ -1,10 +1,6 @@
-update=22/05/2015 07:44:53
+update=Sa 12 Nov 2016 18:32:16 CET
 version=1
 last_client=kicad
-[general]
-version=1
-RootSch=
-BoardNm=
 [pcbnew]
 version=1
 LastNetListRead=
@@ -60,3 +56,15 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
+[general]
+version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=../../../../../Schreibtisch/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
