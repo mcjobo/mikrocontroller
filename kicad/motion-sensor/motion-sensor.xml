@@ -2,8 +2,8 @@
 <export version="D">
   <design>
     <source>/home/jbolay/src/mikrocontroller/kicad/motion-sensor/motion-sensor.sch</source>
-    <date>Mi 03 Feb 2016 18:47:04 CET</date>
-    <tool>Eeschema no-vcs-found-product</tool>
+    <date>Sa 19 Nov 2016 22:53:38 CET</date>
+    <tool>Eeschema 4.0.4-1.fc24-product</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Motion Sensor with PWM LED Strip</title>
@@ -98,7 +98,7 @@
     </comp>
     <comp ref="Q1">
       <value>FDN337N</value>
-      <footprint>TO_SOT_Packages_SMD:SOT-23_Handsoldering</footprint>
+      <footprint>bolay library:SOT-23_Handsoldering-FDN-337N</footprint>
       <datasheet>https://www.fairchildsemi.com/datasheets/FD/FDN337N.pdf</datasheet>
       <fields>
         <field name="Digi-Key">FDN337NTR-ND</field>
@@ -365,6 +365,17 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56B24DF4</tstamp>
     </comp>
+    <comp ref="R10">
+      <value>0</value>
+      <footprint>Resistors_SMD:R_1206_HandSoldering</footprint>
+      <datasheet>http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf</datasheet>
+      <fields>
+        <field name="Digi-Key">311-0.0ERCT-ND</field>
+      </fields>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>56C89AC4</tstamp>
+    </comp>
   </components>
   <libparts>
     <libpart lib="atmel" part="ATMEGA168A-A">
@@ -450,7 +461,7 @@
       </pins>
     </libpart>
     <libpart lib="conn" part="CONN_02X03">
-      <description>Connector 02x03</description>
+      <description>Connector, double row, 02x03</description>
       <footprints>
         <fp>Pin_Header_Straight_2X03</fp>
         <fp>Pin_Header_Angled_2X03</fp>
@@ -471,7 +482,7 @@
       </pins>
     </libpart>
     <libpart lib="conn" part="CONN_02X04">
-      <description>Connector 02x04</description>
+      <description>Connector, double row, 02x04</description>
       <footprints>
         <fp>Pin_Header_Straight_2X04</fp>
         <fp>Pin_Header_Angled_2X04</fp>
@@ -497,7 +508,8 @@
       <description>Polarised capacitor</description>
       <footprints>
         <fp>CP*</fp>
-        <fp>Elko*</fp>
+        <fp>C_Axial*</fp>
+        <fp>C_Radial*</fp>
         <fp>TantalC*</fp>
         <fp>C*elec</fp>
         <fp>c_elec*</fp>
@@ -537,6 +549,10 @@
       </pins>
     </libpart>
     <libpart lib="device" part="INDUCTOR">
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+      </footprints>
       <fields>
         <field name="Reference">L</field>
         <field name="Value">INDUCTOR</field>
@@ -548,13 +564,8 @@
     </libpart>
     <libpart lib="device" part="LED">
       <footprints>
-        <fp>LED-3MM</fp>
-        <fp>LED-5MM</fp>
-        <fp>LED-10MM</fp>
-        <fp>LED-0603</fp>
-        <fp>LED-0805</fp>
-        <fp>LED-1206</fp>
-        <fp>LEDV</fp>
+        <fp>LED-*</fp>
+        <fp>LED_*</fp>
       </footprints>
       <fields>
         <field name="Reference">D</field>
@@ -636,224 +647,228 @@
     </libpart>
   </libparts>
   <libraries>
+    <library logical="motion-sensor-rescue">
+      <uri>/home/jbolay/src/mikrocontroller/kicad/motion-sensor/motion-sensor-rescue.lib</uri>
+    </library>
+    <library logical="device">
+      <uri>/usr/share/kicad/library/device.lib</uri>
+    </library>
+    <library logical="conn">
+      <uri>/usr/share/kicad/library/conn.lib</uri>
+    </library>
     <library logical="atmel">
       <uri>/usr/share/kicad/library/atmel.lib</uri>
     </library>
     <library logical="bolay-library">
       <uri>/home/jbolay/src/mikrocontroller/kicad/library/bolay-library.lib</uri>
     </library>
-    <library logical="conn">
-      <uri>/usr/share/kicad/library/conn.lib</uri>
-    </library>
-    <library logical="device">
-      <uri>/usr/share/kicad/library/device.lib</uri>
-    </library>
-    <library logical="motion-sensor-rescue">
-      <uri>/home/jbolay/src/mikrocontroller/kicad/motion-sensor/motion-sensor-rescue.lib</uri>
-    </library>
   </libraries>
   <nets>
     <net code="1" name="Net-(R2-Pad2)">
       <node ref="U1" pin="5"/>
-      <node ref="R3" pin="2"/>
       <node ref="R2" pin="2"/>
+      <node ref="R3" pin="2"/>
     </net>
-    <net code="2" name="Net-(D1-Pad1)">
+    <net code="2" name="Net-(C2-Pad1)">
+      <node ref="C2" pin="1"/>
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="3" name="Net-(D1-Pad1)">
+      <node ref="U1" pin="2"/>
       <node ref="L1" pin="1"/>
       <node ref="D1" pin="1"/>
-      <node ref="U1" pin="2"/>
     </net>
-    <net code="3" name="Net-(Q1-Pad2)">
+    <net code="4" name="SCK">
+      <node ref="IC1" pin="17"/>
+      <node ref="P1" pin="3"/>
+    </net>
+    <net code="5" name="+3V3">
+      <node ref="IC1" pin="6"/>
+      <node ref="J2" pin="1"/>
+      <node ref="P1" pin="2"/>
+      <node ref="P2" pin="6"/>
+      <node ref="J1" pin="1"/>
+      <node ref="P2" pin="2"/>
+      <node ref="P2" pin="4"/>
+      <node ref="SW2" pin="1"/>
+      <node ref="SW1" pin="1"/>
+      <node ref="R7" pin="1"/>
+      <node ref="R7" pin="2"/>
+      <node ref="C4" pin="1"/>
+      <node ref="IC1" pin="18"/>
+      <node ref="R2" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="CIN1" pin="1"/>
+      <node ref="C3" pin="1"/>
+      <node ref="L1" pin="2"/>
+      <node ref="IC1" pin="4"/>
+    </net>
+    <net code="6" name="Net-(IC1-Pad24)">
+      <node ref="IC1" pin="24"/>
+    </net>
+    <net code="7" name="Net-(IC1-Pad23)">
+      <node ref="IC1" pin="23"/>
+    </net>
+    <net code="8" name="Net-(J1-Pad3)">
+      <node ref="J1" pin="3"/>
+    </net>
+    <net code="9" name="Net-(CON2-Pad2)">
+      <node ref="Q1" pin="1"/>
+      <node ref="R10" pin="1"/>
+      <node ref="CON2" pin="2"/>
+      <node ref="D4" pin="1"/>
+    </net>
+    <net code="10" name="Net-(CON2-Pad3)">
+      <node ref="R10" pin="2"/>
+      <node ref="CON2" pin="3"/>
+    </net>
+    <net code="11" name="Net-(Q1-Pad2)">
       <node ref="R5" pin="1"/>
       <node ref="R6" pin="1"/>
       <node ref="Q1" pin="2"/>
     </net>
-    <net code="4" name="Net-(C2-Pad1)">
-      <node ref="U1" pin="3"/>
-      <node ref="C2" pin="1"/>
-    </net>
-    <net code="5" name="MOSI">
-      <node ref="IC1" pin="15"/>
-      <node ref="P1" pin="4"/>
-    </net>
-    <net code="6" name="MISO">
-      <node ref="P1" pin="1"/>
-      <node ref="IC1" pin="16"/>
-    </net>
-    <net code="7" name="SCK">
-      <node ref="P1" pin="3"/>
-      <node ref="IC1" pin="17"/>
-    </net>
-    <net code="8" name="RESET">
-      <node ref="P1" pin="5"/>
-      <node ref="IC1" pin="29"/>
-    </net>
-    <net code="9" name="PWM_Pin">
-      <node ref="R5" pin="2"/>
-      <node ref="IC1" pin="10"/>
-    </net>
-    <net code="10" name="Motion_Sensor_Pin_1">
-      <node ref="IC1" pin="1"/>
-      <node ref="SW1" pin="2"/>
-      <node ref="J1" pin="2"/>
-    </net>
-    <net code="11" name="Net-(IC1-Pad24)">
-      <node ref="IC1" pin="24"/>
-    </net>
-    <net code="12" name="Net-(IC1-Pad23)">
-      <node ref="IC1" pin="23"/>
+    <net code="12" name="GND">
+      <node ref="Q1" pin="3"/>
+      <node ref="CON1" pin="3"/>
+      <node ref="CON1" pin="2"/>
+      <node ref="P1" pin="6"/>
+      <node ref="IC1" pin="5"/>
+      <node ref="IC1" pin="3"/>
+      <node ref="C1" pin="2"/>
+      <node ref="C3" pin="2"/>
+      <node ref="D1" pin="2"/>
+      <node ref="U1" pin="4"/>
+      <node ref="R3" pin="1"/>
+      <node ref="CIN1" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="R6" pin="2"/>
+      <node ref="IC1" pin="21"/>
+      <node ref="R4" pin="2"/>
+      <node ref="P2" pin="7"/>
+      <node ref="SW1" pin="3"/>
+      <node ref="SW2" pin="3"/>
+      <node ref="J1" pin="4"/>
+      <node ref="R9" pin="2"/>
+      <node ref="R9" pin="1"/>
+      <node ref="R8" pin="2"/>
+      <node ref="R8" pin="1"/>
+      <node ref="J1" pin="5"/>
+      <node ref="J1" pin="6"/>
+      <node ref="J2" pin="4"/>
+      <node ref="J2" pin="5"/>
+      <node ref="J2" pin="6"/>
+      <node ref="C4" pin="2"/>
+      <node ref="C2" pin="2"/>
     </net>
     <net code="13" name="Motion_Sensor_Pin_2">
-      <node ref="J2" pin="2"/>
       <node ref="IC1" pin="32"/>
+      <node ref="J2" pin="2"/>
       <node ref="SW2" pin="2"/>
     </net>
-    <net code="14" name="Net-(J1-Pad3)">
-      <node ref="J1" pin="3"/>
+    <net code="14" name="Motion_Sensor_Pin_1">
+      <node ref="IC1" pin="1"/>
+      <node ref="J1" pin="2"/>
+      <node ref="SW1" pin="2"/>
     </net>
     <net code="15" name="Net-(J2-Pad3)">
       <node ref="J2" pin="3"/>
     </net>
     <net code="16" name="+12V">
-      <node ref="D3" pin="2"/>
-      <node ref="U1" pin="6"/>
       <node ref="R1" pin="2"/>
+      <node ref="U1" pin="6"/>
       <node ref="C1" pin="1"/>
+      <node ref="D3" pin="2"/>
       <node ref="CON1" pin="1"/>
     </net>
     <net code="17" name="Net-(CON2-Pad1)">
       <node ref="D3" pin="1"/>
-      <node ref="D4" pin="2"/>
       <node ref="CON2" pin="1"/>
+      <node ref="D4" pin="2"/>
     </net>
-    <net code="18" name="GND">
-      <node ref="SW1" pin="3"/>
-      <node ref="Q1" pin="3"/>
-      <node ref="SW2" pin="3"/>
-      <node ref="CON1" pin="3"/>
-      <node ref="CON1" pin="2"/>
-      <node ref="P1" pin="6"/>
-      <node ref="R6" pin="2"/>
-      <node ref="C5" pin="2"/>
-      <node ref="CIN1" pin="2"/>
-      <node ref="P2" pin="7"/>
-      <node ref="R4" pin="2"/>
-      <node ref="IC1" pin="21"/>
-      <node ref="IC1" pin="5"/>
-      <node ref="IC1" pin="3"/>
-      <node ref="C3" pin="2"/>
-      <node ref="D1" pin="2"/>
-      <node ref="C1" pin="2"/>
-      <node ref="U1" pin="4"/>
-      <node ref="R3" pin="1"/>
-      <node ref="R9" pin="1"/>
-      <node ref="R8" pin="2"/>
-      <node ref="R8" pin="1"/>
-      <node ref="R9" pin="2"/>
-      <node ref="J1" pin="4"/>
-      <node ref="J1" pin="6"/>
-      <node ref="J1" pin="5"/>
-      <node ref="J2" pin="6"/>
-      <node ref="J2" pin="5"/>
-      <node ref="J2" pin="4"/>
-      <node ref="C2" pin="2"/>
-      <node ref="C4" pin="2"/>
+    <net code="18" name="MOSI">
+      <node ref="P1" pin="4"/>
+      <node ref="IC1" pin="15"/>
     </net>
-    <net code="19" name="+3V3">
-      <node ref="C5" pin="1"/>
-      <node ref="R2" pin="1"/>
-      <node ref="J2" pin="1"/>
-      <node ref="P1" pin="2"/>
-      <node ref="IC1" pin="18"/>
-      <node ref="P2" pin="2"/>
-      <node ref="P2" pin="4"/>
-      <node ref="P2" pin="6"/>
-      <node ref="J1" pin="1"/>
-      <node ref="CIN1" pin="1"/>
-      <node ref="SW1" pin="1"/>
-      <node ref="C3" pin="1"/>
-      <node ref="IC1" pin="4"/>
-      <node ref="IC1" pin="6"/>
-      <node ref="C4" pin="1"/>
-      <node ref="SW2" pin="1"/>
-      <node ref="R7" pin="1"/>
-      <node ref="R7" pin="2"/>
-      <node ref="L1" pin="2"/>
+    <net code="19" name="RESET">
+      <node ref="IC1" pin="29"/>
+      <node ref="P1" pin="5"/>
     </net>
-    <net code="20" name="Net-(CON2-Pad2)">
-      <node ref="Q1" pin="1"/>
-      <node ref="D4" pin="1"/>
-      <node ref="CON2" pin="2"/>
-      <node ref="CON2" pin="3"/>
+    <net code="20" name="MISO">
+      <node ref="P1" pin="1"/>
+      <node ref="IC1" pin="16"/>
     </net>
-    <net code="21" name="Net-(IC1-Pad14)">
-      <node ref="IC1" pin="14"/>
+    <net code="21" name="PWM_Pin">
+      <node ref="IC1" pin="10"/>
+      <node ref="R5" pin="2"/>
     </net>
-    <net code="22" name="Net-(IC1-Pad13)">
-      <node ref="IC1" pin="13"/>
-    </net>
-    <net code="23" name="Net-(IC1-Pad22)">
-      <node ref="IC1" pin="22"/>
-    </net>
-    <net code="24" name="Net-(IC1-Pad12)">
-      <node ref="IC1" pin="12"/>
-    </net>
-    <net code="25" name="Net-(IC1-Pad11)">
+    <net code="22" name="Net-(IC1-Pad11)">
       <node ref="IC1" pin="11"/>
     </net>
-    <net code="26" name="LED_PIN">
+    <net code="23" name="LED_PIN">
       <node ref="IC1" pin="25"/>
       <node ref="D2" pin="2"/>
     </net>
-    <net code="27" name="Net-(IC1-Pad20)">
+    <net code="24" name="Net-(IC1-Pad14)">
+      <node ref="IC1" pin="14"/>
+    </net>
+    <net code="25" name="Net-(IC1-Pad13)">
+      <node ref="IC1" pin="13"/>
+    </net>
+    <net code="26" name="Net-(IC1-Pad22)">
+      <node ref="IC1" pin="22"/>
+    </net>
+    <net code="27" name="Net-(IC1-Pad12)">
+      <node ref="IC1" pin="12"/>
+    </net>
+    <net code="28" name="Net-(IC1-Pad20)">
       <node ref="IC1" pin="20"/>
     </net>
-    <net code="28" name="Net-(IC1-Pad9)">
+    <net code="29" name="Net-(IC1-Pad9)">
       <node ref="IC1" pin="9"/>
     </net>
-    <net code="29" name="Net-(IC1-Pad8)">
+    <net code="30" name="Net-(IC1-Pad8)">
       <node ref="IC1" pin="8"/>
     </net>
-    <net code="30" name="Net-(IC1-Pad7)">
+    <net code="31" name="Net-(IC1-Pad7)">
       <node ref="IC1" pin="7"/>
     </net>
-    <net code="31" name="Net-(IC1-Pad2)">
+    <net code="32" name="Net-(IC1-Pad2)">
       <node ref="IC1" pin="2"/>
     </net>
-    <net code="32" name="Net-(IC1-Pad19)">
+    <net code="33" name="Net-(IC1-Pad19)">
       <node ref="IC1" pin="19"/>
     </net>
-    <net code="33" name="Net-(IC1-Pad28)">
+    <net code="34" name="Net-(IC1-Pad28)">
       <node ref="IC1" pin="28"/>
     </net>
-    <net code="34" name="Net-(IC1-Pad27)">
+    <net code="35" name="Net-(IC1-Pad27)">
       <node ref="IC1" pin="27"/>
     </net>
-    <net code="35" name="Net-(IC1-Pad26)">
+    <net code="36" name="Net-(IC1-Pad26)">
       <node ref="IC1" pin="26"/>
     </net>
-    <net code="36" name="Net-(R1-Pad1)">
-      <node ref="R1" pin="1"/>
-      <node ref="U1" pin="8"/>
-      <node ref="U1" pin="7"/>
+    <net code="37" name="Net-(R1-Pad1)">
       <node ref="U1" pin="1"/>
+      <node ref="R1" pin="1"/>
+      <node ref="U1" pin="7"/>
+      <node ref="U1" pin="8"/>
     </net>
-    <net code="37" name="TXD">
+    <net code="38" name="TXD">
       <node ref="P2" pin="1"/>
       <node ref="IC1" pin="31"/>
     </net>
-    <net code="38" name="RXD">
-      <node ref="IC1" pin="30"/>
+    <net code="39" name="RXD">
       <node ref="P2" pin="8"/>
+      <node ref="IC1" pin="30"/>
     </net>
-    <net code="39" name="Net-(D2-Pad1)">
+    <net code="40" name="Net-(D2-Pad1)">
       <node ref="R4" pin="1"/>
       <node ref="D2" pin="1"/>
     </net>
-    <net code="40" name="Net-(P2-Pad5)">
+    <net code="41" name="Net-(P2-Pad5)">
       <node ref="P2" pin="5"/>
     </net>
-    <net code="41" name="Net-(P2-Pad3)">
+    <net code="42" name="Net-(P2-Pad3)">
       <node ref="P2" pin="3"/>
     </net>
   </nets>
