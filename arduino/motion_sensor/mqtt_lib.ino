@@ -1,12 +1,12 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-#define wifi_ssid "bolay family"
-#define wifi_password "74741606441889230741"
+#define wifi_ssid "APWS2"
+#define wifi_password "BRSAUPWCRHXM"
 
-#define mqtt_server "openhab-r0"
-#define mqtt_user "mcjobo"
-#define mqtt_password "mcjobo"
+#define mqtt_server "192.168.2.50"
+#define mqtt_user "motion"
+#define mqtt_password "motion"
 
 
 WiFiClient espClient;
