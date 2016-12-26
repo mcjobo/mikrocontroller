@@ -1,0 +1,24 @@
+Bewegungsmelder Projekt mit LED Kette ansteuerung und Dimmung.
+
+MQTT Topics für die Steuerung 
+
+<topic-basis>/on		erlaubte Werte: 0,1,2 eingabe Kanal
+				0 -> Lichterkette ist aus Bewegungsmelder ist nicht aktiv
+				1 -> Lichterkette ist dauerhaft an mit eingestellter Helligkeit
+				2 -> Lichterkette wird per Bewegungsmelder angeschaltet und über den Timeout wieder ausgeschaltet. Erneute 						Bewegungs erkennung retriggert den Timeout
+
+<topic-basis>/duty		erlaubte Werte: 0 - 100 eingabe Kanal
+				stellt die Helligkeit der Lichterkette als Prozentwert ein. Der Heligkeitsverlauf ist halbwegs linear.
+
+<topic-basis>/level		erlaubte Werte: keine ausgabe Kanal
+				Hier gibt das Modul Rückmeldung über die aktuell eingestellte Helligkeit an der Lichterkette. Bei jeder 					Helligkeitsänderung wird eine neue Nachricht gesendet. Änderungen die über das ein und aus faden 						kommen sind nicht berücksichtigt. 
+
+<topic-basis>/time		erlaubte Werte: 0-32767 eingabe Kanal
+				Hier wird der Timeout eingestellt für die Betriebsart 2. Es wird die Timeout Dauer in milli Sekunden 						eingestellt. 
+
+<topic-basis>/fade		erlaubte Werte: 0-32767 eingabe Kanal
+				Hier wird das Fading für das ein und ausschalten eingestellt. Im Prinzip ist der Wert die Zeit für das 						komplette durchfahren von 0% Helligkeit bis 100% Helligkeit in milli Sekunden eingestellt. 
+
+Projekte für topic Basis:
+/sleep/		Rostock Schlafzimmer unter dem Bett beleuchtung
+/kueche-kuehl/	Crivitz Küche rechte Seite neben dem Kühlschrank
